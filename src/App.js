@@ -4,6 +4,7 @@ import LocationModal from './components/LocationModal.js'
 import Weather from './components/Weather'
 import CurrentLocation from './components/CurrentLocation'
 import Unsplash from './components/Unsplash.js'
+import News from './components/News'
 
 const App = ({
   coords,
@@ -53,6 +54,9 @@ const App = ({
       </li>
       <li>
         <Unsplash query={unsplashQuery} />
+      </li>
+      <li>
+        <News query={unsplashQuery} />
       </li>
     </ul>
   ) : (
