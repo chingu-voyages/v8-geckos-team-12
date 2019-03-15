@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "algolia-places-react": "^1.4.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-geolocated": "^2.4.1",
