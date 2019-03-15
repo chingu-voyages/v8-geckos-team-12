@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default ({ latitude, longitude }) => {
+export default ({ latitude, longitude, setUnsplashQuery }) => {
   const [currentLocation, setCurrentLocation] = useState()
   const setDestructuredLocation = ({
     country,
@@ -8,7 +8,16 @@ export default ({ latitude, longitude }) => {
     postcode,
     county,
     administrative,
-  }) => setCurrentLocation({ city: city[0], postcode: postcode[0], county: county[0], administrative: administrative[0], country })
+  }) => {
+    setCurrentLocation({
+      city: city[0],
+      postcode: postcode[0],
+      county: county[0],
+      administrative: administrative[0],
+      country,
+    })
+    setUnsplashQuery(administrative[0])
+  }
   if (!currentLocation) {
     fetch(
       `https://places-dsn.algolia.net/1/places/reverse?aroundLatLng=${latitude},${longitude}&hitsPerPage=1&language=en`,

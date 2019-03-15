@@ -3,6 +3,7 @@ import { geolocated } from 'react-geolocated'
 import LocationModal from './components/LocationModal.js'
 import Weather from './components/Weather'
 import CurrentLocation from './components/CurrentLocation'
+import Unsplash from './components/Unsplash.js'
 
 const App = ({
   coords,
@@ -15,6 +16,7 @@ const App = ({
     longitude: 0,
     available: !isGeolocationAvailable || !isGeolocationEnabled,
   })
+  const [unsplashQuery, setUnsplashQuery] = useState(null)
   try {
     const {
       latitude,
@@ -46,7 +48,11 @@ const App = ({
         <CurrentLocation
           latitude={location.latitude}
           longitude={location.longitude}
+          setUnsplashQuery={setUnsplashQuery}
         />{' '}
+      </li>
+      <li>
+        <Unsplash query={unsplashQuery} />
       </li>
     </ul>
   ) : (
