@@ -12,4 +12,8 @@ http://localhost:3000
 
 ## Production Deploy
 
-https://v8-production.chrisczach.com/
+https://v8.chrisczach.com/
+
+## Development Deploy
+
+https://development--v8.chrisczach.com/
