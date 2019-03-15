@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { geolocated } from 'react-geolocated'
 import LocationModal from './components/LocationModal.js'
-
+import Weather from './components/Weather'
 const App = ({
   coords,
   isGeolocationAvailable, // boolean flag indicating that the browser supports the Geolocation API
@@ -37,6 +37,9 @@ const App = ({
     <ul>
       <li>Latitude: {location.latitude}</li>
       <li>Longitude: {location.longitude}</li>
+      <li>
+        <Weather latitude={location.latitude} longitude={location.longitude} />
+      </li>
     </ul>
   ) : (
     <div>Loading</div>

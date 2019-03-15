@@ -6,8 +6,8 @@ export default ({ setLocation }) => {
     <AlgoliaPlaces
       placeholder={`Couldn't get location from browser. Please enter address.`}
       options={{
-        appId: 'plXV2SVUGKZD',
-        apiKey: 'e61b88fadade9c8c8ef06ada54b45cc2',
+        appId: process.env.REACT_APP_ANGOLIA_APP_ID,
+        apiKey: process.env.REACT_APP_ANGOLIO_API_KEY,
       }}
       onChange={({
         query,
