@@ -9,3 +9,7 @@ Add-project-description-here | Voyage-8 | https://chingu.io/
 ## Open in browser
 
 http://localhost:3000
+
+## Production Deploy
+
+https://v8-production.chrisczach.com/
