@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { geolocated } from 'react-geolocated'
+import LocationModal from './components/LocationModal.js'
 
 const App = ({
   coords,
@@ -7,33 +8,38 @@ const App = ({
   isGeolocationEnabled, // boolean flag indicating that the user has allowed the use of the Geolocation API
   positionError, // object with the error returned from the Geolocation API call
 }) => {
+  const [location, setLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+    available: !isGeolocationAvailable || !isGeolocationEnabled,
+  })
   try {
-    var {
+    const {
       latitude,
       longitude,
-      altitude,
-      accuracy,
-      altitudeAccuracy,
-      heading,
-      speed,
+      // altitude,
+      // accuracy,
+      // altitudeAccuracy,
+      // heading,
+      // speed,
     } = coords
+    setLocation({
+      latitude,
+      longitude,
+      available: !isGeolocationAvailable || !isGeolocationEnabled,
+    })
   } catch (err) {}
-  return !isGeolocationAvailable ? (
-    <div>Your browser does not support Geolocation</div>
-  ) : !isGeolocationEnabled ? (
-    <div>Geolocation is not enabled</div>
-  ) : coords ? (
+
+  return !location.available &&
+    (!isGeolocationAvailable || !isGeolocationEnabled) ? (
+    <LocationModal setLocation={setLocation} />
+  ) : coords || location.latitude ? (
     <ul>
-      <li>Latitude: {latitude}</li>
-      <li>Longitude: {longitude}</li>
-      <li>Accuracy: {accuracy}</li>
-      <li>Altitude: {altitude}</li>
-      <li>Altitude Accuracy: {altitudeAccuracy}</li>
-      <li>Heading: {heading}</li>
-      <li>Speed: {speed}</li>
+      <li>Latitude: {location.latitude}</li>
+      <li>Longitude: {location.longitude}</li>
     </ul>
   ) : (
-    <div>Getting the location data&hellip; </div>
+    <div>Loading</div>
   )
 }
 
