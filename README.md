@@ -16,4 +16,4 @@ https://v8.chrisczach.com/
 
 ## Development Deploy
 
-https://development--v8.chrisczach.com/
+https://development.v8.chrisczach.com/
