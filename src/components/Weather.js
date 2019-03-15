@@ -4,7 +4,7 @@ export default ({ latitude, longitude }) => {
   const [forecast, setForecast] = useState()
 
   fetch(
-    `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${
       process.env.REACT_APP_OWM_API_KEY
     }`
   )
