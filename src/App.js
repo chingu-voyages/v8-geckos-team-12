@@ -5,6 +5,7 @@ import Weather from './components/Weather'
 import CurrentLocation from './components/CurrentLocation'
 import Unsplash from './components/Unsplash.js'
 import News from './components/News'
+import LoadingAnimation from './components/LoadingAnimation'
 
 const App = ({
   coords,
@@ -60,7 +61,7 @@ const App = ({
       </li>
     </ul>
   ) : (
-    <div>Loading</div>
+    <LoadingAnimation />
   )
 }
 
