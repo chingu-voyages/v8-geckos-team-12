@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Unsplash from 'unsplash-js'
+import styled from 'styled-components'
+
 const unsplash = new Unsplash({
   applicationId: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
   secret: process.env.REACT_APP_UNSPLASH_SECRET_KEY,
@@ -24,12 +26,11 @@ export default ({ query }) => {
   }
 
   return (
-    <div>
-      Unsplash:{' '}
-      {unsplashImage
-        ? JSON.stringify(unsplashImage)
-        : 'Need to add default unsplash image for failed fetch'}
-    </div>
+    <Modal
+      backgroundImg={
+        unsplashImage ? unsplashImage.urls.full : unsplashFailImage.urls.full
+      }
+    />
   )
 }
 
@@ -64,3 +65,18 @@ const unsplashFailImage = {
     followers: 'https://api.unsplash.com/users/annasmith206/followers',
   },
 }
+
+const Modal = styled.div`
+  background-size: cover;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  background-image: url(${({ backgroundImg }) => backgroundImg});
+  color: white;
+  font-size: 5em;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
