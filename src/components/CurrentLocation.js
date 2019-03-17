@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 
 export default ({ latitude, longitude, setUnsplashQuery }) => {
   const [currentLocation, setCurrentLocation] = useState()
@@ -33,8 +34,18 @@ export default ({ latitude, longitude, setUnsplashQuery }) => {
       .then(({ hits }) => setDestructuredLocation(hits[0]))
   }
   return currentLocation ? (
-    <div>Current Location: {JSON.stringify(currentLocation)}</div>
+    <CurrentLocationWrapper>
+      Current Location: {JSON.stringify(currentLocation)}
+    </CurrentLocationWrapper>
   ) : (
-    <div>Current Location Loading</div>
+    <CurrentLocationLoading>Current Location Loading</CurrentLocationLoading>
   )
 }
+
+const CurrentLocationWrapper = styled.div`
+  //add styles here for current location info
+`
+
+const CurrentLocationLoading = styled.div`
+  //add styles here for current location loading placeholder
+`

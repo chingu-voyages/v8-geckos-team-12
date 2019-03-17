@@ -6,6 +6,7 @@ import CurrentLocation from './components/CurrentLocation'
 import Unsplash from './components/Unsplash.js'
 import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
+import styled from 'styled-components'
 
 const App = ({
   coords,
@@ -40,30 +41,27 @@ const App = ({
     (!isGeolocationAvailable || !isGeolocationEnabled) ? (
     <LocationModal setLocation={setLocation} />
   ) : coords || location.latitude ? (
-    <ul>
-      <li>Latitude: {location.latitude}</li>
-      <li>Longitude: {location.longitude}</li>
-      <li>
-        <Weather latitude={location.latitude} longitude={location.longitude} />
-      </li>
-      <li>
+    <>
+      <Unsplash query={unsplashQuery} />
+      <AppWrapper>
         <CurrentLocation
           latitude={location.latitude}
           longitude={location.longitude}
           setUnsplashQuery={setUnsplashQuery}
-        />{' '}
-      </li>
-      <li>
-        <Unsplash query={unsplashQuery} />
-      </li>
-      <li>
+        />
+        <Weather latitude={location.latitude} longitude={location.longitude} />
         <News query={unsplashQuery} />
-      </li>
-    </ul>
+      </AppWrapper>
+    </>
   ) : (
     <LoadingAnimation />
   )
 }
+
+const AppWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 export default geolocated({
   positionOptions: {
