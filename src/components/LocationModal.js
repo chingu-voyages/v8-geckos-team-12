@@ -1,7 +1,7 @@
 import React from 'react'
 import AlgoliaPlaces from 'algolia-places-react'
 import styled from 'styled-components'
-import moduleName from 'react-spring'
+
 export default ({ setLocation }) => {
   return (
     <Modal>
