@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 
 export default ({ latitude, longitude }) => {
   const [forecast, setForecast] = useState()
@@ -20,8 +21,18 @@ export default ({ latitude, longitude }) => {
       .then(result => setDestructuredForecast(result))
   }
   return forecast ? (
-    <div>Weather Forecast: {JSON.stringify(forecast)}</div>
+    <ForecastWrapper>
+      Weather Forecast: {JSON.stringify(forecast)}
+    </ForecastWrapper>
   ) : (
-    <div>Forecast Loading</div>
+    <ForecastLoadingWrapper>Forecast Loading</ForecastLoadingWrapper>
   )
 }
+
+const ForecastWrapper = styled.div`
+  //add styles here for current location info
+`
+
+const ForecastLoadingWrapper = styled.div`
+  //add styles here for current location loading placeholder
+`
