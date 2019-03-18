@@ -37,24 +37,36 @@ const App = ({
     })
   } catch (err) {}
 
-  return !location.available &&
-    (!isGeolocationAvailable || !isGeolocationEnabled) ? (
-    <LocationModal setLocation={setLocation} />
-  ) : coords || location.latitude ? (
+  return (
     <>
-      <Unsplash query={unsplashQuery} />
-      <AppWrapper>
-        <CurrentLocation
-          latitude={location.latitude}
-          longitude={location.longitude}
-          setUnsplashQuery={setUnsplashQuery}
-        />
-        <Weather latitude={location.latitude} longitude={location.longitude} />
-        <News query={unsplashQuery} />
-      </AppWrapper>
+      <LocationModal
+        setLocation={setLocation}
+        shown={
+          !location.available &&
+          (!isGeolocationAvailable || !isGeolocationEnabled)
+        }
+      />
+
+      {location.available || coords || location.latitude ? (
+        <>
+          <Unsplash query={unsplashQuery} />
+          <AppWrapper>
+            <CurrentLocation
+              latitude={location.latitude}
+              longitude={location.longitude}
+              setUnsplashQuery={setUnsplashQuery}
+            />
+            <Weather
+              latitude={location.latitude}
+              longitude={location.longitude}
+            />
+            <News query={unsplashQuery} />
+          </AppWrapper>
+        </>
+      ) : (
+        <LoadingAnimation />
+      )}
     </>
-  ) : (
-    <LoadingAnimation />
   )
 }
 
