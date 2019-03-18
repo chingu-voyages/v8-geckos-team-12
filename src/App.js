@@ -56,6 +56,7 @@ const App = ({
               longitude={location.longitude}
               setUnsplashQuery={setUnsplashQuery}
             />
+
             <Weather
               latitude={location.latitude}
               longitude={location.longitude}
@@ -64,15 +65,27 @@ const App = ({
           </AppWrapper>
         </>
       ) : (
-        <LoadingAnimation />
+        setTimeout(() => <LoadingAnimation />, 0)
       )}
     </>
   )
 }
 
 const AppWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: grid;
+  grid-gap: 2.5vh;
+  grid-template-rows: 15% 30% 50%;
+  & > * {
+    overflow: hidden;
+  }
+  @media screen and (orientation: portrait) {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 export default geolocated({
