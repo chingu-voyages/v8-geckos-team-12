@@ -11,7 +11,6 @@ export default ({ setLocation, shown }) => {
     from: { opacity: 0, top: -50, transform: `scaleX(0)` },
     config: config.wobbly,
   })
-
   const modalBackground = useSpring({
     background: `linear-gradient(to top left, #2c5364, #203a43, #0f2027)`,
     from: {
