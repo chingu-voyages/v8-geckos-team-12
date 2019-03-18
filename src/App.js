@@ -75,11 +75,16 @@ const AppWrapper = styled.div`
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
+  display: grid;
+  grid-gap: 2.5vh;
+  grid-template-rows: 15% 30% 50%;
+  & > * {
+    overflow: hidden;
+  }
   @media screen and (orientation: portrait) {
     overflow: auto;
+    display: flex;
+    flex-direction: column;
   }
 `
 
