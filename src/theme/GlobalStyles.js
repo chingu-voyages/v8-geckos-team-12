@@ -175,6 +175,18 @@ html,
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  body {
+    background: #0f2027;
+    background: -webkit-linear-gradient(
+      to top left,
+      #2c5364,
+      #203a43,
+      #0f2027
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top left, #2c5364, #203a43, #0f2027);
+    color: rgba(125,125,125,.9);
+  }
 `
 export const GlobalStyle = createGlobalStyle`${globalStylesTagged}`
 
