@@ -1,9 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const globalStylesTagged = `
-body{
-
-}
 a, a:visited {
   color: rgb(250,250,255);
 }
@@ -132,7 +129,7 @@ html,
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
+    font-family: Arial, Helvetica, sans-serif;
     vertical-align: baseline;
     text-decoration: none;
     box-sizing: border-box;
