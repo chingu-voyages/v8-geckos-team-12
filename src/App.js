@@ -46,7 +46,7 @@ const App = ({
   const [colorTheme, setColorTheme] = useState(null)
 
   const randomColor = () => {
-    fetch('/.netlify/functions/randomColors')
+    fetch('/.netlify/functions/random-colors')
       .then(response => response.json())
       .then(json => setColorTheme(json))
   }
