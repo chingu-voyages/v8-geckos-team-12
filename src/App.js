@@ -43,6 +43,9 @@ const App = ({
   //   .then(response => response.json())
   //   .then(console.log)
 
+  /*
+Disabled for now, issues with lambda function
+
   const [colorTheme, setColorTheme] = useState(null)
 
   const randomColor = () => {
@@ -55,6 +58,7 @@ const App = ({
     randomColor()
   }
   console.log(colorTheme)
+  */
   return (
     <>
       {!showLoading && (
