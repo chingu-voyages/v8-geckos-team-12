@@ -39,9 +39,11 @@ const App = ({
   } catch (err) {}
   setTimeout(() => setLoading(false), 5000)
   //Example netlify lambda call
-  fetch('/.netlify/functions/hello')
-    .then(response => response.json())
-    .then(console.log)
+  // fetch('/.netlify/functions/hello')
+  //   .then(response => response.json())
+  //   .then(console.log)
+
+  console.log('Public URL: ', process.env.PUBLIC_URL)
   return (
     <>
       {!showLoading && (
