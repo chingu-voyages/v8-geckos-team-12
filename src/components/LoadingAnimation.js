@@ -28,6 +28,14 @@ const Modal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #0f2027;
+  background: -webkit-linear-gradient(
+    to top left,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top left, #2c5364, #203a43, #0f2027);
 `
 
 const Loading = styled.div`
