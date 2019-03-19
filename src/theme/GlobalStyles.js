@@ -1,9 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const globalStylesTagged = `
-body{
-
-}
 a, a:visited {
   color: rgb(250,250,255);
 }
@@ -132,7 +129,7 @@ html,
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
+    font-family: Arial, Helvetica, sans-serif;
     vertical-align: baseline;
     text-decoration: none;
     box-sizing: border-box;
@@ -177,6 +174,18 @@ html,
   table {
     border-collapse: collapse;
     border-spacing: 0;
+  }
+
+  body {
+    background: #0f2027;
+    background: -webkit-linear-gradient(
+      to top left,
+      #2c5364,
+      #203a43,
+      #0f2027
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top left, #2c5364, #203a43, #0f2027);
+    color: rgba(125,125,125,.9);
   }
 `
 export const GlobalStyle = createGlobalStyle`${globalStylesTagged}`
