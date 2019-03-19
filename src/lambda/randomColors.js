@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 
-export async function handler(event, context) {
+exports.handler = async (event, context) => {
   const body = await fetch(`http://colormind.io/api/`, {
     method: 'POST',
     body: JSON.stringify({ model: `ui` }),
