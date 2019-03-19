@@ -55,10 +55,10 @@
         return Object.prototype.hasOwnProperty.call(e, t)
       }),
       (r.p = ''),
-      r((r.s = 0))
+      r((r.s = 5))
     )
-  })([
-    function(e, t, r) {
+  })({
+    5: function(e, t, r) {
       'use strict'
       async function n(e, t) {
         return {
@@ -73,5 +73,5 @@
           return n
         })
     },
-  ])
+  })
 )

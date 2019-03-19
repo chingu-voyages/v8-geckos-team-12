@@ -43,7 +43,18 @@ const App = ({
   //   .then(response => response.json())
   //   .then(console.log)
 
-  console.log('Public URL: ', process.env.PUBLIC_URL)
+  const [colorTheme, setColorTheme] = useState(null)
+
+  const randomColor = () => {
+    fetch('/.netlify/functions/randomColors')
+      .then(response => response.json())
+      .then(json => setColorTheme(json))
+  }
+
+  if (!colorTheme) {
+    randomColor()
+  }
+  console.log(colorTheme)
   return (
     <>
       {!showLoading && (
