@@ -35,7 +35,19 @@ export default ({ latitude, longitude, setUnsplashQuery }) => {
   }
   return currentLocation ? (
     <CurrentLocationWrapper>
-      Current Location: {JSON.stringify(currentLocation)}
+      <LocationIcon>
+        <img
+          src={require('../images/location-arrow-solid.svg')}
+          alt='Location Icon'
+        />
+      </LocationIcon>
+      <LocationText>
+        <CityWrapper>
+          {currentLocation.city}
+          <span>,</span>
+        </CityWrapper>
+        <StateWrapper>{currentLocation.administrative}</StateWrapper>
+      </LocationText>
     </CurrentLocationWrapper>
   ) : (
     <CurrentLocationLoading>Current Location Loading</CurrentLocationLoading>
@@ -43,7 +55,44 @@ export default ({ latitude, longitude, setUnsplashQuery }) => {
 }
 
 const CurrentLocationWrapper = styled.div`
-  //add styles here for current location info
+  display: flex;
+  color: rgba(255, 255, 255, 0.5);
+
+  @media screen and (max-width: 420px) {
+    justify-content: center;
+  }
+`
+
+const LocationText = styled.div`
+  text-align: right;
+
+  @media screen and (max-width: 420px) {
+    text-align: center;
+  }
+`
+
+const LocationIcon = styled.div`
+  width: 32px;
+  margin-right: 8px;
+
+  @media screen and (max-width: 420px) {
+    width: 16px;
+  }
+`
+
+const CityWrapper = styled.span`
+  // Add span styles if necessary
+  display: block;
+  @media screen and (max-width: 420px) {
+    display: inline-block;
+  }
+`
+const StateWrapper = styled.span`
+  // Add span styles if necessary
+  display: block;
+  @media screen and (max-width: 420px) {
+    display: inline-block;
+  }
 `
 
 const CurrentLocationLoading = styled.div`
