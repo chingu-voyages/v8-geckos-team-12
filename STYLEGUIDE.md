@@ -14,3 +14,9 @@
 Font: [Raleway](https://fonts.google.com/specimen/Raleway)
 
 Logo:
+
+Icons: [Fontawesome](https://fontawesome.com)
+
+Button Style:
+
+Input Style:
