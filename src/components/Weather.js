@@ -13,7 +13,7 @@ export default ({ latitude, longitude }) => {
   }) => setForecast({ weather, main, visibility, wind, clouds, sys })
   if (!forecast) {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${
         process.env.REACT_APP_OWM_API_KEY
       }`
     )
@@ -22,7 +22,10 @@ export default ({ latitude, longitude }) => {
   }
   return forecast ? (
     <ForecastWrapper>
-      Weather Forecast: {JSON.stringify(forecast)}
+      {console.log(forecast)}
+      <div>
+        <h2>Current Weather: {forecast.main.temp} Deg Fahrenheit</h2>
+      </div>
     </ForecastWrapper>
   ) : (
     <ForecastLoadingWrapper>Forecast Loading</ForecastLoadingWrapper>
@@ -31,6 +34,10 @@ export default ({ latitude, longitude }) => {
 
 const ForecastWrapper = styled.div`
   //add styles here for current location info
+  background: rgba(255, 255, 255, 0.8);
+  height: 20vh;
+  width: 90vw;
+  margin: 0 auto;
 `
 
 const ForecastLoadingWrapper = styled.div`
