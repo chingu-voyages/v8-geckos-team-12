@@ -88,8 +88,8 @@ Disabled for now, issues with lambda function
               longitude={location.longitude}
             />
             <News query={unsplashQuery} />
-            <Footer {...unsplashData} />
           </AppWrapper>
+          <Footer {...unsplashData} />
         </>
       ) : (
         <LoadingAnimation />
