@@ -14,6 +14,7 @@ const App = ({
   isGeolocationEnabled, // boolean flag indicating that the user has allowed the use of the Geolocation API
   positionError, // object with the error returned from the Geolocation API call
 }) => {
+  const [showLoading, setLoading] = useState(true)
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
@@ -36,31 +37,79 @@ const App = ({
       available: !isGeolocationAvailable || !isGeolocationEnabled,
     })
   } catch (err) {}
+  setTimeout(() => setLoading(false), 5000)
+  //Example netlify lambda call
+  // fetch('/.netlify/functions/hello')
+  //   .then(response => response.json())
+  //   .then(console.log)
 
-  return !location.available &&
-    (!isGeolocationAvailable || !isGeolocationEnabled) ? (
-    <LocationModal setLocation={setLocation} />
-  ) : coords || location.latitude ? (
+  /*
+Disabled for now, issues with lambda function
+
+  const [colorTheme, setColorTheme] = useState(null)
+
+  const randomColor = () => {
+    fetch('/.netlify/functions/randomColors')
+      .then(response => response.json())
+      .then(json => setColorTheme(json))
+  }
+
+  if (!colorTheme) {
+    randomColor()
+  }
+  console.log(colorTheme)
+  */
+  return (
     <>
-      <Unsplash query={unsplashQuery} />
-      <AppWrapper>
-        <CurrentLocation
-          latitude={location.latitude}
-          longitude={location.longitude}
-          setUnsplashQuery={setUnsplashQuery}
+      {!showLoading && (
+        <LocationModal
+          setLocation={setLocation}
+          shown={
+            !location.available &&
+            (!isGeolocationAvailable || !isGeolocationEnabled)
+          }
         />
-        <Weather latitude={location.latitude} longitude={location.longitude} />
-        <News query={unsplashQuery} />
-      </AppWrapper>
+      )}
+
+      {!showLoading && (location.available || coords || location.latitude) ? (
+        <>
+          <Unsplash query={unsplashQuery} />
+          <AppWrapper>
+            <CurrentLocation
+              latitude={location.latitude}
+              longitude={location.longitude}
+              setUnsplashQuery={setUnsplashQuery}
+            />
+
+            <Weather
+              latitude={location.latitude}
+              longitude={location.longitude}
+            />
+            <News query={unsplashQuery} />
+          </AppWrapper>
+        </>
+      ) : (
+        <LoadingAnimation />
+      )}
     </>
-  ) : (
-    <LoadingAnimation />
   )
 }
 
 const AppWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: grid;
+  grid-gap: 2.5vh;
+  grid-template-rows: 15% 30% 50%;
+  & > * {
+    overflow: hidden;
+  }
+  @media screen and (orientation: portrait) {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 export default geolocated({
