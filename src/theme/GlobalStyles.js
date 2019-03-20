@@ -30,7 +30,7 @@ a, a:visited {
 // body::-webkit-scrollbar-thumb {
 //   border-radius: 1000px;
 //   z-index: 1;
-//   border: 1px solid #666; 
+//   border: 1px solid #666;
 //   background: rgba(0,0,0,.1);
 // }
 
@@ -40,7 +40,7 @@ a, a:visited {
 //   border: 1px solid #444;
 //   box-shadow: 0 0 5px #;
 //   z-index: 1;
-//   background: rgba(0,0,0,.2); 
+//   background: rgba(0,0,0,.2);
 // }
 
 html,
@@ -129,7 +129,7 @@ html,
     padding: 0;
     border: 0;
     font-size: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Raleway, Arial, Helvetica, sans-serif;
     vertical-align: baseline;
     text-decoration: none;
     box-sizing: border-box;
