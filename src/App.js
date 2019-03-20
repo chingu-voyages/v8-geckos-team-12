@@ -14,6 +14,7 @@ const App = ({
   isGeolocationEnabled, // boolean flag indicating that the user has allowed the use of the Geolocation API
   positionError, // object with the error returned from the Geolocation API call
 }) => {
+  const [showLoading, setLoading] = useState(true)
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
@@ -36,18 +37,41 @@ const App = ({
       available: !isGeolocationAvailable || !isGeolocationEnabled,
     })
   } catch (err) {}
+  setTimeout(() => setLoading(false), 5000)
+  //Example netlify lambda call
+  // fetch('/.netlify/functions/hello')
+  //   .then(response => response.json())
+  //   .then(console.log)
 
+  /*
+Disabled for now, issues with lambda function
+
+  const [colorTheme, setColorTheme] = useState(null)
+
+  const randomColor = () => {
+    fetch('/.netlify/functions/randomColors')
+      .then(response => response.json())
+      .then(json => setColorTheme(json))
+  }
+
+  if (!colorTheme) {
+    randomColor()
+  }
+  console.log(colorTheme)
+  */
   return (
     <>
-      <LocationModal
-        setLocation={setLocation}
-        shown={
-          !location.available &&
-          (!isGeolocationAvailable || !isGeolocationEnabled)
-        }
-      />
+      {!showLoading && (
+        <LocationModal
+          setLocation={setLocation}
+          shown={
+            !location.available &&
+            (!isGeolocationAvailable || !isGeolocationEnabled)
+          }
+        />
+      )}
 
-      {location.available || coords || location.latitude ? (
+      {!showLoading && (location.available || coords || location.latitude) ? (
         <>
           <Unsplash query={unsplashQuery} />
           <AppWrapper>
@@ -65,7 +89,7 @@ const App = ({
           </AppWrapper>
         </>
       ) : (
-        setTimeout(() => <LoadingAnimation />, 0)
+        <LoadingAnimation />
       )}
     </>
   )
