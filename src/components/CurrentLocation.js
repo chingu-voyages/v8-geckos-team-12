@@ -5,13 +5,13 @@ export default ({ latitude, longitude, setUnsplashQuery }) => {
   const [currentLocation, setCurrentLocation] = useState()
   const setDestructuredLocation = ({
     country,
-    city,
+    locale_names,
     postcode,
     county,
     administrative,
   }) => {
     setCurrentLocation({
-      city: city[0],
+      city: locale_names[0],
       postcode: postcode[0],
       county: county[0],
       administrative: administrative[0],
