@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Unsplash from 'unsplash-js'
 import styled from 'styled-components'
 
-// Unsplash API & Image Sizing
+// Unsplash API & IMGIX Image Sizing
 const appName = 'placeholder'
 const utmData = `?utm_source=${appName}&utm_medium=referral`
 const rawPhotoParams = '&dpi=1&fit=clamp'
@@ -13,6 +13,7 @@ const query = (() => {
 })()
 // LocalStorage
 const currentTime = new Date()
+const msDay = 86400000
 const storageName = 'unsplashStoreData'
 const storedData = JSON.parse(localStorage.getItem(storageName))
 // Prevent multiple API calls
@@ -47,18 +48,27 @@ export default ({ setUnsplashData }) => {
 
   if (!unsplashImage && count === 0) {
     count++
-    unsplash.photos
-      .getRandomPhoto({ query: query, collections: collections })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json)
-        setDestructuredUnsplashImage(json)
-        setDestructuredUnsplashData(json)
-      })
-      .catch(err => {
-        console.log(err)
-        setDestructuredUnsplashData(unsplashFailImage)
-      })
+    if (storedData && currentTime - new Date(storedData.timestamp) <= msDay) {
+      setDestructuredUnsplashImage(storedData.data)
+      setDestructuredUnsplashData(storedData.data)
+    } else {
+      unsplash.photos
+        .getRandomPhoto({ query: query, collections: collections })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json)
+          setDestructuredUnsplashImage(json)
+          setDestructuredUnsplashData(json)
+          localStorage.setItem(
+            storageName,
+            JSON.stringify({ timestamp: currentTime, data: json })
+          )
+        })
+        .catch(err => {
+          console.log(err)
+          setDestructuredUnsplashData(unsplashFailImage)
+        })
+    }
   }
 
   return (
