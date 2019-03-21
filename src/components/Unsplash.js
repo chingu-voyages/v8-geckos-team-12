@@ -1,72 +1,129 @@
 import React, { useState } from 'react'
 import Unsplash from 'unsplash-js'
 import styled from 'styled-components'
+import { useSpring, animated } from 'react-spring'
+
+// Unsplash API & IMGIX Image Sizing
+const appName = 'placeholder'
+const utmData = `?utm_source=${appName}&utm_medium=referral`
+const rawPhotoParams = '&dpi=1&fit=clamp'
+const collections = [225, 540518, 789734, 827743]
+const query = (() => {
+  let timeChunk = Math.floor(new Date().getHours() / 4)
+  return ['midnight', 'sunrise', 'morning', 'day', 'sunset', 'night'][timeChunk]
+})()
+// LocalStorage
+const currentTime = new Date()
+const msDay = 86400000
+const storageName = 'unsplashStoreData'
+const storedData = JSON.parse(localStorage.getItem(storageName))
+// Prevent multiple API calls
+let count = 0
 
 const unsplash = new Unsplash({
   applicationId: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
   secret: process.env.REACT_APP_UNSPLASH_SECRET_KEY,
 })
 
-export default ({ query }) => {
+export default ({ setUnsplashData }) => {
   const [unsplashImage, setUnsplashImage] = useState(null)
+
   const setDestructuredUnsplashImage = ({
-    description,
     urls,
     links,
     user: { name, links: userLinks },
   }) => {
-    setUnsplashImage({ description, urls, links, name, userLinks })
+    setUnsplashImage({ urls, links, name, userLinks })
   }
-  if (!unsplashImage) {
-    unsplash.photos
-      .getRandomPhoto({ query })
-      .then(response => response.json())
-      .then(json => setDestructuredUnsplashImage(json))
-      .catch(err => unsplashFailImage)
+
+  const setDestructuredUnsplashData = ({
+    user: { links: userLinks },
+    user: { name },
+  }) => {
+    setUnsplashData({
+      profileLink: userLinks.html + utmData,
+      user: name,
+      unsplashLink: 'https://unsplash.com/' + utmData,
+    })
+  }
+
+  const loadingAnimation = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    delay: '250',
+  })
+
+  if (!unsplashImage && count === 0) {
+    count++
+    if (storedData && currentTime - new Date(storedData.timestamp) <= msDay) {
+      setDestructuredUnsplashImage(storedData.data)
+      setDestructuredUnsplashData(storedData.data)
+    } else {
+      unsplash.photos
+        .getRandomPhoto({ query: query, collections: collections })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json)
+          setDestructuredUnsplashImage(json)
+          setDestructuredUnsplashData(json)
+          localStorage.setItem(
+            storageName,
+            JSON.stringify({ timestamp: currentTime, data: json })
+          )
+        })
+        .catch(err => {
+          console.log(err)
+          setDestructuredUnsplashData(unsplashFailImage)
+        })
+    }
   }
 
   return (
     <Modal
+      style={loadingAnimation}
       backgroundImg={
-        unsplashImage ? unsplashImage.urls.full : unsplashFailImage.urls.full
+        unsplashImage
+          ? unsplashImage.urls.raw + rawPhotoParams
+          : unsplashFailImage.urls.raw + rawPhotoParams
       }
     />
   )
 }
 
 const unsplashFailImage = {
-  description: 'brown mountain during daytime',
   urls: {
     raw:
-      'https://images.unsplash.com/photo-1550826922-6d09633993aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjYxNTM3fQ',
+      'https://images.unsplash.com/photo-1552250550-6b157b10a60d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjYyMzk5fQ',
     full:
-      'https://images.unsplash.com/photo-1550826922-6d09633993aa?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjYxNTM3fQ',
+      'https://images.unsplash.com/photo-1552250550-6b157b10a60d?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjYyMzk5fQ',
     regular:
-      'https://images.unsplash.com/photo-1550826922-6d09633993aa?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjYxNTM3fQ',
+      'https://images.unsplash.com/photo-1552250550-6b157b10a60d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjYyMzk5fQ',
     small:
-      'https://images.unsplash.com/photo-1550826922-6d09633993aa?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxNTM3fQ',
+      'https://images.unsplash.com/photo-1552250550-6b157b10a60d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYyMzk5fQ',
     thumb:
-      'https://images.unsplash.com/photo-1550826922-6d09633993aa?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjYxNTM3fQ',
+      'https://images.unsplash.com/photo-1552250550-6b157b10a60d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjYyMzk5fQ',
   },
   links: {
-    self: 'https://api.unsplash.com/photos/vFqAiohv0F4',
-    html: 'https://unsplash.com/photos/vFqAiohv0F4',
-    download: 'https://unsplash.com/photos/vFqAiohv0F4/download',
-    download_location: 'https://api.unsplash.com/photos/vFqAiohv0F4/download',
+    self: 'https://api.unsplash.com/photos/PwCFHWmjoGg',
+    html: 'https://unsplash.com/photos/PwCFHWmjoGg',
+    download: 'https://unsplash.com/photos/PwCFHWmjoGg/download',
+    download_location: 'https://api.unsplash.com/photos/PwCFHWmjoGg/download',
   },
-  name: 'Anna Smith',
-  userLinks: {
-    self: 'https://api.unsplash.com/users/annasmith206',
-    html: 'https://unsplash.com/@annasmith206',
-    photos: 'https://api.unsplash.com/users/annasmith206/photos',
-    likes: 'https://api.unsplash.com/users/annasmith206/likes',
-    portfolio: 'https://api.unsplash.com/users/annasmith206/portfolio',
-    following: 'https://api.unsplash.com/users/annasmith206/following',
-    followers: 'https://api.unsplash.com/users/annasmith206/followers',
+  user: {
+    name: 'Javardh',
+    links: {
+      self: 'https://api.unsplash.com/users/_javardh_001',
+      html: 'https://unsplash.com/@_javardh_001',
+      photos: 'https://api.unsplash.com/users/_javardh_001/photos',
+      likes: 'https://api.unsplash.com/users/_javardh_001/likes',
+      portfolio: 'https://api.unsplash.com/users/_javardh_001/portfolio',
+      following: 'https://api.unsplash.com/users/_javardh_001/following',
+      followers: 'https://api.unsplash.com/users/_javardh_001/followers',
+    },
   },
 }
 
-const Modal = styled.div`
+const Modal = styled(animated.div)`
   background-size: cover;
   position: fixed;
   z-index: -1;

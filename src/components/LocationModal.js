@@ -2,6 +2,13 @@ import React, { useState } from 'react'
 import AlgoliaPlaces from 'algolia-places-react'
 import styled from 'styled-components'
 import { useSpring, useTransition, animated, config } from 'react-spring'
+import {
+  mainDark,
+  mainLight,
+  accentDark,
+  accentLight,
+  brandColor,
+} from '../theme/colors'
 
 export default ({ setLocation, shown }) => {
   const headerProps = useSpring({
@@ -12,11 +19,11 @@ export default ({ setLocation, shown }) => {
     config: config.wobbly,
   })
   const modalBackground = useSpring({
-    background: `linear-gradient(to top left, #2c5364, #203a43, #0f2027)`,
+    background: `${brandColor}, ${mainLight}, ${accentLight})`,
     from: {
-      background: `linear-gradient(to top left, #517e91, #6e9fb5, #4b6e7a)`,
+      background: `linear-gradient(to top left, ${accentDark}, ${brandColor}, ${mainDark})`,
     },
-    config: config.slow,
+    config: config.stiff,
   })
   const angoliaAnimate = useSpring({
     position: `relative`,
@@ -73,9 +80,10 @@ export default ({ setLocation, shown }) => {
 
 const Header = styled(animated.div)`
   position: relative;
-  color: rgba(255, 255, 255, 0.9);
+
   margin: 10vmin auto;
   & h1 {
+    color: var(--main-dark);
     font-size: 4em;
     font-weight: 100;
     @media screen and (orientation: portrait) {
@@ -83,6 +91,7 @@ const Header = styled(animated.div)`
     }
   }
   & h2 {
+    color: var(--accent-dark);
     font-weight: 150;
     opacity: 0.5;
     font-size: 1.4em;
@@ -107,16 +116,21 @@ const Modal = styled(animated.div)`
   flex-direction: column;
   position: fixed;
   top: 0;
-  background: #0f2027;
+  background: var(--brand-color);
   background: -webkit-linear-gradient(
     to top left,
-    #2c5364,
-    #203a43,
-    #0f2027
+    var(--accent-dark),
+    var(--brand-color),
+    var(--main-dark)
   ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top left, #2c5364, #203a43, #0f2027);
+  background: linear-gradient(
+    to top left,
+    var(--accent-dark),
+    var(--brand-color),
+    var(--main-dark)
+  );
 
-  color: #203a43;
+  color: var(--main-dark);
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -126,9 +140,10 @@ const Modal = styled(animated.div)`
 const StyledAngoliaBox = styled(AlgoliaPlaces)`
   position: relative;
   opacity: 0.9;
-  color: #203a43;
+  color: var(--main-dark);
   width: 75vw;
   margin-bottom: auto;
+  box-shadow: 0 0 35px rgba(50, 50, 50, 0.2), 0 0 10px rgba(20, 20, 20, 0.2);
   @media screen and (orientation: portrait) {
     width: 90vw;
   }

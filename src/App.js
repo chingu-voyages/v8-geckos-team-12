@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { geolocated } from 'react-geolocated'
 import LocationModal from './components/LocationModal.js'
+import Header from './components/Header'
 import Weather from './components/Weather'
-import CurrentLocation from './components/CurrentLocation'
 import Unsplash from './components/Unsplash.js'
 import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
+import Footer from './components/Footer'
 import styled from 'styled-components'
 
 const App = ({
@@ -21,6 +22,7 @@ const App = ({
     available: !isGeolocationAvailable || !isGeolocationEnabled,
   })
   const [unsplashQuery, setUnsplashQuery] = useState(null)
+  const [unsplashData, setUnsplashData] = useState(null)
   try {
     const {
       latitude,
@@ -73,9 +75,9 @@ Disabled for now, issues with lambda function
 
       {!showLoading && (location.available || coords || location.latitude) ? (
         <>
-          <Unsplash query={unsplashQuery} />
+          <Unsplash setUnsplashData={setUnsplashData} />
           <AppWrapper>
-            <CurrentLocation
+            <Header
               latitude={location.latitude}
               longitude={location.longitude}
               setUnsplashQuery={setUnsplashQuery}
@@ -87,6 +89,7 @@ Disabled for now, issues with lambda function
             />
             <News query={unsplashQuery} />
           </AppWrapper>
+          <Footer {...unsplashData} />
         </>
       ) : (
         <LoadingAnimation />
@@ -100,7 +103,6 @@ const AppWrapper = styled.div`
   width: 100vw;
   overflow: hidden;
   display: grid;
-  grid-gap: 2.5vh;
   grid-template-rows: 15% 30% 50%;
   & > * {
     overflow: hidden;

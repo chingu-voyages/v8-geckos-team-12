@@ -2,6 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import sun from '../images/sun_animated.svg'
 import { useSpring, useTransition, animated, config } from 'react-spring'
+import {
+  mainDark,
+  mainLight,
+  accentDark,
+  accentLight,
+  brandColor,
+} from '../theme/colors'
 
 export default () => {
   const loadingAnimation = useSpring({
@@ -13,9 +20,9 @@ export default () => {
     config: config.slow,
   })
   const modalBackground = useSpring({
-    background: `linear-gradient(to top left, #2c5364, #203a43, #0f2027)`,
+    background: `${brandColor}, ${mainLight}, ${accentLight})`,
     from: {
-      background: `linear-gradient(to top left, #517e91, #6e9fb5, #4b6e7a)`,
+      background: `linear-gradient(to top left, ${accentDark}, ${brandColor}, ${mainDark})`,
     },
     config: config.slow,
   })
@@ -31,11 +38,10 @@ export default () => {
   )
 }
 
-const Modal = styled.div`
+const Modal = styled(animated.div)`
   position: fixed;
   top: 0;
-  background: #ffffff;
-  color: #000000;
+  color: var(--brand-color);
   font-family: 'Courier New', Courier, monospace;
   font-size: 16px;
   text-align: center;
@@ -44,14 +50,19 @@ const Modal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0f2027;
+  background: var(--brand-color);
   background: -webkit-linear-gradient(
     to top left,
-    #2c5364,
-    #203a43,
-    #0f2027
+    var(--accent-dark),
+    var(--brand-color),
+    var(--main-dark)
   ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top left, #2c5364, #203a43, #0f2027);
+  background: linear-gradient(
+    to top left,
+    var(--accent-dark),
+    var(--brand-color),
+    var(--main-dark)
+  );
 `
 
 const Loading = styled(animated.div)`

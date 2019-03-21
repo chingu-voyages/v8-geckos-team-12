@@ -46,7 +46,7 @@ export default ({ query }) => {
 }
 
 const ArticleWrapper = styled.div`
-  color: black;
+  color: var(--main-dark);
 
   & ul {
     margin: auto;
@@ -62,9 +62,9 @@ const ArticleWrapper = styled.div`
     position: relative;
     width: 70%;
     overflow-wrap: break-word;
-    border: black solid 2px;
+    box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
     border-radius: 5px;
-    background-color: rgba(232, 234, 236, 0.8);
+    background-color: rgba(var(--rgb-main-light), 0.5);
     margin: 10px 5px;
     line-height: 130%;
 
@@ -74,7 +74,7 @@ const ArticleWrapper = styled.div`
     }
 
     & a {
-      color: #dd443c;
+      color: var(--brand-color);
     }
   }
 
