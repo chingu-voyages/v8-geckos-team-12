@@ -1,36 +1,19 @@
 ## Style Guide
 
 [Color Theme](https://coolors.co/393d3f-d5bbb1-726e75-cfd7c7-ac9fbb)
-<<<<<<< HEAD
 
-![#393D3F](https://imgur.com/VOqhZwj)
+[393D3F](https://i.imgur.com/VOqhZwj.jpg)
 
-![#D5BBB1](https://imgur.com/bWtkbHk)
+[#D5BBB1](https://i.imgur.com/bWtkbHk.jpg)
 
-![#726E75](https://imgur.com/9vEUgoi)
+[#726E75](https://i.imgur.com/9vEUgoi.jpg)
 
-![#CFD7C7](https://imgur.com/9OBSVcT)
+[#CFD7C7](https://i.imgur.com/9OBSVcT.jpg)
 
-![#AC9FBB](https://imgur.com/x8wDJFw)
-
-Font: [Raleway](https://fonts.google.com/specimen/Raleway)
-
-Logo: ![App Logo](https://imgur.com/FqOj4Rx)
-
-# Icons: [Fontawesome](https://fontawesome.com)
-
-#393D3F
-
-#D5BBB1
-
-#726E75
-
-#CFD7C7
-
-#AC9FBB
+[#AC9FBB](https://i.imgur.com/x8wDJFw.jpg)
 
 Font: [Raleway](https://fonts.google.com/specimen/Raleway)
 
-Logo:
+Logo: [App Logo](https://i.imgur.com/FqOj4Rx.png)
 
-> > > > > > > 86539516cca9eb192065e7793c68e8d843aeed45
+Icons: [Fontawesome](https://fontawesome.com)
