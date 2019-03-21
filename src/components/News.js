@@ -18,27 +18,38 @@ export default ({ query }) => {
       .then(response => {
         setArticles(response.articles)
       })
+      .catch(err => console.log(err))
   }
 
   return articles ? (
     <ArticleWrapper>
       <ul>
-        {articles.map((article, i) => (
-          <li key={`article-${i}`}>
-            <a href={article.url} target={`__newtab${i}`}>
-              <h5>{article.title}</h5>
-              {article.author ? (
-                <ArticleText auth>By {article.author}</ArticleText>
-              ) : null}
-              <ArticleText desc>
-                {article.content
-                  ? article.content.split('[')[0]
-                  : article.description}
-              </ArticleText>
-              <ArticleText auth>{article.source.name}</ArticleText>
-            </a>
-          </li>
-        ))}
+        {articles.length > 0 ? (
+          articles.map((article, i) => {
+            return article.title ? (
+              <Article key={`article-${i}`}>
+                <a href={article.url} target={`__newtab${i}`}>
+                  <h5>{article.title}</h5>
+                  {article.author ? (
+                    <ArticleText auth>By {article.author}</ArticleText>
+                  ) : null}
+                  <ArticleText desc>
+                    {article.content
+                      ? article.content.split('[')[0]
+                      : article.description
+                      ? article.description
+                      : 'No description available.'}
+                  </ArticleText>
+                  <ArticleText auth>{article.source.name}</ArticleText>
+                </a>
+              </Article>
+            ) : null
+          })
+        ) : (
+          <Error>
+            <p>No news articles were found.</p>
+          </Error>
+        )}
       </ul>
     </ArticleWrapper>
   ) : (
@@ -64,24 +75,26 @@ const ArticleWrapper = styled.div`
     position: relative;
     width: 90%;
     overflow-wrap: break-word;
-    box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
     border-radius: 15px;
-    background-color: rgba(var(--rgb-main-light), 0.7);
     margin: 10px 5px;
-    line-height: 130%;
-    transition: 0.1s;
+  }
+`
 
-    & a {
-      color: var(--main-dark);
+const Article = styled.li`
+  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
+  background-color: rgba(var(--rgb-main-light), 0.7);
+  line-height: 130%;
+  transition: 0.1s;
 
-      & h5 {
-        font-size: 20px;
-        margin-bottom: 10px;
-      }
+  & a {
+    color: var(--main-dark);
+
+    & h5 {
+      font-size: 20px;
+      margin-bottom: 10px;
     }
   }
-
-  & li:hover {
+  :hover {
     transform: translateY(-7px);
     cursor: pointer;
   }
@@ -91,4 +104,10 @@ const ArticleText = styled.p`
   ${props => (props.auth ? 'font-style: italic' : null)};
   ${props => (props.desc ? 'margin: 15px 0' : null)};
   ${props => (props.auth ? 'color: var(--accent-dark)' : null)}
+`
+const Error = styled.li`
+  background-color: rgba(var(--rgb-accent-dark), 0.7);
+  color: var(--main-light);
+  max-height: 40px;
+  text-align: center;
 `
