@@ -14,27 +14,45 @@ export default function RedditFeed() {
 
   const fetchAutoComplete = async query => {
     const response = await fetch(
-      `https://www.reddit.com/api/subreddit_autocomplete_v2.json?query=${query}&include_over_18=false&include_categories=false&include_profiles=false&limit=10`,
-      {
-        include_over_18: false,
-        include_categories: false,
-        include_profiles: false,
-        limit: 10,
-        query: `test`,
-      }
+      `https://www.reddit.com/api/subreddit_autocomplete_v2.json?query=${query}&include_over_18=false&include_categories=false&include_profiles=false&limit=10`
     )
     const json = await response.json()
     const data = await json.data.children.map(({ data }) => data)
-    console.log(data)
+    return data
   }
-  fetchAutoComplete('javas')
+  const [suggestions, setSuggestions] = useState([])
+  const updateAutoComplete = async ({ target: { value } }) => {
+    if (value.length > 0) {
+      const suggestions = await fetchAutoComplete(value)
+      console.log(suggestions)
+
+      const returnedSuggestions = suggestions
+        .filter(({ subreddit_type }) => subreddit_type !== `private`)
+        .map(({ display_name }) => display_name)
+      setSuggestions(returnedSuggestions)
+    } else {
+      setSuggestions([])
+    }
+  }
   return (
     <Postwrap>
-      <OptionSelector>Option Selector</OptionSelector>
+      <OptionSelector>
+        <SearchBox
+          placeholder={`Select subreddit`}
+          onChange={updateAutoComplete}
+        />
+        <ul>
+          {suggestions.map(suggestion => (
+            <li>{suggestion}</li>
+          ))}
+        </ul>
+      </OptionSelector>
       <PostList>{feed.map(PostTile)}</PostList>
     </Postwrap>
   )
 }
+
+const SearchBox = styled.input``
 
 const OptionSelector = styled.div``
 const Postwrap = styled.div``
