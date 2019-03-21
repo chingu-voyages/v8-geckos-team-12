@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Unsplash from 'unsplash-js'
 import styled from 'styled-components'
+import { useSpring, animated } from 'react-spring'
 
 // Unsplash API & IMGIX Image Sizing
 const appName = 'placeholder'
@@ -46,6 +47,12 @@ export default ({ setUnsplashData }) => {
     })
   }
 
+  const loadingAnimation = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    delay: '250',
+  })
+
   if (!unsplashImage && count === 0) {
     count++
     if (storedData && currentTime - new Date(storedData.timestamp) <= msDay) {
@@ -73,6 +80,7 @@ export default ({ setUnsplashData }) => {
 
   return (
     <Modal
+      style={loadingAnimation}
       backgroundImg={
         unsplashImage
           ? unsplashImage.urls.raw + rawPhotoParams
@@ -115,7 +123,7 @@ const unsplashFailImage = {
   },
 }
 
-const Modal = styled.div`
+const Modal = styled(animated.div)`
   background-size: cover;
   position: fixed;
   z-index: -1;
