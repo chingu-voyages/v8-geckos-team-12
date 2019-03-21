@@ -24,7 +24,10 @@ export default ({ latitude, longitude }) => {
     <ForecastWrapper>
       {console.log(forecast)}
       <div>
+        <h2>Weather Info</h2>
+        <a href=''>5 days</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a href=''>16 days</a>
         <h2>Current Weather: {forecast.main.temp} Deg Fahrenheit</h2>
+        <h2>{forecast.weather[0].description}</h2>
       </div>
     </ForecastWrapper>
   ) : (
@@ -38,6 +41,7 @@ const ForecastWrapper = styled.div`
   height: 20vh;
   width: 90vw;
   margin: 0 auto;
+  padding: 2%;
 `
 
 const ForecastLoadingWrapper = styled.div`
