@@ -9,6 +9,7 @@ import {
   accentLight,
   brandColor,
 } from '../theme/colors'
+import RedditFeed from './RedditFeed'
 
 export default ({ setLocation, shown }) => {
   const headerProps = useSpring({
@@ -72,6 +73,7 @@ export default ({ setLocation, shown }) => {
                 }
               />
             </animated.div>
+            <RedditFeed />
           </Modal>
         </animated.div>
       )
