@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 export default function RedditFeed() {
   const [feed, setFeed] = useState([])
-  const fetchData = async () => {
-    const response = await fetch(`https://www.reddit.com/r/javascript/.json`)
+  const fetchData = async (query = `javascript`) => {
+    console.log(query)
+    const response = await fetch(`https://www.reddit.com/r/${query}/.json`)
     const json = await response.json()
     const data = await json.data
-    if (!feed.length) {
-      setFeed(data.children.slice(0, 10))
-    }
+    setFeed(data.children.slice(0, 10))
   }
-  fetchData()
+  if (!feed.length) {
+    fetchData()
+  }
 
   const fetchAutoComplete = async query => {
     const response = await fetch(
@@ -41,20 +42,31 @@ export default function RedditFeed() {
           placeholder={`Select subreddit`}
           onChange={updateAutoComplete}
         />
-        <ul>
+        <SuggestionDropdown>
           {suggestions.map(suggestion => (
-            <li>{suggestion}</li>
+            <li onClick={() => fetchData(suggestion)}>{suggestion}</li>
           ))}
-        </ul>
+        </SuggestionDropdown>
       </OptionSelector>
       <PostList>{feed.map(PostTile)}</PostList>
     </Postwrap>
   )
 }
+const SuggestionDropdown = styled.ul`
+  z-index: 100;
+  background: white;
+  width: 100%;
+  position: absolute;
+  & li {
+  }
+`
 
 const SearchBox = styled.input``
 
-const OptionSelector = styled.div``
+const OptionSelector = styled.div`
+  display: inline-block;
+  position: relative;
+`
 const Postwrap = styled.div``
 const PostList = styled.ul``
 
