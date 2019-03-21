@@ -11,6 +11,9 @@ export default ({ query }) => {
       .topHeadlines({
         q: query,
         language: 'en',
+        country: 'us',
+        pageSize: 10,
+        page: 1,
       })
       .then(response => {
         setArticles(response.articles)
@@ -20,22 +23,20 @@ export default ({ query }) => {
   return articles ? (
     <ArticleWrapper>
       <ul>
-        {articles.map((article, index) => (
-          <li key={`article-${index}`}>
-            <h5>{article.title}</h5>
-            {article.author ? (
-              <ArticleText auth>By {article.author}</ArticleText>
-            ) : null}
-            <ArticleText desc>
-              {article.content
-                ? article.content.split('[')[0]
-                : article.description}
-              <a href={article.url} target='__newtab'>
-                Read more
-              </a>
-            </ArticleText>
-
-            <ArticleText auth>{article.source.name}</ArticleText>
+        {articles.map((article, i) => (
+          <li key={`article-${i}`}>
+            <a href={article.url} target={`__newtab${i}`}>
+              <h5>{article.title}</h5>
+              {article.author ? (
+                <ArticleText auth>By {article.author}</ArticleText>
+              ) : null}
+              <ArticleText desc>
+                {article.content
+                  ? article.content.split('[')[0]
+                  : article.description}
+              </ArticleText>
+              <ArticleText auth>{article.source.name}</ArticleText>
+            </a>
           </li>
         ))}
       </ul>
@@ -53,37 +54,41 @@ const ArticleWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    height: 65vh;
+    height: 50vh;
     overflow-y: scroll;
+    font-size: 17px;
   }
 
   & li {
     padding: 10px 20px;
     position: relative;
-    width: 70%;
+    width: 90%;
     overflow-wrap: break-word;
     box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
-    border-radius: 5px;
-    background-color: rgba(var(--rgb-main-light), 0.5);
+    border-radius: 15px;
+    background-color: rgba(var(--rgb-main-light), 0.7);
     margin: 10px 5px;
     line-height: 130%;
-
-    & h5 {
-      font-size: 19px;
-      margin-bottom: 10px;
-    }
+    transition: 0.1s;
 
     & a {
-      color: var(--brand-color);
+      color: var(--main-dark);
+
+      & h5 {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
     }
   }
 
   & li:hover {
-    transform: translateY(-10px);
+    transform: translateY(-7px);
+    cursor: pointer;
   }
 `
 
 const ArticleText = styled.p`
-  ${props => (props.auth ? 'font-style: italic' : '')};
-  ${props => (props.desc ? 'margin: 15px 0' : '')};
+  ${props => (props.auth ? 'font-style: italic' : null)};
+  ${props => (props.desc ? 'margin: 15px 0' : null)};
+  ${props => (props.auth ? 'color: var(--accent-dark)' : null)}
 `
