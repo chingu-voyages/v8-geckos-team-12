@@ -31,7 +31,7 @@ export default ({ query }) => {
                 <a href={article.url} target={`__newtab${i}`}>
                   <h5>{article.title}</h5>
                   {article.author ? (
-                    <ArticleText auth>By {article.author}</ArticleText>
+                    <ArticleText misc>By {article.author}</ArticleText>
                   ) : null}
                   <ArticleText desc>
                     {article.content
@@ -40,7 +40,16 @@ export default ({ query }) => {
                       ? article.description
                       : 'No description available.'}
                   </ArticleText>
-                  <ArticleText auth>{article.source.name}</ArticleText>
+                  <div>
+                    <ArticleText misc>{article.source.name}</ArticleText>
+                    <ArticleText misc>
+                      {new Date(article.publishedAt)
+                        .toString()
+                        .split(' ')
+                        .splice(0, 4)
+                        .join(' ')}
+                    </ArticleText>
+                  </div>
                 </a>
               </Article>
             ) : null
@@ -77,6 +86,11 @@ const ArticleWrapper = styled.div`
     overflow-wrap: break-word;
     border-radius: 15px;
     margin: 10px 5px;
+
+    & div {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 `
 
@@ -101,9 +115,9 @@ const Article = styled.li`
 `
 
 const ArticleText = styled.p`
-  ${props => (props.auth ? 'font-style: italic' : null)};
+  ${props => (props.misc ? 'font-style: italic' : null)};
   ${props => (props.desc ? 'margin: 15px 0' : null)};
-  ${props => (props.auth ? 'color: var(--accent-dark)' : null)}
+  ${props => (props.misc ? 'color: var(--accent-dark)' : null)}
 `
 const Error = styled.li`
   background-color: rgba(var(--rgb-accent-dark), 0.7);
