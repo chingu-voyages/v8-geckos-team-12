@@ -17,10 +17,18 @@ export default ({ profileLink, user, unsplashLink }) => {
 }
 
 const Foot = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #d8d8d8;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  background-color: var(--main-dark);
+  color: var(--main-light);
   font-size: 0.85em;
   padding: 0.4em;
   text-align: center;
   margin-top: 7em;
+
+  & a,
+  a:visited {
+    color: var(--brand-color);
+  }
 `

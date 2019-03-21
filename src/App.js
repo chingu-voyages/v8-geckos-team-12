@@ -103,7 +103,6 @@ const AppWrapper = styled.div`
   width: 100vw;
   overflow: hidden;
   display: grid;
-  grid-gap: 2.5vh;
   grid-template-rows: 15% 30% 50%;
   & > * {
     overflow: hidden;
