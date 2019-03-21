@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export default function RedditFeed() {
   const [feed, setFeed] = useState([])
   const fetchData = async (query = `javascript`) => {
-    console.log(query)
     const response = await fetch(`https://www.reddit.com/r/${query}/.json`)
     const json = await response.json()
     const data = await json.data
@@ -22,8 +21,12 @@ export default function RedditFeed() {
     return data
   }
   const [suggestions, setSuggestions] = useState([])
+  const [subredditAutocompleteQuery, setSubredditAutocompleteQuery] = useState(
+    ``
+  )
   const updateAutoComplete = async ({ target: { value } }) => {
-    if (value.length > 0) {
+    setSubredditAutocompleteQuery(value)
+    if (subredditAutocompleteQuery.length > 0) {
       const suggestions = await fetchAutoComplete(value)
       console.log(suggestions)
 
@@ -41,10 +44,19 @@ export default function RedditFeed() {
         <SearchBox
           placeholder={`Select subreddit`}
           onChange={updateAutoComplete}
+          value={subredditAutocompleteQuery}
         />
         <SuggestionDropdown>
           {suggestions.map(suggestion => (
-            <li onClick={() => fetchData(suggestion)}>{suggestion}</li>
+            <li
+              onClick={() => {
+                fetchData(suggestion)
+                setSuggestions([])
+                setSubredditAutocompleteQuery(``)
+              }}
+            >
+              {suggestion}
+            </li>
           ))}
         </SuggestionDropdown>
       </OptionSelector>
@@ -58,6 +70,10 @@ const SuggestionDropdown = styled.ul`
   width: 100%;
   position: absolute;
   & li {
+    cursor: pointer;
+    &:hover {
+      background: #aaa;
+    }
   }
 `
 
@@ -67,7 +83,17 @@ const OptionSelector = styled.div`
   display: inline-block;
   position: relative;
 `
-const Postwrap = styled.div``
+const Postwrap = styled.div`
+  z-index: 200;
+  position: fixed;
+  top: 10vh;
+  left: 50vw;
+  height: 80vh;
+  width: calc(100vw - 20vh);
+  transform: translateX(-50%);
+  background: white;
+  overflow-y: scroll;
+`
 const PostList = styled.ul``
 
 const PostTile = ({

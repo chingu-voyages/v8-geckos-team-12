@@ -8,6 +8,7 @@ import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
 import Footer from './components/Footer'
 import styled from 'styled-components'
+import RedditFeed from './components/RedditFeed'
 
 const App = ({
   coords,
@@ -75,6 +76,7 @@ Disabled for now, issues with lambda function
 
       {!showLoading && (location.available || coords || location.latitude) ? (
         <>
+          <RedditFeed />
           <Unsplash setUnsplashData={setUnsplashData} />
           <AppWrapper>
             <Header
