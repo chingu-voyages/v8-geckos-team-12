@@ -3,19 +3,10 @@ import styled from 'styled-components'
 
 export default ({ latitude, longitude, setUnsplashQuery }) => {
   const [currentLocation, setCurrentLocation] = useState()
-  const setDestructuredLocation = ({
-    country,
-    locale_names,
-    postcode,
-    county,
-    administrative,
-  }) => {
+  const setDestructuredLocation = ({ locale_names, administrative }) => {
     setCurrentLocation({
       city: locale_names[0],
-      postcode: postcode[0],
-      county: county[0],
       administrative: administrative[0],
-      country,
     })
     setUnsplashQuery(administrative[0])
   }
@@ -74,7 +65,6 @@ const LocationText = styled.div`
 const LocationIcon = styled.div`
   width: 32px;
   margin-right: 8px;
-
   @media screen and (max-width: 420px) {
     width: 16px;
   }
@@ -82,6 +72,7 @@ const LocationIcon = styled.div`
 
 const CityWrapper = styled.span`
   // Add span styles if necessary
+  color: var(--main-light);
   display: block;
   @media screen and (max-width: 420px) {
     display: inline-block;
@@ -89,6 +80,8 @@ const CityWrapper = styled.span`
 `
 const StateWrapper = styled.span`
   // Add span styles if necessary
+  color: var(--main-light);
+  opacity: 0.5;
   display: block;
   @media screen and (max-width: 420px) {
     display: inline-block;
