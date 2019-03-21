@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import styled from 'styled-components'
 export default function RedditFeed() {
   const [feed, setFeed] = useState([])
   const fetchData = async () => {
@@ -11,11 +11,73 @@ export default function RedditFeed() {
     }
   }
   fetchData()
+
+  const fetchAutoComplete = async query => {
+    const response = await fetch(
+      `https://www.reddit.com/api/subreddit_autocomplete_v2.json?query=${query}&include_over_18=false&include_categories=false&include_profiles=false&limit=10`,
+      {
+        include_over_18: false,
+        include_categories: false,
+        include_profiles: false,
+        limit: 10,
+        query: `test`,
+      }
+    )
+    const json = await response.json()
+    const data = await json.data.children.map(({ data }) => data)
+    console.log(data)
+  }
+  fetchAutoComplete('javas')
   return (
-    <ul>
-      {feed.map(post => (
-        <li>{post.data.title}</li>
-      ))}
-    </ul>
+    <Postwrap>
+      <OptionSelector>Option Selector</OptionSelector>
+      <PostList>{feed.map(PostTile)}</PostList>
+    </Postwrap>
   )
 }
+
+const OptionSelector = styled.div``
+const Postwrap = styled.div``
+const PostList = styled.ul``
+
+const PostTile = ({
+  data: { author, id, score, selftext, subreddit, title, url },
+}) => (
+  <PostWrap key={id}>
+    <div>r/{subreddit}</div>
+    <h5>{title}</h5>
+    <div>{author}</div>
+    <div>
+      {score === 0 ? '' : score > 0 ? '+' : '-'}
+      {score}
+    </div>
+    {/* <div>{selftext}</div> */}
+    <a href={url} target='__newtab'>
+      Read
+    </a>
+  </PostWrap>
+)
+
+const PostWrap = styled.li`
+   padding: 10px 20px;
+    position: relative;
+    overflow-wrap: break-word;
+    box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
+    border-radius: 5px;
+    background-color: rgba(var(--rgb-main-light), 0.5);
+    margin: 10px 5px;
+
+    & h5 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    & a, a:visited {
+      color: var(--brand-color);
+    }
+  }
+
+  & li:hover {
+    transform: translateY(-10px);
+  }
+`
