@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { geolocated } from 'react-geolocated'
 import LocationModal from './components/LocationModal.js'
+import Header from './components/Header'
 import Weather from './components/Weather'
-import CurrentLocation from './components/CurrentLocation'
 import Unsplash from './components/Unsplash.js'
 import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
@@ -75,7 +75,7 @@ Disabled for now, issues with lambda function
         <>
           <Unsplash query={unsplashQuery} />
           <AppWrapper>
-            <CurrentLocation
+            <Header
               latitude={location.latitude}
               longitude={location.longitude}
               setUnsplashQuery={setUnsplashQuery}
