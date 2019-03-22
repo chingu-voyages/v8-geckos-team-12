@@ -76,7 +76,6 @@ Disabled for now, issues with lambda function
 
       {!showLoading && (location.available || coords || location.latitude) ? (
         <>
-          <RedditFeed />
           <Unsplash setUnsplashData={setUnsplashData} />
           <Header
             latitude={location.latitude}
@@ -89,6 +88,7 @@ Disabled for now, issues with lambda function
               longitude={location.longitude}
             />
             <News query={unsplashQuery} />
+            <RedditFeed />
           </AppWrapper>
           <Footer {...unsplashData} />
         </>
@@ -103,8 +103,9 @@ const AppWrapper = styled.div`
   min-height: 100vh;
   width: 100vw;
   display: grid;
+  grid-auto-flow: row dense;
   grid-gap: 1vw;
-  margin: 1.5vw;
+  margin: 1.5vw 1.5vw 4.5vw 1.5vw;
   grid-template-columns: repeat(8, 11.25vw);
   grid-auto-rows: 11.25vw;
   @media screen and (orientation: portrait) {

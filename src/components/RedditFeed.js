@@ -84,14 +84,8 @@ const OptionSelector = styled.div`
   position: relative;
 `
 const Postwrap = styled.div`
-  z-index: 200;
-  position: fixed;
-  top: 10vh;
-  left: 50vw;
-  height: 80vh;
-  width: calc(100vw - 20vh);
-  transform: translateX(-50%);
-  background: white;
+  grid-column: span 4;
+  grid-row: span 2;
   overflow-y: scroll;
 `
 const PostList = styled.ul``
@@ -121,7 +115,7 @@ const PostWrap = styled.li`
     box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
     border-radius: 5px;
     background-color: rgba(var(--rgb-main-light), 0.5);
-    margin: 10px 5px;
+    margin: 0 0 1vw 0;
 
     & h5 {
       font-size: 19px;
