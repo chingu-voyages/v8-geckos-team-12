@@ -78,13 +78,12 @@ Disabled for now, issues with lambda function
         <>
           <RedditFeed />
           <Unsplash setUnsplashData={setUnsplashData} />
+          <Header
+            latitude={location.latitude}
+            longitude={location.longitude}
+            setUnsplashQuery={setUnsplashQuery}
+          />
           <AppWrapper>
-            <Header
-              latitude={location.latitude}
-              longitude={location.longitude}
-              setUnsplashQuery={setUnsplashQuery}
-            />
-
             <Weather
               latitude={location.latitude}
               longitude={location.longitude}
@@ -101,18 +100,16 @@ Disabled for now, issues with lambda function
 }
 
 const AppWrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  overflow: hidden;
   display: grid;
-  grid-template-rows: 15% 30% 50%;
-  & > * {
-    overflow: hidden;
-  }
+  grid-gap: 1vw;
+  margin: 1.5vw;
+  grid-template-columns: repeat(8, 11.25vw);
+  grid-auto-rows: 11.25vw;
   @media screen and (orientation: portrait) {
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: repeat(4, 23.5vw);
+    grid-auto-rows: 25vw;
   }
 `
 

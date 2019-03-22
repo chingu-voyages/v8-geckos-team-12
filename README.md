@@ -12,8 +12,14 @@ http://localhost:3000
 
 ## Production Deploy
 
-https://v8.chrisczach.com/
+https://geckos.netlify.com/
 
 ## Development Deploy
 
-https://development.v8.chrisczach.com/
+https://development--geckos.netlify.com/
+
+## Branch Deploys
+
+To view branch deploy, prefix production url with branch name.
+
+https://[BranchNameHere]--geckos.netlify.com/

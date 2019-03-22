@@ -17,7 +17,7 @@ export default ({ profileLink, user, unsplashLink }) => {
 }
 
 const Foot = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100vw;
   background-color: var(--main-dark);

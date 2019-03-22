@@ -15,6 +15,11 @@ const Header = props => (
 )
 
 const HeaderWrapper = styled.header`
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  background: var(--main-dark);
+  z-index: 1000;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,11 +27,9 @@ const HeaderWrapper = styled.header`
   margin: 24px 0;
 
   @media screen and (max-width: 420px) {
-     {
-      display: block;
-      padding: 24px 8px;
-      margin: 0 auto;
-    }
+    display: block;
+    padding: 24px 8px;
+    margin: 0 auto;
   }
 `
 
