@@ -134,14 +134,15 @@ const PostTile = ({
 
 const PostCard = styled.li`
   display: inline-block;
+  vertical-align: top;
   padding: ${({ position }) =>
     position === `left`
       ? `0 0.5vw 0 0`
       : position === `right`
       ? `0 0 0 0.5vw`
-      : `0 0.5vw 0 0.5vw`};
-  height: 100%;
+      : `0 0.5vw`};
   width: ${({ position }) => (position ? `10%` : `80%`)};
+  height: 100%;
 `
 
 const Post = styled.div`
@@ -170,7 +171,4 @@ overflow: hidden;
     }
   }
 
-  & li:hover {
-    transform: translateY(-10px);
-  }
 `
