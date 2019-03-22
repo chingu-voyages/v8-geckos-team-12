@@ -191,7 +191,8 @@ const Postwrap = styled.div`
 `
 const PostList = styled.ul`
   height: 80%;
-  overflow: scroll hidden;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
   -webkit-scroll-snap-type: x mandatory;
   -webkit-scroll-snap-points-x: repeat(100%);
   -webkit-scroll-snap-destination: 50% 50%;
@@ -225,7 +226,6 @@ const PostTile = ({
 )
 
 const PostCard = styled.li`
-  overflow-x: scroll;
   -webkit-scroll-snap-coordinate: 50% 50%;
   scroll-snap-align: center;
   display: inline-block;
