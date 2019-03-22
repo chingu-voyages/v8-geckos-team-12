@@ -8,6 +8,7 @@ import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
 import Footer from './components/Footer'
 import styled from 'styled-components'
+import RedditFeed from './components/RedditFeed'
 
 const App = ({
   coords,
@@ -87,6 +88,7 @@ Disabled for now, issues with lambda function
               longitude={location.longitude}
             />
             <News query={unsplashQuery} />
+            <RedditFeed />
           </AppWrapper>
           <Footer {...unsplashData} />
         </>
@@ -101,8 +103,9 @@ const AppWrapper = styled.div`
   min-height: 100vh;
   width: 100vw;
   display: grid;
+  grid-auto-flow: row dense;
   grid-gap: 1vw;
-  margin: 1.5vw;
+  margin: 1.5vw 1.5vw 4.5vw 1.5vw;
   grid-template-columns: repeat(8, 11.25vw);
   grid-auto-rows: 11.25vw;
   @media screen and (orientation: portrait) {

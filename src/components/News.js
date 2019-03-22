@@ -41,11 +41,16 @@ export default ({ query }) => {
       </ul>
     </ArticleWrapper>
   ) : (
-    'Articles Loading'
+    <ArticleWrapper>'Articles Loading'</ArticleWrapper>
   )
 }
 
 const ArticleWrapper = styled.div`
+  grid-column: span 4;
+  grid-row: span 4;
+  overflow-y: scroll;
+  height: 100%;
+
   color: var(--main-dark);
 
   & ul {
@@ -59,12 +64,11 @@ const ArticleWrapper = styled.div`
   & li {
     padding: 10px 20px;
     position: relative;
-    width: 70%;
     overflow-wrap: break-word;
     box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
     border-radius: 5px;
     background-color: rgba(var(--rgb-main-light), 0.5);
-    margin: 10px 5px;
+    margin: 0 0 1vw 0;
     line-height: 130%;
 
     & h5 {
