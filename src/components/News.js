@@ -53,7 +53,6 @@ const ArticleWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    height: 65vh;
     overflow-y: scroll;
   }
 
