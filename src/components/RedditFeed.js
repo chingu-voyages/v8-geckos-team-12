@@ -39,22 +39,29 @@ export default function RedditFeed() {
       setSuggestions([])
     }
   }
+
+  const [toggle, setToggle] = useState(false)
   return (
     <Postwrap>
       <Options>
         <OptionSelector>
-          {!currentSub ? (
-            <SearchBox
-              placeholder={`Select subreddit:`}
-              onChange={updateAutoComplete}
-              value={subredditAutocompleteQuery}
-              resultsShown={
-                suggestions.length !== 0 && subredditAutocompleteQuery
-              }
-            />
-          ) : (
-            <CurrentSub sub={currentSub} close={() => setCurrentSub(null)} />
-          )}
+          <SearchBox
+            toggle={!toggle}
+            placeholder={!toggle ? currentSub : `Select subreddit:`}
+            onChange={updateAutoComplete}
+            onFocus={() => setToggle(state => !state)}
+            onBlur={() =>
+              setTimeout(() => {
+                setSubredditAutocompleteQuery(``)
+                setToggle(state => !state)
+              }, 100)
+            }
+            value={subredditAutocompleteQuery}
+            resultsShown={
+              suggestions.length !== 0 && subredditAutocompleteQuery
+            }
+          />
+          {!toggle ? <CloseIcon>X</CloseIcon> : ``}
           {suggestions.length !== 0 && subredditAutocompleteQuery ? (
             <SuggestionDropdown>
               {suggestions.map(suggestion => (
@@ -64,6 +71,7 @@ export default function RedditFeed() {
                     setSuggestions([])
                     setSubredditAutocompleteQuery(``)
                     setCurrentSub(`r/${suggestion}`)
+                    //setToggle(state => !state)
                   }}
                 >
                   {suggestion}
@@ -84,6 +92,16 @@ export default function RedditFeed() {
   )
 }
 
+const CloseIcon = styled.button`
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--branc-color);
+  background: transparent;
+  border: none;
+`
 const CurrentSub = ({ sub, close }) => {
   return (
     <CurrentSubBox onClick={close}>
@@ -138,6 +156,7 @@ const SuggestionDropdown = styled.ul`
 `
 
 const SearchBox = styled.input`
+  cursor: ${({ toggle }) => (toggle === true ? `pointer` : `auto`)};
   z-index: 150;
   border-radius: ${({ resultsShown }) =>
     resultsShown ? `5px 5px 0 0` : `5px`};
@@ -173,6 +192,8 @@ const Postwrap = styled.div`
 const PostList = styled.ul`
   height: 80%;
   overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-snap-points-y: repeat(100%);
   white-space: nowrap;
 
   &::-webkit-scrollbar {
@@ -183,8 +204,8 @@ const PostList = styled.ul`
 const PostTile = ({
   data: { author, id, score, selftext, subreddit, title, url },
 }) => (
-  <PostCard>
-    <Post key={id}>
+  <PostCard key={id}>
+    <Post>
       <div>r/{subreddit}</div>
       <h5>{title}</h5>
       <div>{author}</div>
@@ -201,6 +222,7 @@ const PostTile = ({
 )
 
 const PostCard = styled.li`
+  scroll-snap-align: center;
   display: inline-block;
   vertical-align: top;
   padding: ${({ position }) =>
@@ -231,6 +253,10 @@ const Post = styled.div`
     & h5 {
       font-size: 19px;
       margin-bottom: 10px;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-wrap:break-word;
+      white-space:normal;
     }
 
     & a, a:visited {
