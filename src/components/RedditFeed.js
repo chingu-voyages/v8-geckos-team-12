@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import AutosizeInput from 'react-input-autosize'
+import colors from '../theme/colors'
 export default function RedditFeed() {
   const [feed, setFeed] = useState([])
   const fetchData = async (query = `javascript`) => {
@@ -45,7 +47,23 @@ export default function RedditFeed() {
     <Postwrap>
       <Options>
         <OptionSelector>
-          <SearchBox
+          <AutosizeInput
+            style={{
+              border: 'none',
+              zIndex: 2000,
+              boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
+              color: colors.brandColor,
+            }}
+            inputStyle={{
+              border: 'none',
+              borderRadius: 5,
+              zIndex: 2000,
+              padding: `.25vw ${!toggle ? `4vw` : `0.25vw`} 0.25vw 0.25vw`,
+              fontSize: `1em`,
+              background: colors.mainDark,
+              boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
+              color: colors.brandColor,
+            }}
             toggle={!toggle}
             placeholder={!toggle ? currentSub : `Select subreddit:`}
             onChange={updateAutoComplete}
@@ -94,22 +112,16 @@ export default function RedditFeed() {
 
 const CloseIcon = styled.button`
   pointer-events: none;
+  cursor: pointer;
   position: absolute;
   right: 0;
+  height: 100%;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--branc-color);
+  color: var(--brand-color);
   background: transparent;
   border: none;
 `
-const CurrentSub = ({ sub, close }) => {
-  return (
-    <CurrentSubBox onClick={close}>
-      {sub}
-      <CloseSub>X</CloseSub>
-    </CurrentSubBox>
-  )
-}
 
 const CurrentSubBox = styled.div`
   cursor: pointer;
@@ -140,12 +152,20 @@ const Spacer = ({ position }) => (
   </PostCard>
 )
 const SuggestionDropdown = styled.ul`
-  border-radius: 0 0 5px 5px;
-  padding: 0.5vmax 0.25vmax;
-  z-index: 10;
+  z-index: 200;
+  border-radius: 5px;
+  padding: 2.5vmax 0.25vmax 0.5vmax 0.25vmax;
+  z-index: 0;
+  bottom: 0;
+  transform: translateY(100%);
   background: linear-gradient(to bottom right, var(--main-dark), black);
   color: var(--brand-color);
-  width: 100%;
+  width: 24vw;
+
+  @media screen and (orientation: portrait) {
+    width: 49.25vw;
+  }
+
   position: absolute;
   & li {
     cursor: pointer;
@@ -155,32 +175,8 @@ const SuggestionDropdown = styled.ul`
   }
 `
 
-const SearchBox = styled.input`
-  cursor: ${({ toggle }) => (toggle === true ? `pointer` : `auto`)};
-  z-index: 150;
-  border-radius: ${({ resultsShown }) =>
-    resultsShown ? `5px 5px 0 0` : `5px`};
-  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
-  background: var(--main-dark);
-  color: var(--accent-light);
-  padding: 0.25vmax;
-  border: none;
-  font-size: 1em;
-
-  &::placeholder {
-    color: var(--brand-color);
-    font-size: 1em;
-  }
-
-  &:focus {
-    outline: none;
-    border: none;
-    box-shadow: 0 0 35px rgba(var(--rgb-brand-color), 0.4),
-      0 0 10px rgba(var(--rgb-brand-color), 0.4);
-  }
-`
-
 const OptionSelector = styled.div`
+  z-index: 200;
   position: relative;
 `
 const Postwrap = styled.div`
@@ -192,6 +188,7 @@ const Postwrap = styled.div`
 const PostList = styled.ul`
   height: 80%;
   overflow-x: scroll;
+  -webkit-y: hidden;
   -webkit-overflow-scrolling: touch;
   -webkit-scroll-snap-type: x mandatory;
   -webkit-scroll-snap-points-x: repeat(100%);
