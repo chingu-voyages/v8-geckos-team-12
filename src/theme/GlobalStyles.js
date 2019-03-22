@@ -13,7 +13,7 @@ import {
 } from './colors'
 export const globalStylesTagged = `
 :root {
-  --main-dark: ${mainDark}; 
+  --main-dark: ${mainDark};
   --main-light: ${mainLight};
   --accent-dark: ${accentDark};
   --accent-light: ${accentLight};

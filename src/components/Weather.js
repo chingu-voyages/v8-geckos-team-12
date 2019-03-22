@@ -25,9 +25,9 @@ export default ({ latitude, longitude }) => {
       {console.log(forecast)}
       <div>
         <h2>Weather Info</h2>
-        <a href=''>5 days</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a href=''>16 days</a>
-        <h2>Current Weather: {forecast.main.temp} Deg Fahrenheit</h2>
-        <h2>{forecast.weather[0].description}</h2>
+        <a href=''>Today</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a href=''>5 days</a>
+        <h2>Current Weather: {forecast.main.temp}&#176; F</h2>
+        <h2>{forecast.weather[0].main}</h2>
       </div>
     </ForecastWrapper>
   ) : (
@@ -42,8 +42,9 @@ const ForecastWrapper = styled.div`
   width: 90vw;
   margin: 0 auto;
   padding: 2%;
+  box-shadow: 2px 2px 5px rgb(var(--rgb-main-light));
+  border-radius: 5px;
 `
-
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
 `
