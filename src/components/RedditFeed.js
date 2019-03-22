@@ -60,10 +60,20 @@ export default function RedditFeed() {
           ))}
         </SuggestionDropdown>
       </OptionSelector>
-      <PostList>{feed.map(PostTile)}</PostList>
+      <PostList>
+        <Spacer position={`left`} />
+        {feed.map(PostTile)}
+        <Spacer position={`right`} />
+      </PostList>
     </Postwrap>
   )
 }
+
+const Spacer = ({ position }) => (
+  <PostCard position={position}>
+    <Post position={position} />
+  </PostCard>
+)
 const SuggestionDropdown = styled.ul`
   z-index: 100;
   background: white;
@@ -82,41 +92,74 @@ const SearchBox = styled.input``
 const OptionSelector = styled.div`
   display: inline-block;
   position: relative;
+  height: 10%;
 `
 const Postwrap = styled.div`
   grid-column: span 4;
   grid-row: span 2;
-  overflow-y: scroll;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `
-const PostList = styled.ul``
+const PostList = styled.ul`
+  height: 90%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 const PostTile = ({
   data: { author, id, score, selftext, subreddit, title, url },
 }) => (
-  <PostWrap key={id}>
-    <div>r/{subreddit}</div>
-    <h5>{title}</h5>
-    <div>{author}</div>
-    <div>
-      {score === 0 ? '' : score > 0 ? '+' : '-'}
-      {score}
-    </div>
-    {/* <div>{selftext}</div> */}
-    <a href={url} target='__newtab'>
-      Read
-    </a>
-  </PostWrap>
+  <PostCard>
+    <Post key={id}>
+      <div>r/{subreddit}</div>
+      <h5>{title}</h5>
+      <div>{author}</div>
+      <div>
+        {score === 0 ? '' : score > 0 ? '+' : '-'}
+        {score}
+      </div>
+      {/* <div>{selftext}</div> */}
+      <a href={url} target='__newtab'>
+        Read
+      </a>
+    </Post>
+  </PostCard>
 )
 
-const PostWrap = styled.li`
+const PostCard = styled.li`
+  display: inline-block;
+  padding: ${({ position }) =>
+    position === `left`
+      ? `0 0.5vw 0 0`
+      : position === `right`
+      ? `0 0 0 0.5vw`
+      : `0 0.5vw 0 0.5vw`};
+  height: 100%;
+  width: ${({ position }) => (position ? `10%` : `80%`)};
+`
+
+const Post = styled.div`
+overflow: hidden;
    padding: 10px 20px;
+   height: 100%;
     position: relative;
     overflow-wrap: break-word;
     box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
-    border-radius: 5px;
-    background-color: rgba(var(--rgb-main-light), 0.5);
+    border-radius: ${({ position }) =>
+      position === `left`
+        ? `0 5px 5px 0`
+        : position === `right`
+        ? `5px 0 0 5px`
+        : `5px`};
+    background-color: rgba(var(--rgb-main-light), 0.85);
     margin: 0 0 1vw 0;
-
+    color: var(--main-dark);
     & h5 {
       font-size: 19px;
       margin-bottom: 10px;
