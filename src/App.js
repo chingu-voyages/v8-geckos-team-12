@@ -40,7 +40,7 @@ const App = ({
       available: !isGeolocationAvailable || !isGeolocationEnabled,
     })
   } catch (err) {}
-  setTimeout(() => setLoading(false), 1500)
+  setTimeout(() => setLoading(false), 2500)
   //Example netlify lambda call
   // fetch('/.netlify/functions/hello')
   //   .then(response => response.json())

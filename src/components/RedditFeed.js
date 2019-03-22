@@ -225,6 +225,7 @@ const PostTile = ({
 )
 
 const PostCard = styled.li`
+  overflow-x: scroll;
   -webkit-scroll-snap-coordinate: 50% 50%;
   scroll-snap-align: center;
   display: inline-block;
