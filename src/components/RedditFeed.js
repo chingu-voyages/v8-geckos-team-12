@@ -11,6 +11,7 @@ export default function RedditFeed() {
   if (!feed.length) {
     fetchData()
   }
+  const [currentSub, setCurrentSub] = useState(`r/javascript`)
 
   const fetchAutoComplete = async query => {
     const response = await fetch(
@@ -40,26 +41,40 @@ export default function RedditFeed() {
   }
   return (
     <Postwrap>
-      <OptionSelector>
-        <SearchBox
-          placeholder={`Select subreddit`}
-          onChange={updateAutoComplete}
-          value={subredditAutocompleteQuery}
-        />
-        <SuggestionDropdown>
-          {suggestions.map(suggestion => (
-            <li
-              onClick={() => {
-                fetchData(suggestion)
-                setSuggestions([])
-                setSubredditAutocompleteQuery(``)
-              }}
-            >
-              {suggestion}
-            </li>
-          ))}
-        </SuggestionDropdown>
-      </OptionSelector>
+      <Options>
+        <OptionSelector>
+          {!currentSub ? (
+            <SearchBox
+              placeholder={`Select subreddit:`}
+              onChange={updateAutoComplete}
+              value={subredditAutocompleteQuery}
+              resultsShown={
+                suggestions.length !== 0 && subredditAutocompleteQuery
+              }
+            />
+          ) : (
+            <CurrentSub sub={currentSub} close={() => setCurrentSub(null)} />
+          )}
+          {suggestions.length !== 0 && subredditAutocompleteQuery ? (
+            <SuggestionDropdown>
+              {suggestions.map(suggestion => (
+                <li
+                  onClick={() => {
+                    fetchData(suggestion)
+                    setSuggestions([])
+                    setSubredditAutocompleteQuery(``)
+                    setCurrentSub(`r/${suggestion}`)
+                  }}
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </SuggestionDropdown>
+          ) : (
+            ``
+          )}
+        </OptionSelector>
+      </Options>
       <PostList>
         <Spacer position={`left`} />
         {feed.map(PostTile)}
@@ -69,14 +84,49 @@ export default function RedditFeed() {
   )
 }
 
+const CurrentSub = ({ sub, close }) => {
+  return (
+    <CurrentSubBox onClick={close}>
+      {sub}
+      <CloseSub>X</CloseSub>
+    </CurrentSubBox>
+  )
+}
+
+const CurrentSubBox = styled.div`
+  cursor: pointer;
+  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
+  background: var(--main-dark);
+  color: var(--brand-color);
+  padding: 0.25vmax;
+  border-radius: 5px;
+  font-size: 1em;
+`
+const CloseSub = styled.button`
+  padding: 0.25vmax 0.25vmax 0.25vmax 2vmax;
+  background: none;
+  color: var(--brand-color);
+  border: none;
+  cursor: pointer;
+`
+
+const Options = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 20%;
+`
 const Spacer = ({ position }) => (
   <PostCard position={position}>
     <Post position={position} />
   </PostCard>
 )
 const SuggestionDropdown = styled.ul`
-  z-index: 100;
-  background: white;
+  border-radius: 0 0 5px 5px;
+  padding: 0.5vmax 0.25vmax;
+  z-index: 10;
+  background: linear-gradient(to bottom right, var(--main-dark), black);
+  color: var(--brand-color);
   width: 100%;
   position: absolute;
   & li {
@@ -87,24 +137,42 @@ const SuggestionDropdown = styled.ul`
   }
 `
 
-const SearchBox = styled.input``
+const SearchBox = styled.input`
+  z-index: 150;
+  border-radius: ${({ resultsShown }) =>
+    resultsShown ? `5px 5px 0 0` : `5px`};
+  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
+  background: var(--main-dark);
+  color: var(--accent-light);
+  padding: 0.25vmax;
+  border: none;
+  font-size: 1em;
+
+  &::placeholder {
+    color: var(--brand-color);
+    font-size: 1em;
+  }
+
+  &:focus {
+    outline: none;
+    border: none;
+    box-shadow: 0 0 35px rgba(var(--rgb-brand-color), 0.4),
+      0 0 10px rgba(var(--rgb-brand-color), 0.4);
+  }
+`
 
 const OptionSelector = styled.div`
-  display: inline-block;
   position: relative;
-  height: 10%;
 `
 const Postwrap = styled.div`
   grid-column: span 4;
   grid-row: span 2;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 `
 const PostList = styled.ul`
-  height: 90%;
+  height: 80%;
   overflow-x: scroll;
-  overflow-y: hidden;
   white-space: nowrap;
 
   &::-webkit-scrollbar {
@@ -137,16 +205,15 @@ const PostCard = styled.li`
   vertical-align: top;
   padding: ${({ position }) =>
     position === `left`
-      ? `0 0.5vw 0 0`
+      ? `0 0.5vmax 0 0`
       : position === `right`
-      ? `0 0 0 0.5vw`
-      : `0 0.5vw`};
+      ? `0 0 0 0.5vmax`
+      : `0 0.5vmax`};
   width: ${({ position }) => (position ? `10%` : `80%`)};
   height: 100%;
 `
 
 const Post = styled.div`
-overflow: hidden;
    padding: 10px 20px;
    height: 100%;
     position: relative;
