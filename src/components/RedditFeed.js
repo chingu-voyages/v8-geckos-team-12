@@ -191,9 +191,12 @@ const Postwrap = styled.div`
 `
 const PostList = styled.ul`
   height: 80%;
-  overflow-x: scroll;
+  overflow: scroll hidden;
+  -webkit-scroll-snap-type: x mandatory;
+  -webkit-scroll-snap-points-x: repeat(100%);
+  -webkit-scroll-snap-destination: 50% 50%;
   scroll-snap-type: x mandatory;
-  scroll-snap-points-y: repeat(100%);
+  scroll-snap-points-x: repeat(100%);
   white-space: nowrap;
 
   &::-webkit-scrollbar {
@@ -222,6 +225,7 @@ const PostTile = ({
 )
 
 const PostCard = styled.li`
+  -webkit-scroll-snap-coordinate: 50% 50%;
   scroll-snap-align: center;
   display: inline-block;
   vertical-align: top;
@@ -240,6 +244,7 @@ const Post = styled.div`
    height: 100%;
     position: relative;
     overflow-wrap: break-word;
+    overflow: hidden;
     box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
     border-radius: ${({ position }) =>
       position === `left`
