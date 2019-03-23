@@ -79,7 +79,6 @@ const ArticleWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    height: 50vh;
     overflow-y: scroll;
     font-size: 17px;
   }
@@ -88,8 +87,11 @@ const ArticleWrapper = styled.div`
     padding: 10px 20px;
     position: relative;
     overflow-wrap: break-word;
-    border-radius: 15px;
-    margin-bottom: 1vw;
+    box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
+    border-radius: 5px;
+    background-color: rgba(var(--rgb-main-light), 0.5);
+    margin: 0 0 1vw 0;
+    line-height: 130%;
 
     & div {
       display: flex;

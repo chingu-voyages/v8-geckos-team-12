@@ -23,9 +23,8 @@ export default ({ latitude, longitude }) => {
   return forecast ? (
     <ForecastWrapper>
       {console.log(forecast)}
-      <div>
-        <h2>Current Weather: {forecast.main.temp} Deg Fahrenheit</h2>
-      </div>
+
+      <h2>Current Weather: {forecast.main.temp} Deg Fahrenheit</h2>
     </ForecastWrapper>
   ) : (
     <ForecastLoadingWrapper>Forecast Loading</ForecastLoadingWrapper>
@@ -34,12 +33,14 @@ export default ({ latitude, longitude }) => {
 
 const ForecastWrapper = styled.div`
   //add styles here for current location info
-  background: rgba(255, 255, 255, 0.8);
-  height: 20vh;
-  width: 90vw;
-  margin: 0 auto;
+  grid-column: span 4;
+  grid-row: span 2;
+  background: white;
 `
 
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
+  background: white;
+  grid-column: span 4;
+  grid-row: span 2;
 `
