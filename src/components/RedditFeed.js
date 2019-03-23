@@ -13,7 +13,15 @@ export default function RedditFeed() {
   if (!feed.length) {
     fetchData()
   }
-  const [currentSub, setCurrentSub] = useState(`r/javascript`)
+  const storedSubReddit = localStorage.getItem(`subreddit`)
+  const [currentSub, setCurrentSub] = useState(
+    storedSubReddit ? storedSubReddit : `r/javascript`
+  )
+
+  const setCurrentSubToLocal = subreddit => {
+    setCurrentSub(subreddit)
+    localStorage.setItem(`subreddit`, subreddit)
+  }
 
   const fetchAutoComplete = async query => {
     const response = await fetch(
@@ -88,7 +96,7 @@ export default function RedditFeed() {
                     fetchData(suggestion)
                     setSuggestions([])
                     setSubredditAutocompleteQuery(``)
-                    setCurrentSub(`r/${suggestion}`)
+                    setCurrentSubToLocal(`r/${suggestion}`)
                     //setToggle(state => !state)
                   }}
                 >
@@ -188,6 +196,7 @@ const Postwrap = styled.div`
 const PostList = styled.ul`
   height: 80%;
   overflow-x: scroll;
+  overflow-y: hidden;
   -webkit-y: hidden;
   -webkit-overflow-scrolling: touch;
   -webkit-scroll-snap-type: x mandatory;
