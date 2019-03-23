@@ -1,6 +1,10 @@
 # v8-geckos-team-12
 
-Add-project-description-here | Voyage-8 | https://chingu.io/
+Chingu Voyage-8 | https://chingu.io/
+
+Dashboard App that gets the user's current location and displays the weather forcast, relevant news, user's location, and a background photo based on the location. 
+
+We are still adding more features so this will be updated later on.
 
 ## To start
 
@@ -23,3 +27,4 @@ https://development--geckos.netlify.com/
 To view branch deploy, prefix production url with branch name.
 
 https://[BranchNameHere]--geckos.netlify.com/
+
