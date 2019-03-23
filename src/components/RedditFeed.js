@@ -233,7 +233,7 @@ const PostCard = styled.li`
       : position === `right`
       ? `0 0 0 0.5vmax`
       : `0 0.5vmax`};
-  width: ${({ position }) => (position !== null ? `10%` : `80%`)};
+  width: ${({ position }) => (position ? `10%` : `80%`)};
   height: 100%;
 `
 
