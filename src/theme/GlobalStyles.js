@@ -202,14 +202,19 @@ html,
   }
 
   body {
-    background: #0f2027;
-    background: -webkit-linear-gradient(
-      to top left,
-      #2c5364,
-      #203a43,
-      #0f2027
-    ); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top left, #2c5364, #203a43, #0f2027);
+    background: var(--brand-color);
+  background: -webkit-linear-gradient(
+    to top left,
+    var(--accent-dark),
+    var(--brand-color),
+    var(--main-dark)
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top left,
+    var(--accent-dark),
+    var(--brand-color),
+    var(--main-dark)
+  );
     color: rgba(125,125,125,.9);
   }
 `
