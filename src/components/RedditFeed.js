@@ -109,7 +109,7 @@ export default function RedditFeed() {
           ) : (
             ``
           )}
-          {<div>Another Option</div>}
+          {/* <div>Another Option</div> */}
         </OptionSelector>
       </Options>
       <PostList>
@@ -136,23 +136,6 @@ const CloseIcon = styled.button`
   color: var(--brand-color);
   background: transparent;
   border: none;
-`
-
-const CurrentSubBox = styled.div`
-  cursor: pointer;
-  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
-  background: var(--main-dark);
-  color: var(--brand-color);
-  padding: 0.25vmax;
-  border-radius: 5px;
-  font-size: 1em;
-`
-const CloseSub = styled.button`
-  padding: 0.25vmax 0.25vmax 0.25vmax 2vmax;
-  background: none;
-  color: var(--brand-color);
-  border: none;
-  cursor: pointer;
 `
 
 const Options = styled.div`
@@ -237,7 +220,7 @@ const PostTile = ({
       <Title>
         {title}
         <Score>
-          {score === 0 ? ' ▶ ' : score > 0 ? ' ▲ ' : ' ▼ '}
+          {score === 0 ? '  ' : score > 0 ? ' ▲ ' : ' ▼ '}
           {score}
         </Score>
       </Title>
