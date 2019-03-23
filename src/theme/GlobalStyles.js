@@ -202,6 +202,7 @@ html,
   }
 
   body {
+    overflow-x: hidden;
     background: var(--brand-color);
   background: -webkit-linear-gradient(
     to top left,
