@@ -3,9 +3,19 @@ import styled from 'styled-components'
 
 export default ({ latitude, longitude, setUnsplashQuery }) => {
   const [currentLocation, setCurrentLocation] = useState()
-  const setDestructuredLocation = ({ locale_names, administrative }) => {
+  const setDestructuredLocation = ({
+    locale_names,
+    administrative,
+    city: cityName,
+  }) => {
+    let city
+    try {
+      city = cityName[0]
+    } catch (err) {
+      city = locale_names[0]
+    }
     setCurrentLocation({
-      city: locale_names[0],
+      city,
       administrative: administrative[0],
     })
     setUnsplashQuery(administrative[0])

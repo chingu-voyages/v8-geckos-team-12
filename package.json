@@ -10,8 +10,10 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-geolocated": "^2.4.1",
+    "react-input-autosize": "^2.2.1",
     "react-scripts": "2.1.8",
     "react-spring": "^8.0.18",
+    "react-use-scroll-position": "^1.0.0",
     "styled-components": "^4.1.3",
     "unsplash-js": "^5.0.0"
   },

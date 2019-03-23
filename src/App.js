@@ -8,6 +8,7 @@ import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
 import Footer from './components/Footer'
 import styled from 'styled-components'
+import RedditFeed from './components/RedditFeed'
 
 const App = ({
   coords,
@@ -39,7 +40,7 @@ const App = ({
       available: !isGeolocationAvailable || !isGeolocationEnabled,
     })
   } catch (err) {}
-  setTimeout(() => setLoading(false), 5000)
+  setTimeout(() => setLoading(false), 2500)
   //Example netlify lambda call
   // fetch('/.netlify/functions/hello')
   //   .then(response => response.json())
@@ -76,18 +77,18 @@ Disabled for now, issues with lambda function
       {!showLoading && (location.available || coords || location.latitude) ? (
         <>
           <Unsplash setUnsplashData={setUnsplashData} />
+          <Header
+            latitude={location.latitude}
+            longitude={location.longitude}
+            setUnsplashQuery={setUnsplashQuery}
+          />
           <AppWrapper>
-            <Header
-              latitude={location.latitude}
-              longitude={location.longitude}
-              setUnsplashQuery={setUnsplashQuery}
-            />
-
             <Weather
               latitude={location.latitude}
               longitude={location.longitude}
             />
             <News query={unsplashQuery} />
+            <RedditFeed />
           </AppWrapper>
           <Footer {...unsplashData} />
         </>
@@ -99,18 +100,17 @@ Disabled for now, issues with lambda function
 }
 
 const AppWrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  overflow: hidden;
   display: grid;
-  grid-template-rows: 15% 30% 50%;
-  & > * {
-    overflow: hidden;
-  }
+  grid-auto-flow: row dense;
+  grid-gap: 1vw;
+  margin: 1.5vw 1.5vw 4.5vmax 1.5vw;
+  grid-template-columns: repeat(8, 11.25vw);
+  grid-auto-rows: 11.25vw;
   @media screen and (orientation: portrait) {
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: repeat(4, 23.5vw);
+    grid-auto-rows: 25vw;
   }
 `
 
