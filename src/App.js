@@ -40,7 +40,7 @@ const App = ({
       available: !isGeolocationAvailable || !isGeolocationEnabled,
     })
   } catch (err) {}
-  setTimeout(() => setLoading(false), 5000)
+  setTimeout(() => setLoading(false), 2500)
   //Example netlify lambda call
   // fetch('/.netlify/functions/hello')
   //   .then(response => response.json())
@@ -105,7 +105,7 @@ const AppWrapper = styled.div`
   display: grid;
   grid-auto-flow: row dense;
   grid-gap: 1vw;
-  margin: 1.5vw 1.5vw 4.5vw 1.5vw;
+  margin: 1.5vw 1.5vw 4.5vmax 1.5vw;
   grid-template-columns: repeat(8, 11.25vw);
   grid-auto-rows: 11.25vw;
   @media screen and (orientation: portrait) {
