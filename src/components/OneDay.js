@@ -3,9 +3,6 @@ import styled from 'styled-components'
 
 export default ({ latitude, longitude }) => {
   const [forecast, setForecast] = useState()
-  const [weatherIcons, setWeatherIcons] = useState(
-    <i className='fas fa-cloud-sun fa-2x' />
-  )
   const setDestructuredForecast = ({
     weather,
     main,
@@ -31,24 +28,26 @@ export default ({ latitude, longitude }) => {
       .then(response => response.json())
       .then(result => setDestructuredForecast(result))
   }
-  // const weatherIcon = main => {
-  //   if (main == 'clouds') {
-  //     return <i className='fas fa-cloud' />
-  //   } else if (main == 'rain') {
-  //     return <i className='fas fa-tint' />
-  //   } else if (main == 'snow') {
-  //     return <i className='far fa-snowflake' />
-  //   } else if (main == "sunny" || main =="clear"){
-  //     return <i className="fas fa-sun"></i>
-  //   }
-  // }
+  const weatherIcon = main => {
+    let icon = main.toLowerCase()
+    if (icon == 'clouds') {
+      return 'fas fa-cloud'
+    } else if (icon == 'rain') {
+      return 'fas fa-cloud-rain'
+    } else if (icon == 'snow') {
+      return 'far fa-snowflake'
+    } else if (icon == 'sunny' || icon == 'clear') {
+      return 'fas fa-sun'
+    }
+  }
   return forecast ? (
     <ForecastWrapper>
       {console.log(forecast)}
       <div>
         <h2>Weather Info</h2>
         <h2>
-          {weatherIcons} {forecast.weather[0].main}
+          <i className={weatherIcon(forecast.weather[0].main)} />{' '}
+          {forecast.weather[0].main}
         </h2>
         <section>
           <h1>{forecast.main.temp}&#176; F</h1>
@@ -73,7 +72,7 @@ const ForecastWrapper = styled.div`
   padding: 1%;
   box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
   border-radius: 5px;
-  background-color: rgba(var(--rgb-main-light), 0.5);
+  background-color: rgba(var(--rgb-main-light), 0.85);
   color: var(--main-dark);
   section h1 {
     font-size: 26px;
@@ -90,7 +89,7 @@ const ForecastWrapper = styled.div`
 `
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
-  background-color: rgba(var(--rgb-main-light), 0.5);
+  background-color: rgba(var(--rgb-main-light), 0.85);
   grid-column: span 4;
   grid-row: span 2;
 `

@@ -23,7 +23,11 @@ export default ({ latitude, longitude }) => {
       {forecast.list.map(singleDay => {
         return (
           <div>
-            H {singleDay.main.temp_max} / L {singleDay.main.temp_min}
+            <p>{singleDay.dt_txt.split(' ')[0]}</p>
+            <p>
+              {' '}
+              H {singleDay.main.temp_max} / L {singleDay.main.temp_min}
+            </p>
           </div>
         )
       })}
@@ -44,7 +48,7 @@ const ForecastWrapper = styled.div`
   padding: 1%;
   box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
   border-radius: 5px;
-  background-color: rgba(var(--rgb-main-light), 0.5);
+  background-color: rgba(var(--rgb-main-light), 0.85);
   color: var(--main-dark);
   section h1 {
     font-size: 26px;
@@ -58,10 +62,13 @@ const ForecastWrapper = styled.div`
   h2 {
     font-size: 1.25em;
   }
+  p {
+    display: inline;
+  }
 `
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
-  background-color: rgba(var(--rgb-main-light), 0.5);
+  background-color: rgba(var(--rgb-main-light), 0.85);
   grid-column: span 4;
   grid-row: span 2;
 `
