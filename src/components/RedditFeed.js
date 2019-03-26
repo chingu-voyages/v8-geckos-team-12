@@ -3,8 +3,11 @@ import styled from 'styled-components'
 import AutosizeInput from 'react-input-autosize'
 import colors from '../theme/colors'
 export default function RedditFeed() {
+  const subreddit = localStorage.getItem(`subreddit`) || `javascript`
+  const [currentSub, setCurrentSub] = useState(subreddit)
+
   const [feed, setFeed] = useState([])
-  const fetchData = async (query = `javascript`) => {
+  const fetchData = async (query = currentSub) => {
     const response = await fetch(`https://www.reddit.com/r/${query}/.json`)
     const json = await response.json()
     const data = await json.data
@@ -13,7 +16,6 @@ export default function RedditFeed() {
   if (!feed.length) {
     fetchData()
   }
-  const [currentSub, setCurrentSub] = useState(`r/javascript`)
 
   const fetchAutoComplete = async query => {
     const response = await fetch(
@@ -89,6 +91,7 @@ export default function RedditFeed() {
                     setSuggestions([])
                     setSubredditAutocompleteQuery(``)
                     setCurrentSub(`r/${suggestion}`)
+                    localStorage.setItem(`subreddit`, suggestion)
                     //setToggle(state => !state)
                   }}
                 >
@@ -196,6 +199,7 @@ const PostList = styled.ul`
   scroll-snap-type: x mandatory;
   scroll-snap-points-x: repeat(100%);
   white-space: nowrap;
+  overflow-y: hidden;
 
   &::-webkit-scrollbar {
     display: none;
