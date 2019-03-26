@@ -5,7 +5,7 @@ import OneDay from './OneDay'
 import FiveDays from './FiveDays'
 
 export default props => {
-  return <OneDay latitude={props.latitude} longitude={props.longitude} />
+  return <FiveDays latitude={props.latitude} longitude={props.longitude} />
 }
 
 const ForecastWrapper = styled.div`

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 export default ({ latitude, longitude }) => {
   const [forecast, setForecast] = useState()
+  const today = new Date()
   const setDestructuredForecast = ({ list }) =>
     setForecast({
       list,
@@ -16,6 +17,20 @@ export default ({ latitude, longitude }) => {
       .then(response => response.json())
       .then(result => setDestructuredForecast(result))
   }
+  const weatherIcon = main => {
+    let icon = main.toLowerCase()
+    if (icon == 'clouds') {
+      return 'fas fa-cloud'
+    } else if (icon == 'rain') {
+      return 'fas fa-cloud-rain'
+    } else if (icon == 'snow') {
+      return 'far fa-snowflake'
+    } else if (icon == 'sunny' || icon == 'clear') {
+      return 'fas fa-sun'
+    } else {
+      return 'fas fa-cloud-sun'
+    }
+  }
   return forecast ? (
     <ForecastWrapper>
       {console.log(forecast)}
@@ -23,11 +38,16 @@ export default ({ latitude, longitude }) => {
       {forecast.list.map(singleDay => {
         return (
           <div>
-            <p>{singleDay.dt_txt.split(' ')[0]}</p>
-            <p>
-              {' '}
-              H {singleDay.main.temp_max} / L {singleDay.main.temp_min}
-            </p>
+            <p>{singleDay.dt_txt}</p>
+            <DayWrapper>
+              <HourWrapper>
+                <div>
+                  <i className={weatherIcon(singleDay.weather[0].main)} />{' '}
+                  {singleDay.weather[0].main}
+                  <p>{singleDay.main.temp}&#176; F</p>
+                </div>
+              </HourWrapper>
+            </DayWrapper>
           </div>
         )
       })}
@@ -62,9 +82,13 @@ const ForecastWrapper = styled.div`
   h2 {
     font-size: 1.25em;
   }
-  p {
-    display: inline;
-  }
+`
+const HourWrapper = styled.div`
+  display: flex;
+`
+const DayWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
 `
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder

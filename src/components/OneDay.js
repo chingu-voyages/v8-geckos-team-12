@@ -38,13 +38,14 @@ export default ({ latitude, longitude }) => {
       return 'far fa-snowflake'
     } else if (icon == 'sunny' || icon == 'clear') {
       return 'fas fa-sun'
+    } else {
+      return 'fas fa-cloud-sun'
     }
   }
   return forecast ? (
     <ForecastWrapper>
-      {console.log(forecast)}
       <div>
-        <h2>Weather Info</h2>
+        <h1>Weather Info</h1>
         <h2>
           <i className={weatherIcon(forecast.weather[0].main)} />{' '}
           {forecast.weather[0].main}
@@ -69,22 +70,25 @@ const ForecastWrapper = styled.div`
   grid-row: span 2;
   margin: 0 2%;
   /* line-height: 20px; */
-  padding: 1%;
+  padding: 5%;
   box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
   border-radius: 5px;
   background-color: rgba(var(--rgb-main-light), 0.85);
   color: var(--main-dark);
-  section h1 {
-    font-size: 26px;
+  h1 {
+    font-size: 2em;
   }
   p,
   h2,
   h1 {
     padding: 2% 0.5%;
     color: var(--main-dark);
+    text-align: center;
+    font-size: 1.25em;
   }
   h2 {
-    font-size: 1.25em;
+    font-size: 1.5em;
+    text-align: center;
   }
 `
 const ForecastLoadingWrapper = styled.div`
