@@ -10,8 +10,11 @@ export default function WidgetSelector({ widgets }) {
     }
     const savedActive = localSetting.active
     const active = []
-    const inactive = widgets.map(widget =>
-      savedActive.indexOf(widget.name) === -1 ? widget : active.push(widget)
+    const inactive = []
+    widgets.map(widget =>
+      savedActive.indexOf(widget.name) === -1
+        ? inactive.push(widget)
+        : active.push(widget)
     )
     return { active, inactive }
   }
@@ -55,26 +58,45 @@ export default function WidgetSelector({ widgets }) {
 }
 
 const Selector = ({ widgetStatus, activateWidget, deactivateWidget }) => {
+  const [showOptions, setOptions] = useState(false)
+  const toggleOptionsModal = () => setOptions(state => !state)
   return (
-    <SelectorWrap>
-      <h1>Toggle Widgets</h1>
-      <h2>Active</h2>
-      <ul>
-        {widgetStatus.active.map(({ name }, index) => (
-          <li onClick={() => deactivateWidget(index)}>{name}</li>
-        ))}
-      </ul>
-      <h2>Inactive</h2>
-      <ul>
-        {widgetStatus.inactive.map(({ name }, index) => (
-          <li onClick={() => activateWidget(index)}>{name}</li>
-        ))}
-      </ul>
-    </SelectorWrap>
+    <>
+      <ToggleButton onClick={toggleOptionsModal}>
+        Open/Close Options Modal
+      </ToggleButton>
+      <SelectorWrap show={showOptions}>
+        <h1>Toggle Widgets</h1>
+        <h2>Active</h2>
+        <ul>
+          {widgetStatus.active.map(({ name }, index) => (
+            <li onClick={() => deactivateWidget(index)}>{name}</li>
+          ))}
+        </ul>
+        <h2>Inactive</h2>
+        <ul>
+          {widgetStatus.inactive.map(({ name }, index) => (
+            <li onClick={() => activateWidget(index)}>{name}</li>
+          ))}
+        </ul>
+      </SelectorWrap>
+    </>
   )
 }
 
+const ToggleButton = styled.button`
+  padding: 2vmax;
+  background: orangered;
+  color: white;
+  font-size: 1em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 6000;
+`
+
 const SelectorWrap = styled.div`
+  opacity: ${({ show }) => (show ? 1 : 0)};
   position: fixed;
   top: 0;
   z-index: 5000;
