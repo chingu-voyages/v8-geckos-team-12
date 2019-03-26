@@ -2,7 +2,7 @@
 
 Chingu Voyage-8 | https://chingu.io/
 
-Dashboard App that gets the user's current location and displays the weather forcast, relevant news, user's location, and a background photo based on the location. 
+Dashboard App that gets the user's current location and displays the weather forcast, relevant news, user's location, and a background photo based on the location.
 
 We are still adding more features so this will be updated later on.
 
@@ -27,4 +27,3 @@ https://development--geckos.netlify.com/
 To view branch deploy, prefix production url with branch name.
 
 https://[BranchNameHere]--geckos.netlify.com/
-
