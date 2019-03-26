@@ -2,28 +2,52 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 export default function WidgetSelector({ widgets }) {
-  const [widgetStatus, setWidgetStatus] = useState({
-    active: [],
-    inactive: [],
-  })
+  const localSetting = JSON.parse(localStorage.getItem(`widgetToggleSettings`))
 
-  if (widgetStatus.active.length === 0 && widgetStatus.inactive.length === 0) {
-    setWidgetStatus({ active: widgets, inactive: [] })
+  const filteredWidgets = (widgets, localSetting) => {
+    if (!localSetting) {
+      return { active: widgets, inactive: [] }
+    }
+    const savedActive = localSetting.active
+    const active = []
+    const inactive = widgets.map(widget =>
+      savedActive.indexOf(widget.name) === -1 ? widget : active.push(widget)
+    )
+    return { active, inactive }
   }
 
-  const activateWidget = inactiveIndex =>
+  const [widgetStatus, setWidgetStatus] = useState(
+    filteredWidgets(widgets, localSetting)
+  )
+  const updateLocalStorage = state =>
+    localStorage.setItem(
+      `widgetToggleSettings`,
+      JSON.stringify({
+        active: state.active.map(({ name }) => name),
+        inactive: state.inactive.map(({ name }) => name),
+      })
+    )
+
+  // if (widgetStatus.active.length === 0 && widgetStatus.inactive.length === 0) {
+  //   setWidgetStatus({ active: widgets, inactive: [] })
+  // }
+
+  const activateWidget = inactiveIndex => {
     setWidgetStatus(({ active, inactive }) => {
       active.push(...inactive.splice(inactiveIndex, 1))
+      updateLocalStorage({ active, inactive })
       return { active, inactive }
     })
+  }
 
-  const deactivateWidget = activeIndex =>
+  const deactivateWidget = activeIndex => {
     setWidgetStatus(({ active, inactive }) => {
       inactive.push(...active.splice(activeIndex, 1))
+      updateLocalStorage({ active, inactive })
       return { active, inactive }
     })
+  }
 
-  console.log(widgetStatus)
   return [
     ...widgetStatus.active.map(({ component }) => component),
     Selector({ widgetStatus, activateWidget, deactivateWidget }),
@@ -51,6 +75,10 @@ const Selector = ({ widgetStatus, activateWidget, deactivateWidget }) => {
 }
 
 const SelectorWrap = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 5000;
+  left: 0;
   padding: 1vmax;
   background: rgba(var(--rgb-main-dark), 0.95);
   color: var(--main-light);
