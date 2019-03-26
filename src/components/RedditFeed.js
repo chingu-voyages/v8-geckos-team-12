@@ -11,7 +11,7 @@ export default function RedditFeed() {
     const response = await fetch(`https://www.reddit.com/r/${query}/.json`)
     const json = await response.json()
     const data = await json.data
-    setFeed(data.children.slice(0, 10))
+    setFeed(data.children.slice(0, 30))
   }
   if (!feed.length) {
     fetchData()
@@ -49,39 +49,41 @@ export default function RedditFeed() {
     <Postwrap>
       <Options>
         <OptionSelector>
-          <AutosizeInput
-            style={{
-              border: 'none',
-              zIndex: 2000,
-              boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
-              color: colors.brandColor,
-            }}
-            inputStyle={{
-              border: 'none',
-              borderRadius: 5,
-              zIndex: 2000,
-              padding: `.25vw ${!toggle ? `4vw` : `0.25vw`} 0.25vw 0.25vw`,
-              fontSize: `1em`,
-              background: colors.mainDark,
-              boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
-              color: colors.brandColor,
-            }}
-            toggle={!toggle}
-            placeholder={!toggle ? currentSub : `Select subreddit:`}
-            onChange={updateAutoComplete}
-            onFocus={() => setToggle(state => !state)}
-            onBlur={() =>
-              setTimeout(() => {
-                setSubredditAutocompleteQuery(``)
-                setToggle(state => !state)
-              }, 100)
-            }
-            value={subredditAutocompleteQuery}
-            resultsShown={
-              suggestions.length !== 0 && subredditAutocompleteQuery
-            }
-          />
-          {!toggle ? <CloseIcon>X</CloseIcon> : ``}
+          <InputWrap>
+            <AutosizeInput
+              style={{
+                border: 'none',
+                zIndex: 2000,
+                boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
+                color: colors.brandColor,
+              }}
+              inputStyle={{
+                border: 'none',
+                borderRadius: 5,
+                zIndex: 2000,
+                padding: `.25vw ${!toggle ? `4vw` : `0.25vw`} 0.25vw 0.25vw`,
+                fontSize: `1em`,
+                background: colors.mainDark,
+                boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
+                color: colors.brandColor,
+              }}
+              toggle={!toggle}
+              placeholder={!toggle ? currentSub : `Select subreddit:`}
+              onChange={updateAutoComplete}
+              onFocus={() => setToggle(state => !state)}
+              onBlur={() =>
+                setTimeout(() => {
+                  setSubredditAutocompleteQuery(``)
+                  setToggle(state => !state)
+                }, 100)
+              }
+              value={subredditAutocompleteQuery}
+              resultsShown={
+                suggestions.length !== 0 && subredditAutocompleteQuery
+              }
+            />
+            {!toggle ? <CloseIcon>X</CloseIcon> : ``}
+          </InputWrap>
           {suggestions.length !== 0 && subredditAutocompleteQuery ? (
             <SuggestionDropdown>
               {suggestions.map(suggestion => (
@@ -102,6 +104,7 @@ export default function RedditFeed() {
           ) : (
             ``
           )}
+          {/* <div>Another Option</div> */}
         </OptionSelector>
       </Options>
       <PostList>
@@ -112,6 +115,10 @@ export default function RedditFeed() {
     </Postwrap>
   )
 }
+
+const InputWrap = styled.div`
+  position: relative;
+`
 
 const CloseIcon = styled.button`
   pointer-events: none;
@@ -126,28 +133,14 @@ const CloseIcon = styled.button`
   border: none;
 `
 
-const CurrentSubBox = styled.div`
-  cursor: pointer;
-  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
-  background: var(--main-dark);
-  color: var(--brand-color);
-  padding: 0.25vmax;
-  border-radius: 5px;
-  font-size: 1em;
-`
-const CloseSub = styled.button`
-  padding: 0.25vmax 0.25vmax 0.25vmax 2vmax;
-  background: none;
-  color: var(--brand-color);
-  border: none;
-  cursor: pointer;
-`
-
 const Options = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: 20%;
+  @media screen and (orientation: portrait) {
+    height: 10%;
+  }
 `
 const Spacer = ({ position }) => (
   <PostCard position={position}>
@@ -157,10 +150,10 @@ const Spacer = ({ position }) => (
 const SuggestionDropdown = styled.ul`
   z-index: 200;
   border-radius: 5px;
-  padding: 2.5vmax 0.25vmax 0.5vmax 0.25vmax;
+  padding: 0.25vmax;
   z-index: 0;
   bottom: 0;
-  transform: translateY(100%);
+  transform: translateY(calc(100% + 0.25vmax));
   background: linear-gradient(to bottom right, var(--main-dark), black);
   color: var(--brand-color);
   width: 24vw;
@@ -179,18 +172,26 @@ const SuggestionDropdown = styled.ul`
 `
 
 const OptionSelector = styled.div`
+  display: flex;
   z-index: 200;
   position: relative;
 `
 const Postwrap = styled.div`
   grid-column: span 4;
   grid-row: span 2;
+  @media screen and (orientation: portrait) {
+    grid-row: span 4;
+  }
   display: flex;
   flex-direction: column;
 `
 const PostList = styled.ul`
   height: 80%;
+  @media screen and (orientation: portrait) {
+    height: 90%;
+  }
   overflow-x: scroll;
+  overflow-y: hidden;
   -webkit-y: hidden;
   -webkit-overflow-scrolling: touch;
   -webkit-scroll-snap-type: x mandatory;
@@ -207,24 +208,64 @@ const PostList = styled.ul`
 `
 
 const PostTile = ({
-  data: { author, id, score, selftext, subreddit, title, url },
+  data: { author, id, score, selftext, title, permalink, url },
 }) => (
   <PostCard key={id}>
     <Post>
-      <div>r/{subreddit}</div>
-      <h5>{title}</h5>
-      <div>{author}</div>
-      <div>
-        {score === 0 ? '' : score > 0 ? '+' : '-'}
-        {score}
-      </div>
-      {/* <div>{selftext}</div> */}
-      <a href={url} target='__newtab'>
+      <Author>Posted by u/{author}</Author>
+      <Title>
+        {title}
+        <Score>
+          {score === 0 ? '  ' : score > 0 ? ' ▲ ' : ' ▼ '}
+          {score}
+        </Score>
+      </Title>
+      <BodyText>
+        {selftext.length === 0 ? (
+          <a href={url}>{url}</a>
+        ) : selftext.length > 320 ? (
+          `${selftext.slice(0, 320)}...`
+        ) : (
+          selftext
+        )}
+      </BodyText>
+      <ReadLink href={`https://www.reddit.com${permalink}`} target='__newtab'>
         Read
-      </a>
+      </ReadLink>
     </Post>
   </PostCard>
 )
+
+const ReadLink = styled.a`
+  align-self: center;
+  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
+  border-radius: 5px;
+  padding: 0.5vmax 8vmax;
+  background: rgba(var(--rgb-main-dark), 0.5);
+`
+const BodyText = styled.div`
+  overflow-wrap: break-word;
+  white-space: normal;
+  font-size: 1em;
+  margin: 1vmax 0;
+`
+
+const Title = styled.div`
+  overflow-wrap: break-word;
+  white-space: normal;
+  font-size: 1.25em;
+  margin: 0.5vmax 0;
+`
+const Score = styled.div`
+  display: inline-block;
+  color: var(--brand-color);
+`
+
+const Author = styled.div`
+  color: var(--accent-dark);
+  font-size: 0.75em;
+  margin-bottom: 0.25vmax;
+`
 
 const PostCard = styled.li`
   -webkit-scroll-snap-coordinate: 50% 50%;
@@ -244,7 +285,10 @@ const PostCard = styled.li`
 const Post = styled.div`
    padding: 10px 20px;
    height: 100%;
+   max-height: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
     overflow-wrap: break-word;
     overflow: hidden;
     box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
