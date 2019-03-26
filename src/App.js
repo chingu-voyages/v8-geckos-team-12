@@ -9,6 +9,7 @@ import LoadingAnimation from './components/LoadingAnimation'
 import Footer from './components/Footer'
 import styled from 'styled-components'
 import RedditFeed from './components/RedditFeed'
+import WidgetSelector from './components/WidgetSelector'
 
 const App = ({
   coords,
@@ -83,12 +84,24 @@ Disabled for now, issues with lambda function
             setUnsplashQuery={setUnsplashQuery}
           />
           <AppWrapper>
-            <Weather
-              latitude={location.latitude}
-              longitude={location.longitude}
+            <WidgetSelector
+              widgets={[
+                {
+                  component: (
+                    <Weather
+                      latitude={location.latitude}
+                      longitude={location.longitude}
+                    />
+                  ),
+                  name: `Weather`,
+                },
+                {
+                  component: <News query={unsplashQuery} />,
+                  name: `News Feed`,
+                },
+                { component: <RedditFeed />, name: `Reddit Feed` },
+              ]}
             />
-            <News query={unsplashQuery} />
-            <RedditFeed />
           </AppWrapper>
           <Footer {...unsplashData} />
         </>
