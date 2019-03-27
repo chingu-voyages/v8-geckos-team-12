@@ -3,6 +3,10 @@ import Logo from './Logo'
 import styled from 'styled-components'
 import CurrentLocation from './CurrentLocation'
 import { useScrollYPosition } from 'react-use-scroll-position'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
+library.add(faCog)
 
 const Header = props => {
   const position = useScrollYPosition()
@@ -13,6 +17,9 @@ const Header = props => {
         latitude={props.latitude}
         longitude={props.longitude}
         setUnsplashQuery={props.setUnsplashQuery}
+      />
+      <ToggleSettingsVisibleButton
+        toggleShowSettings={props.toggleShowSettings}
       />
     </HeaderWrapper>
   )
@@ -44,6 +51,24 @@ const HeaderWrapper = styled.header`
     flex-direction: column;
     justify-content: center;
   }
+`
+const ToggleSettingsVisibleButton = ({ toggleShowSettings }) => (
+  <ToggleButton onClick={toggleShowSettings}>
+    <FontAwesomeIcon icon='cog' />
+  </ToggleButton>
+)
+
+const ToggleButton = styled.button`
+  position: relative;
+  height: 100%;
+  background: transparent;
+  border: none;
+  color: var(--main-light);
+  font-size: 2em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 6000;
 `
 
 export default Header

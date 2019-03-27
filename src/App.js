@@ -63,6 +63,9 @@ Disabled for now, issues with lambda function
   }
   console.log(colorTheme)
   */
+
+  const [showSettings, setShowSettings] = useState(false)
+  const toggleShowSettings = () => setShowSettings(state => !state)
   return (
     <>
       {!showLoading && (
@@ -82,9 +85,12 @@ Disabled for now, issues with lambda function
             latitude={location.latitude}
             longitude={location.longitude}
             setUnsplashQuery={setUnsplashQuery}
+            toggleShowSettings={toggleShowSettings}
           />
           <AppWrapper>
             <Settings
+              showSettings={showSettings}
+              toggleShowSettings={toggleShowSettings}
               widgets={[
                 {
                   component: (

@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { useScrollYPosition } from 'react-use-scroll-position'
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+library.add(faWindowClose)
 
-library.add(faCog)
-
-export default function Settings({ widgets }) {
+export default function Settings({
+  widgets,
+  showSettings,
+  toggleShowSettings,
+}) {
   const localSetting = JSON.parse(localStorage.getItem(`widgetToggleSettings`))
 
   const filteredWidgets = (widgets, localSetting) => {
@@ -61,48 +63,39 @@ export default function Settings({ widgets }) {
     WidgetSelector({ widgetStatus, activateWidget, deactivateWidget }),
   ]
 
-  const [showOptions, setOptions] = useState(false)
-  const toggleOptionsModal = () => setOptions(state => !state)
   return [
     ...widgetStatus.active.map(({ component }) => component),
     <SettingsWrapper
-      showOptions={showOptions}
-      toggleOptions={toggleOptionsModal}
+      showOptions={showSettings}
+      toggleOptions={toggleShowSettings}
     >
       {SettingsWidgets}
     </SettingsWrapper>,
   ]
 }
 const SettingsWrapper = ({ children, showOptions, toggleOptions }) => {
-  return (
+  return showOptions ? (
     <>
-      <ToggleButton onClick={toggleOptions}>
-        <FontAwesomeIcon icon='cog' />
-      </ToggleButton>
-      {showOptions ? (
-        <SettingsModal show={showOptions}>{children}</SettingsModal>
-      ) : (
-        ''
-      )}
+      <PositionedIcon icon='window-close' onClick={toggleOptions} />
+      <SettingsModal show={showOptions}>{children}</SettingsModal>
     </>
+  ) : (
+    ''
   )
 }
+const PositionedIcon = styled(FontAwesomeIcon)`
+  padding: 1em;
+  font-size: 2em;
+  color: var(--main-dark);
+  z-index: 6000;
+  position: fixed;
+  top: 0;
+  right: 0;
+`
 
 const SettingsModal = styled.div`
   transition: all 0.3s ease;
   background: var(--brand-color);
-  background: -webkit-linear-gradient(
-    to top left,
-    rgba(var(--rgb-accent-dark), 0.8),
-    rgba(var(--rgb-brand-color), 0.9),
-    rgba(var(--rgb-main-dark), 0.7)
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top left,
-    rgba(var(--rgb-accent-dark), 0.9),
-    rgba(var(--rgb-brand-color), 0.95),
-    rgba(var(--rgb-main-dark), 0.8)
-  );
   opacity: ${({ show }) => (show ? 1 : 0)};
   position: fixed;
   top: 0;
@@ -143,18 +136,6 @@ const WidgetSelector = ({ widgetStatus, activateWidget, deactivateWidget }) => {
     </>
   )
 }
-
-const ToggleButton = styled.button`
-  padding: 24px 12px;
-  background: transparent;
-  border: none;
-  color: var(--main-light);
-  font-size: 2em;
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 6000;
-`
 
 const SelectorWrap = styled.div`
   padding: 1vmax;
