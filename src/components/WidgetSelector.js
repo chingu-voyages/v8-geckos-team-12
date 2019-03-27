@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-export default function WidgetSelector({ widgets }) {
+export default function Settings({ widgets }) {
   const localSetting = JSON.parse(localStorage.getItem(`widgetToggleSettings`))
 
   const filteredWidgets = (widgets, localSetting) => {
@@ -51,21 +51,52 @@ export default function WidgetSelector({ widgets }) {
     })
   }
 
+  const SettingsWidgets = [
+    WidgetSelector({ widgetStatus, activateWidget, deactivateWidget }),
+  ]
   return [
     ...widgetStatus.active.map(({ component }) => component),
-    Selector({ widgetStatus, activateWidget, deactivateWidget }),
+    <SettingsWrapper>{SettingsWidgets}</SettingsWrapper>,
   ]
 }
-
-const Selector = ({ widgetStatus, activateWidget, deactivateWidget }) => {
+const SettingsWrapper = ({ children }) => {
   const [showOptions, setOptions] = useState(false)
   const toggleOptionsModal = () => setOptions(state => !state)
+
   return (
     <>
       <ToggleButton onClick={toggleOptionsModal}>
         Open/Close Options Modal
       </ToggleButton>
-      <SelectorWrap show={showOptions}>
+      <SettingsModal show={showOptions}>{children}</SettingsModal>
+    </>
+  )
+}
+
+const SettingsModal = styled.div`
+  opacity: ${({ show }) => (show ? 1 : 0)};
+  position: fixed;
+  top: 0;
+  z-index: 5000;
+  left: 0;
+  min-height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-gap: 1vw;
+  margin: 1.5vw 1.5vw 4.5vmax 1.5vw;
+  grid-template-columns: repeat(8, 11.25vw);
+  grid-auto-rows: 11.25vw;
+  @media screen and (orientation: portrait) {
+    grid-template-columns: repeat(4, 23.5vw);
+    grid-auto-rows: 25vw;
+  }
+`
+
+const WidgetSelector = ({ widgetStatus, activateWidget, deactivateWidget }) => {
+  return (
+    <>
+      <SelectorWrap>
         <h1>Toggle Widgets</h1>
         <h2>Active</h2>
         <ul>
@@ -96,11 +127,6 @@ const ToggleButton = styled.button`
 `
 
 const SelectorWrap = styled.div`
-  opacity: ${({ show }) => (show ? 1 : 0)};
-  position: fixed;
-  top: 0;
-  z-index: 5000;
-  left: 0;
   padding: 1vmax;
   background: rgba(var(--rgb-main-dark), 0.95);
   color: var(--main-light);
