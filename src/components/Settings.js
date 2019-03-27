@@ -76,16 +76,32 @@ export default function Settings({
 const SettingsWrapper = ({ children, showOptions, toggleOptions }) => {
   return showOptions ? (
     <>
-      <PositionedIcon icon='window-close' onClick={toggleOptions} />
+      <Header>settings</Header>
       <SettingsModal show={showOptions}>{children}</SettingsModal>
+      <PositionedIcon icon='window-close' onClick={toggleOptions} />
     </>
   ) : (
     ''
   )
 }
+
+const Header = styled.div`
+  height: 6vmax;
+  margin-left: 1.5vmax;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  color: var(--main-dark);
+  z-index: 6000;
+  position: fixed;
+  top: 0;
+  left: 0;
+`
 const PositionedIcon = styled(FontAwesomeIcon)`
-  padding: 1em;
-  font-size: 2em;
+  height: 6vmax;
+  margin-right: 1.5vmax;
+  font-size: 3em;
   color: var(--main-dark);
   z-index: 6000;
   position: fixed;
@@ -96,6 +112,16 @@ const PositionedIcon = styled(FontAwesomeIcon)`
 const SettingsModal = styled.div`
   transition: all 0.3s ease;
   background: var(--brand-color);
+  background: -webkit-linear-gradient(
+    to bottom right,
+    var(--brand-color),
+    var(--accent-light)
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom right,
+    var(--brand-color),
+    var(--accent-light)
+  );
   opacity: ${({ show }) => (show ? 1 : 0)};
   position: fixed;
   top: 0;
@@ -104,7 +130,7 @@ const SettingsModal = styled.div`
   min-height: 100vh;
   width: 100vw;
   display: grid;
-  padding: 3vmax;
+  padding: 6vmax 1.5vmax 1.5vmax 1.5vmax;
   grid-auto-flow: row dense;
   grid-gap: 1vw;
   grid-template-columns: repeat(8, 1fr);
