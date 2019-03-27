@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { useScrollYPosition } from 'react-use-scroll-position'
+
+library.add(faCog)
 
 export default function Settings({ widgets }) {
   const localSetting = JSON.parse(localStorage.getItem(`widgetToggleSettings`))
@@ -54,26 +60,49 @@ export default function Settings({ widgets }) {
   const SettingsWidgets = [
     WidgetSelector({ widgetStatus, activateWidget, deactivateWidget }),
   ]
-  return [
-    ...widgetStatus.active.map(({ component }) => component),
-    <SettingsWrapper>{SettingsWidgets}</SettingsWrapper>,
-  ]
-}
-const SettingsWrapper = ({ children }) => {
+
   const [showOptions, setOptions] = useState(false)
   const toggleOptionsModal = () => setOptions(state => !state)
-
+  return [
+    ...widgetStatus.active.map(({ component }) => component),
+    <SettingsWrapper
+      showOptions={showOptions}
+      toggleOptions={toggleOptionsModal}
+    >
+      {SettingsWidgets}
+    </SettingsWrapper>,
+  ]
+}
+const SettingsWrapper = ({ children, showOptions, toggleOptions }) => {
   return (
     <>
-      <ToggleButton onClick={toggleOptionsModal}>
-        Open/Close Options Modal
+      <ToggleButton onClick={toggleOptions}>
+        <FontAwesomeIcon icon='cog' />
       </ToggleButton>
-      <SettingsModal show={showOptions}>{children}</SettingsModal>
+      {showOptions ? (
+        <SettingsModal show={showOptions}>{children}</SettingsModal>
+      ) : (
+        ''
+      )}
     </>
   )
 }
 
 const SettingsModal = styled.div`
+  transition: all 0.3s ease;
+  background: var(--brand-color);
+  background: -webkit-linear-gradient(
+    to top left,
+    rgba(var(--rgb-accent-dark), 0.8),
+    rgba(var(--rgb-brand-color), 0.9),
+    rgba(var(--rgb-main-dark), 0.7)
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top left,
+    rgba(var(--rgb-accent-dark), 0.9),
+    rgba(var(--rgb-brand-color), 0.95),
+    rgba(var(--rgb-main-dark), 0.8)
+  );
   opacity: ${({ show }) => (show ? 1 : 0)};
   position: fixed;
   top: 0;
@@ -82,13 +111,13 @@ const SettingsModal = styled.div`
   min-height: 100vh;
   width: 100vw;
   display: grid;
+  padding: 3vmax;
   grid-auto-flow: row dense;
   grid-gap: 1vw;
-  margin: 1.5vw 1.5vw 4.5vmax 1.5vw;
-  grid-template-columns: repeat(8, 11.25vw);
+  grid-template-columns: repeat(8, 1fr);
   grid-auto-rows: 11.25vw;
   @media screen and (orientation: portrait) {
-    grid-template-columns: repeat(4, 23.5vw);
+    grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: 25vw;
   }
 `
@@ -116,10 +145,11 @@ const WidgetSelector = ({ widgetStatus, activateWidget, deactivateWidget }) => {
 }
 
 const ToggleButton = styled.button`
-  padding: 2vmax;
-  background: orangered;
-  color: white;
-  font-size: 1em;
+  padding: 24px 12px;
+  background: transparent;
+  border: none;
+  color: var(--main-light);
+  font-size: 2em;
   position: fixed;
   top: 0;
   right: 0;

@@ -9,7 +9,7 @@ import LoadingAnimation from './components/LoadingAnimation'
 import Footer from './components/Footer'
 import styled from 'styled-components'
 import RedditFeed from './components/RedditFeed'
-import WidgetSelector from './components/WidgetSelector'
+import Settings from './components/Settings'
 
 const App = ({
   coords,
@@ -84,7 +84,7 @@ Disabled for now, issues with lambda function
             setUnsplashQuery={setUnsplashQuery}
           />
           <AppWrapper>
-            <WidgetSelector
+            <Settings
               widgets={[
                 {
                   component: (

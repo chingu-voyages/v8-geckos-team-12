@@ -7,14 +7,14 @@ export default function RedditFeed() {
   const [currentSub, setCurrentSub] = useState(subreddit)
 
   const [feed, setFeed] = useState([])
-  const fetchData = async (query = currentSub) => {
+  const fetchData = async query => {
     const response = await fetch(`https://www.reddit.com/r/${query}/.json`)
     const json = await response.json()
     const data = await json.data
     setFeed(data.children.slice(0, 30))
   }
   if (!feed.length) {
-    fetchData()
+    fetchData(currentSub)
   }
 
   const fetchAutoComplete = async query => {
