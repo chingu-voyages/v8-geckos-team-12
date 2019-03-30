@@ -116,6 +116,12 @@ const DayWrapper = styled.div`
     margin-bottom: 10%;
     text-align: center;
   }
+  div {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
