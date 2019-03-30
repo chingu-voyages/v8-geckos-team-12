@@ -5,7 +5,32 @@ import OneDay from './OneDay'
 import FiveDays from './FiveDays'
 
 export default props => {
-  return <FiveDays latitude={props.latitude} longitude={props.longitude} />
+  return (
+    <Router>
+      <ForecastWrapper>
+        <h2>Weather Info</h2>
+        <nav>
+          <Link to='/'>Today</Link>
+          <Link to='/5days'>5 Days</Link>
+        </nav>
+        <Route>
+          <Route
+            path='/'
+            exact
+            render={() => (
+              <OneDay latitude={props.latitude} longitude={props.longitude} />
+            )}
+          />
+          <Route
+            path='/5days'
+            render={() => (
+              <FiveDays latitude={props.latitude} longitude={props.longitude} />
+            )}
+          />
+        </Route>
+      </ForecastWrapper>
+    </Router>
+  )
 }
 
 const ForecastWrapper = styled.div`
@@ -13,6 +38,7 @@ const ForecastWrapper = styled.div`
   background: rgba(255, 255, 255, 0.85);
   grid-column: span 4;
   grid-row: span 2;
+  overflow: scroll;
   margin: 0 2%;
   /* line-height: 20px; */
   padding: 1%;
@@ -29,8 +55,17 @@ const ForecastWrapper = styled.div`
     padding: 2% 0.5%;
     color: var(--main-dark);
   }
-  h2 {
+  h2,
+  h1 {
     font-size: 1.25em;
+    text-align: center;
+  }
+  a {
+    margin: 2%;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
   }
 `
 const ForecastLoadingWrapper = styled.div`

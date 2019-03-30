@@ -31,21 +31,20 @@ export default ({ latitude, longitude }) => {
   const weatherIcon = main => {
     let icon = main.toLowerCase()
     if (icon == 'clouds') {
-      return 'fas fa-cloud'
+      return 'fas fa-cloud fa-3x'
     } else if (icon == 'rain') {
-      return 'fas fa-cloud-rain'
+      return 'fas fa-cloud-rain fa-3x'
     } else if (icon == 'snow') {
-      return 'far fa-snowflake'
+      return 'far fa-snowflake fa-3x'
     } else if (icon == 'sunny' || icon == 'clear') {
-      return 'fas fa-sun'
+      return 'fas fa-sun fa-3x'
     } else {
-      return 'fas fa-cloud-sun'
+      return 'fas fa-cloud-sun fa-3x'
     }
   }
   return forecast ? (
-    <ForecastWrapper>
+    <TodayWrapper>
       <div>
-        <h1>Weather Info</h1>
         <h2>
           <i className={weatherIcon(forecast.weather[0].main)} />{' '}
           {forecast.weather[0].main}
@@ -57,40 +56,20 @@ export default ({ latitude, longitude }) => {
           </p>
         </section>
       </div>
-    </ForecastWrapper>
+    </TodayWrapper>
   ) : (
     <ForecastLoadingWrapper>Forecast Loading</ForecastLoadingWrapper>
   )
 }
 
-const ForecastWrapper = styled.div`
-  //add styles here for current location info
-  background: rgba(255, 255, 255, 0.8);
-  grid-column: span 4;
-  grid-row: span 2;
-  margin: 0 2%;
-  /* line-height: 20px; */
-  padding: 5%;
-  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
-  border-radius: 5px;
-  background-color: rgba(var(--rgb-main-light), 0.85);
-  color: var(--main-dark);
-  h1 {
-    font-size: 2em;
-  }
-  p,
-  h2,
-  h1 {
-    padding: 2% 0.5%;
-    color: var(--main-dark);
-    text-align: center;
-    font-size: 1.25em;
-  }
-  h2 {
-    font-size: 1.5em;
-    text-align: center;
-  }
+const TodayWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
 `
+
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
   background-color: rgba(var(--rgb-main-light), 0.85);
