@@ -3,8 +3,7 @@ import styled from 'styled-components'
 
 export default ({ latitude, longitude }) => {
   const [forecast, setForecast] = useState()
-  const setDestructuredForecast = ({ list }) => {
-    console.log(list)
+  const setDestructuredForecast = ({ list }) =>
     setForecast({
       list: changeForecast(list),
     })
@@ -123,6 +122,7 @@ const DayWrapper = styled.div`
     align-items: center;
   }
 `
+
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
   background-color: rgba(var(--rgb-main-light), 0.85);
