@@ -28,44 +28,44 @@ export const globalStylesTagged = `
 a, a:visited {
   color: rgb(250,250,255);
 }
-//Custom Scroll Bar
-// body::-webkit-scrollbar {
-//   z-index: 1;
-// width: .75vw;
-// border-radius: 10000px;
-// background:  rgba(0,0,0,.4);
-// }
 
-// body::-webkit-scrollbar:hover{
-//   border: 1px solid rgba(0,0,0,.05);
-//   z-index: 1;
-//   background: rgba(0,0,0,.1);
-// width: .75vw;
-//   }
+body::-webkit-scrollbar, ::-webkit-scrollbar {
+  z-index: 1;
+width: .75vw;
+border-radius: 10000px;
+background:  rgba(var(--rgb-main-dark),0.5);
+}
 
-
-// /* Track */
-// body::-webkit-scrollbar-track {
-//   z-index: 1;
-//   background: transparent;
-// }
-
-// /* Handle */
-// body::-webkit-scrollbar-thumb {
-//   border-radius: 1000px;
-//   z-index: 1;
-//   border: 1px solid #666;
-//   background: rgba(0,0,0,.1);
-// }
+body::-webkit-scrollbar:hover, ::-webkit-scrollbar:hover {
+  border: 1px solid  rgba(var(--rgb-main-dark),0.5);
+  z-index: 1;
+  background:  rgba(var(--rgb-main-dark),0.2);
+width: .75vw;
+  }
 
 
-// /* Handle on hover */
-// body::-webkit-scrollbar-thumb:hover {
-//   border: 1px solid #444;
-//   box-shadow: 0 0 5px #;
-//   z-index: 1;
-//   background: rgba(0,0,0,.2);
-// }
+/* Track */
+body::-webkit-scrollbar-track, ::-webkit-scrollbar-track {
+  z-index: 1;
+  background: transparent;
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+  border-radius: 1000px;
+  z-index: 1;
+  border: 1px solid var(--main-dark);
+  background: rgba(var(--rgb-brand-color), 0.2);
+}
+
+
+/* Handle on hover */
+body::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:hover {
+  border: 1px solid var(--main-dark);
+  box-shadow: 0 0 5px var(--main-dark);
+  z-index: 1;
+  background:rgba(var(--rgb-brand-color), 0.2);
+}
 
 html,
   body,
