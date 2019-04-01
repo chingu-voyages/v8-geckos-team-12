@@ -218,9 +218,9 @@ const PostList = styled.ul`
   white-space: nowrap;
   overflow-y: hidden;
 
-  &::-webkit-scrollbar {
+  /* &::-webkit-scrollbar {
     display: none;
-  }
+  } */
 `
 
 const PostTile = ({
