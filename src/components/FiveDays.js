@@ -7,7 +7,6 @@ export default ({ latitude, longitude }) => {
     setForecast({
       list: changeForecast(list),
     })
-  }
   if (!forecast) {
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${
