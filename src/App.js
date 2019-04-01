@@ -68,16 +68,6 @@ Disabled for now, issues with lambda function
   const toggleShowSettings = () => setShowSettings(state => !state)
   return (
     <>
-      {!showLoading && (
-        <LocationModal
-          setLocation={setLocation}
-          shown={
-            !location.available &&
-            (!isGeolocationAvailable || !isGeolocationEnabled)
-          }
-        />
-      )}
-
       {!showLoading && (location.available || coords || location.latitude) ? (
         <>
           <Unsplash setUnsplashData={setUnsplashData} />
@@ -112,6 +102,15 @@ Disabled for now, issues with lambda function
         </>
       ) : (
         <LoadingAnimation />
+      )}
+      {!showLoading && (
+        <LocationModal
+          setLocation={setLocation}
+          shown={
+            !location.available &&
+            (!isGeolocationAvailable || !isGeolocationEnabled)
+          }
+        />
       )}
     </>
   )
