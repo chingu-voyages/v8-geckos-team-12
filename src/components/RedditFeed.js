@@ -118,6 +118,7 @@ export default function RedditFeed() {
 }
 
 const Header = styled.div`
+  font-weight: 400;
   background: var(--main-dark);
   color: var(--main-light);
   display: flex;
@@ -149,14 +150,10 @@ const Options = styled.div`
   background-color: rgba(var(--rgb-main-light), 0.85);
   margin-bottom: 1vw;
   border-radius: 0 0 5px 5px;
-  padding: 0.5vw 1vw;
+  padding: 1vw 1vw;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 10%;
-  @media screen and (orientation: portrait) {
-    height: 5%;
-  }
 `
 const Spacer = ({ position }) => (
   <PostCard position={position}>
@@ -181,8 +178,11 @@ const SuggestionDropdown = styled.ul`
   position: absolute;
   & li {
     cursor: pointer;
+    padding: 5px;
+    transition: all 0.2s ease;
     &:hover {
-      background: #aaa;
+      background: var(--brand-color);
+      color: var(--main-dark);
     }
   }
 `
@@ -194,7 +194,7 @@ const OptionSelector = styled.div`
 `
 const Postwrap = styled.div`
   grid-column: span 4;
-  grid-row: span 2;
+  grid-row: span 4;
   @media screen and (orientation: portrait) {
     grid-row: span 4;
   }
