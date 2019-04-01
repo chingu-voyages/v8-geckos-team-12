@@ -85,7 +85,6 @@ Disabled for now, issues with lambda function
             latitude={location.latitude}
             longitude={location.longitude}
             setUnsplashQuery={setUnsplashQuery}
-            toggleShowSettings={toggleShowSettings}
           />
           <AppWrapper>
             <Settings
@@ -109,7 +108,7 @@ Disabled for now, issues with lambda function
               ]}
             />
           </AppWrapper>
-          <Footer {...unsplashData} />
+          <Footer {...unsplashData} toggleShowSettings={toggleShowSettings} />
         </>
       ) : (
         <LoadingAnimation />
