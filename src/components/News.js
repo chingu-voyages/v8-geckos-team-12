@@ -23,6 +23,7 @@ export default ({ query }) => {
 
   return (
     <ArticleWrapper>
+      <h2>News Feed</h2>
       {articles ? (
         <ul>
           {articles.length > 0 ? (
@@ -97,10 +98,20 @@ const ArticleWrapper = styled.div`
       justify-content: space-between;
     }
   }
+
+  & h2 {
+    text-align: center;
+    font-size: 1.25em;
+    padding: 10px 0;
+    background-color: var(--main-dark);
+    color: white;
+    margin-bottom: 7px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
 `
 
 const Article = styled.li`
-  box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
   background-color: rgba(var(--rgb-main-light), 0.85);
   line-height: 130%;
   transition: 0.1s;
@@ -116,7 +127,7 @@ const Article = styled.li`
     }
   }
   :hover {
-    transform: translateY(-7px);
+    transform: translateY(-6px);
     cursor: pointer;
   }
 `

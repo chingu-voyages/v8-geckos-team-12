@@ -9,6 +9,7 @@ import LoadingAnimation from './components/LoadingAnimation'
 import Footer from './components/Footer'
 import styled from 'styled-components'
 import RedditFeed from './components/RedditFeed'
+import Settings from './components/Settings'
 
 const App = ({
   coords,
@@ -62,6 +63,9 @@ Disabled for now, issues with lambda function
   }
   console.log(colorTheme)
   */
+
+  const [showSettings, setShowSettings] = useState(false)
+  const toggleShowSettings = () => setShowSettings(state => !state)
   return (
     <>
       {!showLoading && (
@@ -83,14 +87,28 @@ Disabled for now, issues with lambda function
             setUnsplashQuery={setUnsplashQuery}
           />
           <AppWrapper>
-            <Weather
-              latitude={location.latitude}
-              longitude={location.longitude}
+            <Settings
+              showSettings={showSettings}
+              toggleShowSettings={toggleShowSettings}
+              widgets={[
+                {
+                  component: (
+                    <Weather
+                      latitude={location.latitude}
+                      longitude={location.longitude}
+                    />
+                  ),
+                  name: `Weather`,
+                },
+                {
+                  component: <News query={unsplashQuery} />,
+                  name: `News Feed`,
+                },
+                { component: <RedditFeed />, name: `Reddit Feed` },
+              ]}
             />
-            <News query={unsplashQuery} />
-            <RedditFeed />
           </AppWrapper>
-          <Footer {...unsplashData} />
+          <Footer {...unsplashData} toggleShowSettings={toggleShowSettings} />
         </>
       ) : (
         <LoadingAnimation />
