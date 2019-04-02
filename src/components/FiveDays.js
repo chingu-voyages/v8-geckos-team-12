@@ -71,45 +71,6 @@ export default ({ latitude, longitude }) => {
     }
     return newList
   }
-  const changeForecast = list => {
-    let newList = []
-    let data = {
-      date: list[0].dt_txt.split(' ')[0],
-      min: [list[0].main.temp_min],
-      max: [list[0].main.temp_max],
-      weather: '',
-    }
-    for (let i = 0; i < list.length - 1; i++) {
-      if (list[i].dt_txt.split(' ')[0] == list[i + 1].dt_txt.split(' ')[0]) {
-        data.min.push(list[i + 1].main.temp_min)
-        data.max.push(list[i + 1].main.temp_max)
-        if (list[i + 1].dt_txt.split(' ')[1] == '12:00:00') {
-          data.weather = list[i + 1].weather[0].main
-        }
-        if (i + 2 == list.length) {
-          newList.push({
-            date: data.date,
-            min: data.min,
-            max: data.max,
-            weather: data.weather,
-          })
-        }
-      } else {
-        newList.push({
-          date: data.date,
-          min: data.min,
-          max: data.max,
-          weather: data.weather,
-        })
-        data.date = list[i + 1].dt_txt.split(' ')[0]
-        data.min = []
-        data.max = []
-        data.min.push(list[i + 1].main.temp_min)
-        data.max.push(list[i + 1].main.temp_max)
-      }
-    }
-    return newList
-  }
   return forecast ? (
     <ComponentWrapper>
       <div>
