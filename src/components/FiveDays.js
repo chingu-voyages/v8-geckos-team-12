@@ -3,8 +3,12 @@ import styled from 'styled-components'
 
 export default ({ latitude, longitude }) => {
   const [forecast, setForecast] = useState()
+<<<<<<< HEAD
   const setDestructuredForecast = ({ list }) => {
     console.log(list)
+=======
+  const setDestructuredForecast = ({ list }) =>
+>>>>>>> bf92d401214039b232aa484ab96db9361b4ba5fc
     setForecast({
       list: changeForecast(list),
     })
@@ -30,7 +34,49 @@ export default ({ latitude, longitude }) => {
       return 'fas fa-sun fa-3x'
     } else {
       return 'fas fa-cloud-sun fa-3x'
+<<<<<<< HEAD
     }
+  }
+  const changeForecast = list => {
+    let newList = []
+    let data = {
+      date: list[0].dt_txt.split(' ')[0],
+      min: [list[0].main.temp_min],
+      max: [list[0].main.temp_max],
+      weather: '',
+    }
+    for (let i = 0; i < list.length - 1; i++) {
+      if (list[i].dt_txt.split(' ')[0] == list[i + 1].dt_txt.split(' ')[0]) {
+        data.min.push(list[i + 1].main.temp_min)
+        data.max.push(list[i + 1].main.temp_max)
+        if (list[i + 1].dt_txt.split(' ')[1] == '12:00:00') {
+          data.weather = list[i + 1].weather[0].main
+        }
+        if (i + 2 == list.length) {
+          newList.push({
+            date: data.date,
+            min: data.min,
+            max: data.max,
+            weather: data.weather,
+          })
+        }
+      } else {
+        newList.push({
+          date: data.date,
+          min: data.min,
+          max: data.max,
+          weather: data.weather,
+        })
+        data.date = list[i + 1].dt_txt.split(' ')[0]
+        data.min = []
+        data.max = []
+        data.min.push(list[i + 1].main.temp_min)
+        data.max.push(list[i + 1].main.temp_max)
+      }
+=======
+>>>>>>> bf92d401214039b232aa484ab96db9361b4ba5fc
+    }
+    return newList
   }
   const changeForecast = list => {
     let newList = []
@@ -103,7 +149,11 @@ export default ({ latitude, longitude }) => {
 
 const ComponentWrapper = styled.div``
 const DayWrapper = styled.div`
+<<<<<<< HEAD
   overflow: scroll;
+=======
+  /* overflow: scroll; */
+>>>>>>> bf92d401214039b232aa484ab96db9361b4ba5fc
   background-color: rgba(var(--rgb-main-light), 0.8);
   margin: 1%;
   padding: 2%;
@@ -115,6 +165,7 @@ const DayWrapper = styled.div`
     padding: 1% 0 3%;
     margin-bottom: 10%;
     text-align: center;
+<<<<<<< HEAD
   }
   div {
     width: 80%;
@@ -123,6 +174,17 @@ const DayWrapper = styled.div`
     align-items: center;
   }
 `
+=======
+  }
+  div {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`
+
+>>>>>>> bf92d401214039b232aa484ab96db9361b4ba5fc
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
   background-color: rgba(var(--rgb-main-light), 0.85);

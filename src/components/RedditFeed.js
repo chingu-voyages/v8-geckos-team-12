@@ -47,6 +47,7 @@ export default function RedditFeed() {
   const [toggle, setToggle] = useState(false)
   return (
     <Postwrap>
+      <Header>Reddit Feed</Header>
       <Options>
         <OptionSelector>
           <InputWrap>
@@ -68,7 +69,7 @@ export default function RedditFeed() {
                 color: colors.brandColor,
               }}
               toggle={!toggle}
-              placeholder={!toggle ? currentSub : `Select subreddit:`}
+              placeholder={!toggle ? `r/${currentSub}` : `Select subreddit:`}
               onChange={updateAutoComplete}
               onFocus={() => setToggle(state => !state)}
               onBlur={() =>
@@ -92,7 +93,7 @@ export default function RedditFeed() {
                     fetchData(suggestion)
                     setSuggestions([])
                     setSubredditAutocompleteQuery(``)
-                    setCurrentSub(`r/${suggestion}`)
+                    setCurrentSub(suggestion)
                     localStorage.setItem(`subreddit`, suggestion)
                     //setToggle(state => !state)
                   }}
@@ -116,6 +117,18 @@ export default function RedditFeed() {
   )
 }
 
+const Header = styled.div`
+  font-weight: 400;
+  background: var(--main-dark);
+  color: var(--main-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25em;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+`
+
 const InputWrap = styled.div`
   position: relative;
 `
@@ -134,13 +147,13 @@ const CloseIcon = styled.button`
 `
 
 const Options = styled.div`
+  background-color: rgba(var(--rgb-main-light), 0.85);
+  margin-bottom: 1vw;
+  border-radius: 0 0 5px 5px;
+  padding: 1vw 1vw;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 20%;
-  @media screen and (orientation: portrait) {
-    height: 10%;
-  }
 `
 const Spacer = ({ position }) => (
   <PostCard position={position}>
@@ -165,8 +178,11 @@ const SuggestionDropdown = styled.ul`
   position: absolute;
   & li {
     cursor: pointer;
+    padding: 5px;
+    transition: all 0.2s ease;
     &:hover {
-      background: #aaa;
+      background: var(--brand-color);
+      color: var(--main-dark);
     }
   }
 `
@@ -178,7 +194,7 @@ const OptionSelector = styled.div`
 `
 const Postwrap = styled.div`
   grid-column: span 4;
-  grid-row: span 2;
+  grid-row: span 4;
   @media screen and (orientation: portrait) {
     grid-row: span 4;
   }
@@ -186,9 +202,9 @@ const Postwrap = styled.div`
   flex-direction: column;
 `
 const PostList = styled.ul`
-  height: 80%;
+  height: 90%;
   @media screen and (orientation: portrait) {
-    height: 90%;
+    height: 95%;
   }
   overflow-x: scroll;
   overflow-y: hidden;
@@ -202,9 +218,9 @@ const PostList = styled.ul`
   white-space: nowrap;
   overflow-y: hidden;
 
-  &::-webkit-scrollbar {
+  /* &::-webkit-scrollbar {
     display: none;
-  }
+  } */
 `
 
 const PostTile = ({
@@ -291,7 +307,6 @@ const Post = styled.div`
     flex-direction: column;
     overflow-wrap: break-word;
     overflow: hidden;
-    box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
     border-radius: ${({ position }) =>
       position === `left`
         ? `0 5px 5px 0`
