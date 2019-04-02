@@ -31,24 +31,22 @@ export default ({ latitude, longitude }) => {
   const weatherIcon = main => {
     let icon = main.toLowerCase()
     if (icon == 'clouds') {
-      return 'fas fa-cloud fa-3x'
+      return 'fas fa-cloud fa-4x'
     } else if (icon == 'rain') {
-      return 'fas fa-cloud-rain fa-3x'
+      return 'fas fa-cloud-rain fa-4x'
     } else if (icon == 'snow') {
-      return 'far fa-snowflake fa-3x'
+      return 'far fa-snowflake fa-4x'
     } else if (icon == 'sunny' || icon == 'clear') {
-      return 'fas fa-sun fa-3x'
+      return 'fas fa-sun fa-4x'
     } else {
-      return 'fas fa-cloud-sun fa-3x'
+      return 'fas fa-cloud-sun fa-4x'
     }
   }
   return forecast ? (
     <TodayWrapper>
       <div>
-        <h2>
-          <i className={weatherIcon(forecast.weather[0].main)} />{' '}
-          {forecast.weather[0].main}
-        </h2>
+        <i className={weatherIcon(forecast.weather[0].main)} />{' '}
+        <h1>{forecast.weather[0].main}</h1>
         <section>
           <h1>{forecast.main.temp}&#176; F</h1>
           <p>
@@ -68,6 +66,9 @@ const TodayWrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 70%;
+  i {
+    color: var(--main-dark);
+  }
 `
 
 const ForecastLoadingWrapper = styled.div`
