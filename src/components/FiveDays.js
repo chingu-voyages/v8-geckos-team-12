@@ -3,10 +3,12 @@ import styled from 'styled-components'
 
 export default ({ latitude, longitude }) => {
   const [forecast, setForecast] = useState()
-  const setDestructuredForecast = ({ list }) =>
+  const setDestructuredForecast = ({ list }) => {
+    console.log(list)
     setForecast({
       list: changeForecast(list),
     })
+  }
   if (!forecast) {
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${
@@ -121,9 +123,8 @@ const DayWrapper = styled.div`
     align-items: center;
   }
 `
-
 const ForecastLoadingWrapper = styled.div`
-  //add styles here for current location loading placeholder
+  /* add styles here for current location loading placeholder */
   background-color: rgba(var(--rgb-main-light), 0.85);
   grid-column: span 4;
   grid-row: span 2;
