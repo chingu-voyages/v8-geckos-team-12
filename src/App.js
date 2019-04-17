@@ -41,7 +41,7 @@ const App = ({
       available: !isGeolocationAvailable || !isGeolocationEnabled,
     })
   } catch (err) {}
-  setTimeout(() => setLoading(false), 2500)
+  setTimeout(() => setLoading(false), 3000)
   //Example netlify lambda call
   // fetch('/.netlify/functions/hello')
   //   .then(response => response.json())
@@ -68,7 +68,7 @@ Disabled for now, issues with lambda function
   const toggleShowSettings = () => setShowSettings(state => !state)
   return (
     <>
-      {!showLoading && (location.available || coords || location.latitude) ? (
+      {(location.available || coords || location.latitude) && (
         <>
           <Unsplash setUnsplashData={setUnsplashData} />
           <Header
@@ -100,9 +100,8 @@ Disabled for now, issues with lambda function
           </AppWrapper>
           <Footer {...unsplashData} toggleShowSettings={toggleShowSettings} />
         </>
-      ) : (
-        <LoadingAnimation />
       )}
+      {showLoading && <LoadingAnimation />}
       {!showLoading &&
         (!location.available || !coords || !location.latitude) && (
           <LocationModal

@@ -8,23 +8,23 @@ export default function RedditFeed() {
 
   const [feed, setFeed] = useState([])
   const fetchData = async query => {
-    const response = await fetch(`https://www.reddit.com/r/${query}/.json`)
-    const json = await response.json()
-    const data = await json.data
-    setFeed(data.children.slice(0, 30))
+    const { data } = await fetch(
+      `.netlify/functions/redditFetchFeed?query=${query}`
+    ).then(response => response.json())
+    setFeed(data)
   }
+
   if (!feed.length) {
     fetchData(currentSub)
   }
 
   const fetchAutoComplete = async query => {
-    const response = await fetch(
-      `https://www.reddit.com/api/subreddit_autocomplete_v2.json?query=${query}&include_over_18=false&include_categories=false&include_profiles=false&limit=10`
-    )
-    const json = await response.json()
-    const data = await json.data.children.map(({ data }) => data)
+    const { data } = await fetch(
+      `.netlify/functions/redditAutocomplete?query=${query}`
+    ).then(response => response.json())
     return data
   }
+
   const [suggestions, setSuggestions] = useState([])
   const [subredditAutocompleteQuery, setSubredditAutocompleteQuery] = useState(
     ``
@@ -33,7 +33,6 @@ export default function RedditFeed() {
     setSubredditAutocompleteQuery(value)
     if (subredditAutocompleteQuery.length > 0) {
       const suggestions = await fetchAutoComplete(value)
-      console.log(suggestions)
 
       const returnedSuggestions = suggestions
         .filter(({ subreddit_type }) => subreddit_type !== `private`)
@@ -194,7 +193,7 @@ const OptionSelector = styled.div`
 `
 const Postwrap = styled.div`
   grid-column: span 4;
-  grid-row: span 4;
+  grid-row: span 2;
   @media screen and (orientation: portrait) {
     grid-row: span 4;
   }
