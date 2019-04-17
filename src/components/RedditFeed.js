@@ -8,7 +8,7 @@ export default function RedditFeed() {
   const baseURL =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000'
-      : process.env.url
+      : process.env.DEPLOY_URL
   const [feed, setFeed] = useState([])
   const fetchData = async query => {
     const { data } = await fetch(
