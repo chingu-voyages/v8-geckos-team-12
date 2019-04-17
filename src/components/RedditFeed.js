@@ -5,11 +5,14 @@ import colors from '../theme/colors'
 export default function RedditFeed() {
   const subreddit = localStorage.getItem(`subreddit`) || `javascript`
   const [currentSub, setCurrentSub] = useState(subreddit)
-
+  const baseURL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : process.env.url
   const [feed, setFeed] = useState([])
   const fetchData = async query => {
     const { data } = await fetch(
-      `http://localhost:3000/.netlify/functions/redditFetchFeed?query=${query}`
+      `${baseURL}/.netlify/functions/redditFetchFeed?query=${query}`
     ).then(response => response.json())
     setFeed(data)
   }
@@ -20,7 +23,7 @@ export default function RedditFeed() {
 
   const fetchAutoComplete = async query => {
     const { data } = await fetch(
-      `http://localhost:3000/.netlify/functions/redditAutocomplete?query=${query}`
+      `${baseURL}/.netlify/functions/redditAutocomplete?query=${query}`
     ).then(response => response.json())
     return data
   }
