@@ -11,7 +11,7 @@ export default function RedditFeed() {
     const { data } = await fetch(
       `http://localhost:3000/.netlify/functions/redditFetchFeed?query=${query}`
     ).then(response => response.json())
-    console.log(data)
+    setFeed(data)
   }
 
   if (!feed.length) {
@@ -33,7 +33,6 @@ export default function RedditFeed() {
     setSubredditAutocompleteQuery(value)
     if (subredditAutocompleteQuery.length > 0) {
       const suggestions = await fetchAutoComplete(value)
-      console.log(suggestions)
 
       const returnedSuggestions = suggestions
         .filter(({ subreddit_type }) => subreddit_type !== `private`)
@@ -110,7 +109,7 @@ export default function RedditFeed() {
       </Options>
       <PostList>
         <Spacer position={`left`} />
-        {console.log(feed) || feed.map(PostTile)}
+        {feed.map(PostTile)}
         <Spacer position={`right`} />
       </PostList>
     </Postwrap>
