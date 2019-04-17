@@ -5,6 +5,7 @@ import colors from '../theme/colors'
 export default function RedditFeed() {
   const subreddit = localStorage.getItem(`subreddit`) || `javascript`
   const [currentSub, setCurrentSub] = useState(subreddit)
+  console.log(`deploy url: `, process.env.DEPLOY_URL)
   const baseURL =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000/'
