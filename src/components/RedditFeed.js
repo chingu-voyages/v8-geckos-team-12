@@ -5,10 +5,8 @@ import colors from '../theme/colors'
 export default function RedditFeed() {
   const subreddit = localStorage.getItem(`subreddit`) || `javascript`
   const [currentSub, setCurrentSub] = useState(subreddit)
-  const baseURL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      : process.env.DEPLOY_URL
+  const baseURL = process.env.DEPLOY_URL || 'http://localhost:3000'
+  console.log(baseURL)
   const [feed, setFeed] = useState([])
   const fetchData = async query => {
     const { data } = await fetch(
