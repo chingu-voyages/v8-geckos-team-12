@@ -193,7 +193,7 @@ const OptionSelector = styled.div`
 `
 const Postwrap = styled.div`
   grid-column: span 4;
-  grid-row: span 4;
+  grid-row: span 2;
   @media screen and (orientation: portrait) {
     grid-row: span 4;
   }
