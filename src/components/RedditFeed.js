@@ -8,23 +8,23 @@ export default function RedditFeed() {
 
   const [feed, setFeed] = useState([])
   const fetchData = async query => {
-    const response = await fetch(`https://www.reddit.com/r/${query}/.json`)
-    const json = await response.json()
-    const data = await json.data
-    setFeed(data.children.slice(0, 30))
+    const { data } = await fetch(
+      `http://localhost:3000/.netlify/functions/redditFetchFeed?query=${query}`
+    ).then(response => response.json())
+    console.log(data)
   }
+
   if (!feed.length) {
     fetchData(currentSub)
   }
 
   const fetchAutoComplete = async query => {
-    const response = await fetch(
-      `https://www.reddit.com/api/subreddit_autocomplete_v2.json?query=${query}&include_over_18=false&include_categories=false&include_profiles=false&limit=10`
-    )
-    const json = await response.json()
-    const data = await json.data.children.map(({ data }) => data)
+    const { data } = await fetch(
+      `http://localhost:3000/.netlify/functions/redditAutocomplete?query=${query}`
+    ).then(response => response.json())
     return data
   }
+
   const [suggestions, setSuggestions] = useState([])
   const [subredditAutocompleteQuery, setSubredditAutocompleteQuery] = useState(
     ``
@@ -110,7 +110,7 @@ export default function RedditFeed() {
       </Options>
       <PostList>
         <Spacer position={`left`} />
-        {feed.map(PostTile)}
+        {console.log(feed) || feed.map(PostTile)}
         <Spacer position={`right`} />
       </PostList>
     </Postwrap>
