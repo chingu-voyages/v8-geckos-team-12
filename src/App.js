@@ -11,6 +11,15 @@ import styled from 'styled-components'
 import RedditFeed from './components/RedditFeed'
 import Settings from './components/Settings'
 
+import GlobalStyle from './theme/GlobalStyles'
+import {
+  RGBMainDark,
+  RGBMainLight,
+  RGBAccentDark,
+  RGBAccentLight,
+  RGBBrandColor,
+} from './theme/colors'
+
 const App = ({
   coords,
   isGeolocationAvailable, // boolean flag indicating that the browser supports the Geolocation API
@@ -68,6 +77,7 @@ Disabled for now, issues with lambda function
   const toggleShowSettings = () => setShowSettings(state => !state)
   return (
     <>
+      <GlobalStyle />
       {(location.available || coords || location.latitude) && (
         <>
           <Unsplash setUnsplashData={setUnsplashData} />

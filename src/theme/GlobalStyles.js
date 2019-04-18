@@ -224,13 +224,15 @@ const parseColors = ({
 }
 `
 
-export const GlobalStyle = colors =>
+export const GlobalStyle = ({ colors }) =>
   createGlobalStyle`${parseColors(colors)}${globalStylesTagged}`
 
 export default GlobalStyle({
-  RGBMainDark,
-  RGBMainLight,
-  RGBAccentDark,
-  RGBAccentLight,
-  RGBBrandColor,
+  colors: {
+    RGBMainDark,
+    RGBMainLight,
+    RGBAccentDark,
+    RGBAccentLight,
+    RGBBrandColor,
+  },
 })
