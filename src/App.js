@@ -21,9 +21,14 @@ const App = ({
   positionError, // object with the error returned from the Geolocation API call
 }) => {
   const [showLoading, setLoading] = useState(true)
-  const [theme, setTheme] = useState({
-    colors,
-  })
+
+  const [theme, setTheme] = useState(
+    JSON.parse(window.localStorage.getItem(`theme`)) || { colors }
+  )
+  const updateTheme = ({ colors }) => {
+    window.localStorage.setItem(`theme`, JSON.stringify({ colors }))
+    setTheme({ colors })
+  }
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
@@ -86,6 +91,8 @@ Disabled for now, issues with lambda function
             />
             <AppWrapper>
               <Settings
+                currentTheme={theme}
+                updateTheme={updateTheme}
                 showSettings={showSettings}
                 toggleShowSettings={toggleShowSettings}
                 widgets={[

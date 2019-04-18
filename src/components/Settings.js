@@ -9,6 +9,8 @@ export default function Settings({
   widgets,
   showSettings,
   toggleShowSettings,
+  updateTheme,
+  currentTheme,
 }) {
   const localSetting = JSON.parse(localStorage.getItem(`widgetToggleSettings`))
 
@@ -59,8 +61,19 @@ export default function Settings({
     })
   }
 
+  const ThemeSelector = () => {
+    return (
+      <>
+        <SelectorWrap>
+          <h1>Theme Selector</h1>
+        </SelectorWrap>
+      </>
+    )
+  }
+
   const SettingsWidgets = [
     WidgetSelector({ widgetStatus, activateWidget, deactivateWidget }),
+    ThemeSelector({ updateTheme, currentTheme }),
   ]
 
   return [
