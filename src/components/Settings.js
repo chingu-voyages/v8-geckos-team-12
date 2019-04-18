@@ -208,7 +208,7 @@ const SelectorWrap = styled.div`
   grid-column: span 2;
   grid-row: span 2;
   @media screen and (orientation: portrait) {
-    grid-row: span 2;
+    grid-row: span 4;
   }
   display: flex;
   flex-direction: column;
