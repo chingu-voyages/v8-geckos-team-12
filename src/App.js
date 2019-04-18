@@ -7,7 +7,7 @@ import Unsplash from './components/Unsplash.js'
 import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
 import Footer from './components/Footer'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import RedditFeed from './components/RedditFeed'
 import Settings from './components/Settings'
 
@@ -27,6 +27,15 @@ const App = ({
   positionError, // object with the error returned from the Geolocation API call
 }) => {
   const [showLoading, setLoading] = useState(true)
+  const [theme, setTheme] = useState({
+    colors: {
+      RGBMainDark,
+      RGBMainLight,
+      RGBAccentDark,
+      RGBAccentLight,
+      RGBBrandColor,
+    },
+  })
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
@@ -76,53 +85,55 @@ Disabled for now, issues with lambda function
   const [showSettings, setShowSettings] = useState(false)
   const toggleShowSettings = () => setShowSettings(state => !state)
   return (
-    <>
-      <GlobalStyle />
-      {(location.available || coords || location.latitude) && (
-        <>
-          <Unsplash setUnsplashData={setUnsplashData} />
-          <Header
-            latitude={location.latitude}
-            longitude={location.longitude}
-            setUnsplashQuery={setUnsplashQuery}
-          />
-          <AppWrapper>
-            <Settings
-              showSettings={showSettings}
-              toggleShowSettings={toggleShowSettings}
-              widgets={[
-                {
-                  component: (
-                    <Weather
-                      latitude={location.latitude}
-                      longitude={location.longitude}
-                    />
-                  ),
-                  name: `Weather`,
-                },
-                {
-                  component: <News query={unsplashQuery} />,
-                  name: `News Feed`,
-                },
-                { component: <RedditFeed />, name: `Reddit Feed` },
-              ]}
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyle />
+        {(location.available || coords || location.latitude) && (
+          <>
+            <Unsplash setUnsplashData={setUnsplashData} />
+            <Header
+              latitude={location.latitude}
+              longitude={location.longitude}
+              setUnsplashQuery={setUnsplashQuery}
             />
-          </AppWrapper>
-          <Footer {...unsplashData} toggleShowSettings={toggleShowSettings} />
-        </>
-      )}
-      {showLoading && <LoadingAnimation />}
-      {!showLoading &&
-        (!location.available || !coords || !location.latitude) && (
-          <LocationModal
-            setLocation={setLocation}
-            shown={
-              !location.available &&
-              (!isGeolocationAvailable || !isGeolocationEnabled)
-            }
-          />
+            <AppWrapper>
+              <Settings
+                showSettings={showSettings}
+                toggleShowSettings={toggleShowSettings}
+                widgets={[
+                  {
+                    component: (
+                      <Weather
+                        latitude={location.latitude}
+                        longitude={location.longitude}
+                      />
+                    ),
+                    name: `Weather`,
+                  },
+                  {
+                    component: <News query={unsplashQuery} />,
+                    name: `News Feed`,
+                  },
+                  { component: <RedditFeed />, name: `Reddit Feed` },
+                ]}
+              />
+            </AppWrapper>
+            <Footer {...unsplashData} toggleShowSettings={toggleShowSettings} />
+          </>
         )}
-    </>
+        {showLoading && <LoadingAnimation />}
+        {!showLoading &&
+          (!location.available || !coords || !location.latitude) && (
+            <LocationModal
+              setLocation={setLocation}
+              shown={
+                !location.available &&
+                (!isGeolocationAvailable || !isGeolocationEnabled)
+              }
+            />
+          )}
+      </>
+    </ThemeProvider>
   )
 }
 
