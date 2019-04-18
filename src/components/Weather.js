@@ -70,6 +70,10 @@ const ForecastWrapper = styled.div`
     color: white;
     padding: 2%;
   }
+  div {
+    width: 100%;
+    text-align: center;
+  }
 `
 const ForecastLoadingWrapper = styled.div`
   //add styles here for current location loading placeholder
