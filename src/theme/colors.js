@@ -11,7 +11,7 @@ export const accentLight = `rgb(${RGBAccentLight})`
 export const brandColor = `rgb(${RGBBrandColor})`
 
 export const defaultStyle = {
-  name: 'default',
+  name: 'Default',
   colors: {
     RGBMainDark: `57, 61, 63`,
     RGBMainLight: `207, 215, 199`,
@@ -22,7 +22,7 @@ export const defaultStyle = {
 }
 
 const bright = {
-  name: 'bright',
+  name: 'Bright',
   colors: {
     RGBMainDark: `38,34,74`,
     RGBMainLight: `251,254,249`,
@@ -33,7 +33,7 @@ const bright = {
 }
 
 const muted = {
-  name: 'muted',
+  name: 'Muted',
   colors: {
     RGBMainDark: `20,17,20`,
     RGBMainLight: `231,230,224`,
@@ -44,7 +44,7 @@ const muted = {
 }
 
 const earth = {
-  name: 'earth',
+  name: 'Earth',
   colors: {
     RGBMainDark: `69,86,37`,
     RGBMainLight: `244,242,245`,

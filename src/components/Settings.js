@@ -202,8 +202,8 @@ const WidgetSelector = ({ widgetStatus, activateWidget, deactivateWidget }) => {
 
 const SelectorWrap = styled.div`
   padding: 1vmax;
-  background: rgba(var(--rgb-main-dark), 0.95);
-  color: var(--main-light);
+  background: rgba(var(--rgb-main-light), 0.95);
+  color: var(--main-dark);
   border-radius: 5px;
   grid-column: span 2;
   grid-row: span 2;
@@ -223,12 +223,12 @@ const SelectorWrap = styled.div`
   }
   ul {
     li {
-      color: var(--main-light);
+      color: var(--main-dark);
       cursor: pointer;
       padding: 0.5vmax 1vmax;
       &:hover {
-        background: var(--accent-light);
-        color: var(--main-dark);
+        background: var(--accent-dark);
+        color: var(--main-light);
       }
     }
   }
