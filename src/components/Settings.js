@@ -3,7 +3,23 @@ import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { themes } from '../theme/colors'
 library.add(faWindowClose)
+
+const ThemeSelector = ({ updateTheme, currentTheme }) => {
+  return (
+    <>
+      <SelectorWrap>
+        <h1>Theme Selector</h1>
+        <ul>
+          {themes.map(theme => (
+            <li onClick={() => updateTheme(theme)}>{theme.name}</li>
+          ))}
+        </ul>
+      </SelectorWrap>
+    </>
+  )
+}
 
 export default function Settings({
   widgets,
@@ -59,16 +75,6 @@ export default function Settings({
       updateLocalStorage({ active, inactive })
       return { active, inactive }
     })
-  }
-
-  const ThemeSelector = () => {
-    return (
-      <>
-        <SelectorWrap>
-          <h1>Theme Selector</h1>
-        </SelectorWrap>
-      </>
-    )
   }
 
   const SettingsWidgets = [

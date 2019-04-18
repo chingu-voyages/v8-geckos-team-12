@@ -12,7 +12,7 @@ import RedditFeed from './components/RedditFeed'
 import Settings from './components/Settings'
 
 import GlobalStyle from './theme/GlobalStyles'
-import colors from './theme/colors'
+import { defaultStyle } from './theme/colors'
 
 const App = ({
   coords,
@@ -21,13 +21,12 @@ const App = ({
   positionError, // object with the error returned from the Geolocation API call
 }) => {
   const [showLoading, setLoading] = useState(true)
-
   const [theme, setTheme] = useState(
-    JSON.parse(window.localStorage.getItem(`theme`)) || { colors }
+    JSON.parse(window.localStorage.getItem(`theme`)) || defaultStyle
   )
-  const updateTheme = ({ colors }) => {
-    window.localStorage.setItem(`theme`, JSON.stringify({ colors }))
-    setTheme({ colors })
+  const updateTheme = theme => {
+    window.localStorage.setItem(`theme`, JSON.stringify(theme))
+    setTheme(theme)
   }
   const [location, setLocation] = useState({
     latitude: 0,
