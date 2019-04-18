@@ -28,7 +28,9 @@ const ThemeSelector = ({ updateTheme, currentTheme }) => {
           {themes.map(
             theme =>
               theme.name !== currentTheme.name && (
-                <li onClick={() => updateTheme(theme)}>{theme.name}</li>
+                <li onClick={() => updateTheme({ ...currentTheme, ...theme })}>
+                  {theme.name}
+                </li>
               )
           )}
         </ul>
