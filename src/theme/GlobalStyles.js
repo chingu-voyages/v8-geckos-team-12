@@ -11,18 +11,19 @@ ${({
       RGBAccentLight,
       RGBBrandColor,
     },
+    darkMode,
   },
 }) => `
   :root {
-  --main-dark: rgb( ${RGBMainDark});
-  --main-light: rgb(${RGBMainLight});
-  --accent-dark: rgb(${RGBAccentDark});
-  --accent-light: rgb(${RGBAccentLight});
+  --main-dark: rgb( ${darkMode ? RGBMainLight : RGBMainDark});
+  --main-light: rgb(${darkMode ? RGBMainDark : RGBMainLight});
+  --accent-dark: rgb(${darkMode ? RGBAccentLight : RGBAccentDark});
+  --accent-light: rgb(${darkMode ? RGBAccentDark : RGBAccentLight});
   --brand-color: rgb(${RGBBrandColor});
-  --rgb-main-dark: ${RGBMainDark};
-  --rgb-main-light: ${RGBMainLight};
-  --rgb-accent-dark: ${RGBAccentDark};
-  --rgb-accent-light: ${RGBAccentLight};
+  --rgb-main-dark: ${darkMode ? RGBMainLight : RGBMainDark};
+  --rgb-main-light: ${darkMode ? RGBMainDark : RGBMainLight};
+  --rgb-accent-dark: ${darkMode ? RGBAccentLight : RGBAccentDark};
+  --rgb-accent-light: ${darkMode ? RGBAccentDark : RGBAccentLight};
   --rgb-brand-color: ${RGBBrandColor};
 }
   `}

@@ -22,7 +22,10 @@ const App = ({
 }) => {
   const [showLoading, setLoading] = useState(true)
   const [theme, setTheme] = useState(
-    JSON.parse(window.localStorage.getItem(`theme`)) || defaultStyle
+    JSON.parse(window.localStorage.getItem(`theme`)) || {
+      ...defaultStyle,
+      darkMode: false,
+    }
   )
   const updateTheme = theme => {
     window.localStorage.setItem(`theme`, JSON.stringify(theme))

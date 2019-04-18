@@ -7,14 +7,30 @@ import { themes } from '../theme/colors'
 library.add(faWindowClose)
 
 const ThemeSelector = ({ updateTheme, currentTheme }) => {
+  const toggleDark = () => {
+    updateTheme({ ...currentTheme, darkMode: !currentTheme.darkMode })
+  }
   return (
     <>
       <SelectorWrap>
         <h1>Theme Selector</h1>
+        <h2>Current Theme</h2>
         <ul>
-          {themes.map(theme => (
-            <li onClick={() => updateTheme(theme)}>{theme.name}</li>
-          ))}
+          <li onClick={toggleDark}>
+            {currentTheme.name}
+            {currentTheme.darkMode
+              ? ` dark mode  --click to toggle to normal mode--`
+              : ' --click to toggle to dark mode--'}
+          </li>
+        </ul>
+        <h2>Select Theme</h2>
+        <ul>
+          {themes.map(
+            theme =>
+              theme.name !== currentTheme.name && (
+                <li onClick={() => updateTheme(theme)}>{theme.name}</li>
+              )
+          )}
         </ul>
       </SelectorWrap>
     </>
