@@ -12,13 +12,7 @@ import RedditFeed from './components/RedditFeed'
 import Settings from './components/Settings'
 
 import GlobalStyle from './theme/GlobalStyles'
-import {
-  RGBMainDark,
-  RGBMainLight,
-  RGBAccentDark,
-  RGBAccentLight,
-  RGBBrandColor,
-} from './theme/colors'
+import colors from './theme/colors'
 
 const App = ({
   coords,
@@ -28,13 +22,7 @@ const App = ({
 }) => {
   const [showLoading, setLoading] = useState(true)
   const [theme, setTheme] = useState({
-    colors: {
-      RGBMainDark,
-      RGBMainLight,
-      RGBAccentDark,
-      RGBAccentLight,
-      RGBBrandColor,
-    },
+    colors,
   })
   const [location, setLocation] = useState({
     latitude: 0,

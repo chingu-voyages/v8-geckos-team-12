@@ -1,13 +1,32 @@
 import { createGlobalStyle } from 'styled-components'
-import {
-  RGBMainDark,
-  RGBMainLight,
-  RGBAccentDark,
-  RGBAccentLight,
-  RGBBrandColor,
-} from './colors'
 
-export const globalStylesTagged = `
+export const GlobalStyle = createGlobalStyle`
+
+${({
+  theme: {
+    colors: {
+      RGBMainDark,
+      RGBMainLight,
+      RGBAccentDark,
+      RGBAccentLight,
+      RGBBrandColor,
+    },
+  },
+}) => `
+  :root {
+  --main-dark: rgb( ${RGBMainDark});
+  --main-light: rgb(${RGBMainLight});
+  --accent-dark: rgb(${RGBAccentDark});
+  --accent-light: rgb(${RGBAccentLight});
+  --brand-color: rgb(${RGBBrandColor});
+  --rgb-main-dark: ${RGBMainDark};
+  --rgb-main-light: ${RGBMainLight};
+  --rgb-accent-dark: ${RGBAccentDark};
+  --rgb-accent-light: ${RGBAccentLight};
+  --rgb-brand-color: ${RGBBrandColor};
+}
+  `}
+
 
 a, a:visited {
   color: rgb(250,250,255);
@@ -203,36 +222,5 @@ html,
     color: rgba(125,125,125,.9);
   }
 `
-const parseColors = ({
-  RGBMainDark,
-  RGBMainLight,
-  RGBAccentDark,
-  RGBAccentLight,
-  RGBBrandColor,
-}) => `
-:root {
-  --main-dark: rgb(${RGBMainDark});
-  --main-light: rgb(${RGBMainLight});
-  --accent-dark: rgb(${RGBAccentDark});
-  --accent-light: rgb(${RGBAccentLight});
-  --brand-color: rgb(${RGBBrandColor});
-  --rgb-main-dark: ${RGBMainDark};
-  --rgb-main-light: ${RGBMainLight};
-  --rgb-accent-dark: ${RGBAccentDark};
-  --rgb-accent-light: ${RGBAccentLight};
-  --rgb-brand-color: ${RGBBrandColor};
-}
-`
 
-export const GlobalStyle = ({ colors }) =>
-  createGlobalStyle`${parseColors(colors)}${globalStylesTagged}`
-
-export default GlobalStyle({
-  colors: {
-    RGBMainDark,
-    RGBMainLight,
-    RGBAccentDark,
-    RGBAccentLight,
-    RGBBrandColor,
-  },
-})
+export default GlobalStyle
