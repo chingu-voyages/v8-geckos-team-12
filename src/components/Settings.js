@@ -15,14 +15,11 @@ const ThemeSelector = ({ updateTheme, currentTheme }) => {
       <SelectorWrap>
         <h1>Theme Selector</h1>
         <h2>Current Theme</h2>
-        <ul>
-          <li onClick={toggleDark}>
-            {currentTheme.name}
-            {currentTheme.darkMode
-              ? ` dark mode  --click to toggle to normal mode--`
-              : ' --click to toggle to dark mode--'}
-          </li>
-        </ul>
+        <p>{currentTheme.name}</p>
+        <h2>Toggle Theme Mode</h2>
+        <p>
+          <ModeSlider toggle={toggleDark} isEnabled={currentTheme.darkMode} />
+        </p>
         <h2>Select Theme</h2>
         <ul>
           {themes.map(
@@ -38,6 +35,44 @@ const ThemeSelector = ({ updateTheme, currentTheme }) => {
     </>
   )
 }
+
+const ModeSlider = ({ isEnabled, toggle }) => {
+  return (
+    <SliderContainer onClick={toggle}>
+      Normal{' '}
+      <SliderBackground>
+        <SlideButton isEnabled={isEnabled} />
+      </SliderBackground>{' '}
+      Dark
+    </SliderContainer>
+  )
+}
+
+const SliderContainer = styled.div`
+  cursor: pointer;
+`
+
+const SlideButton = styled.div`
+  position: absolute;
+  top: 50%;
+  ${({ isEnabled }) => (isEnabled ? `right: 2.5px;` : `left: 2.5px;`)}
+  background: var(--main-light);
+  width: calc(1em - 5px);
+  height: calc(1em - 5px);
+  border-radius: 2.5px;
+  transform: translateY(-50%);
+  box-shadow: 0 0 4px var(--brand-color);
+`
+const SliderBackground = styled.div`
+  box-shadow: inset 0 0 4px var(--brand-color);
+  position: relative;
+  display: inline-block;
+  background: var(--main-dark);
+  height: 1em;
+  width: 2em;
+  margin: 0 0.5em;
+  border-radius: 5px;
+`
 
 export default function Settings({
   widgets,
@@ -206,7 +241,7 @@ const SelectorWrap = styled.div`
   color: var(--main-dark);
   border-radius: 5px;
   grid-column: span 2;
-  grid-row: span 2;
+  grid-row: span 4;
   @media screen and (orientation: portrait) {
     grid-row: span 4;
   }
@@ -231,5 +266,8 @@ const SelectorWrap = styled.div`
         color: var(--main-light);
       }
     }
+  }
+  p {
+    padding: 0.5vmax 1vmax;
   }
 `
