@@ -7,9 +7,12 @@ import Unsplash from './components/Unsplash.js'
 import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
 import Footer from './components/Footer'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import RedditFeed from './components/RedditFeed'
 import Settings from './components/Settings'
+
+import GlobalStyle from './theme/GlobalStyles'
+import { defaultStyle } from './theme/colors'
 
 const App = ({
   coords,
@@ -18,6 +21,16 @@ const App = ({
   positionError, // object with the error returned from the Geolocation API call
 }) => {
   const [showLoading, setLoading] = useState(true)
+  const [theme, setTheme] = useState(
+    JSON.parse(window.localStorage.getItem(`theme`)) || {
+      ...defaultStyle,
+      darkMode: false,
+    }
+  )
+  const updateTheme = theme => {
+    window.localStorage.setItem(`theme`, JSON.stringify(theme))
+    setTheme(theme)
+  }
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
@@ -41,7 +54,7 @@ const App = ({
       available: !isGeolocationAvailable || !isGeolocationEnabled,
     })
   } catch (err) {}
-  setTimeout(() => setLoading(false), 2500)
+  setTimeout(() => setLoading(false), 3000)
   //Example netlify lambda call
   // fetch('/.netlify/functions/hello')
   //   .then(response => response.json())
@@ -67,54 +80,57 @@ Disabled for now, issues with lambda function
   const [showSettings, setShowSettings] = useState(false)
   const toggleShowSettings = () => setShowSettings(state => !state)
   return (
-    <>
-      {!showLoading && (
-        <LocationModal
-          setLocation={setLocation}
-          shown={
-            !location.available &&
-            (!isGeolocationAvailable || !isGeolocationEnabled)
-          }
-        />
-      )}
-
-      {!showLoading && (location.available || coords || location.latitude) ? (
-        <>
-          <Unsplash setUnsplashData={setUnsplashData} />
-          <Header
-            latitude={location.latitude}
-            longitude={location.longitude}
-            setUnsplashQuery={setUnsplashQuery}
-            toggleShowSettings={toggleShowSettings}
-          />
-          <AppWrapper>
-            <Settings
-              showSettings={showSettings}
-              toggleShowSettings={toggleShowSettings}
-              widgets={[
-                {
-                  component: (
-                    <Weather
-                      latitude={location.latitude}
-                      longitude={location.longitude}
-                    />
-                  ),
-                  name: `Weather`,
-                },
-                {
-                  component: <News query={unsplashQuery} />,
-                  name: `News Feed`,
-                },
-                { component: <RedditFeed />, name: `Reddit Feed` },
-              ]}
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyle />
+        {(location.available || coords || location.latitude) && (
+          <>
+            <Unsplash setUnsplashData={setUnsplashData} />
+            <Header
+              latitude={location.latitude}
+              longitude={location.longitude}
+              setUnsplashQuery={setUnsplashQuery}
             />
-          </AppWrapper>
-          <Footer {...unsplashData} />
-        </>
-      ) : (
-        <LoadingAnimation />
-      )}
-    </>
+            <AppWrapper>
+              <Settings
+                currentTheme={theme}
+                updateTheme={updateTheme}
+                showSettings={showSettings}
+                toggleShowSettings={toggleShowSettings}
+                widgets={[
+                  {
+                    component: (
+                      <Weather
+                        latitude={location.latitude}
+                        longitude={location.longitude}
+                      />
+                    ),
+                    name: `Weather`,
+                  },
+                  {
+                    component: <News query={unsplashQuery} />,
+                    name: `News Feed`,
+                  },
+                  { component: <RedditFeed />, name: `Reddit Feed` },
+                ]}
+              />
+            </AppWrapper>
+            <Footer {...unsplashData} toggleShowSettings={toggleShowSettings} />
+          </>
+        )}
+        {showLoading && <LoadingAnimation />}
+        {!showLoading &&
+          (!location.available || !coords || !location.latitude) && (
+            <LocationModal
+              setLocation={setLocation}
+              shown={
+                !location.available &&
+                (!isGeolocationAvailable || !isGeolocationEnabled)
+              }
+            />
+          )}
+      </>
+    </ThemeProvider>
   )
 }
 

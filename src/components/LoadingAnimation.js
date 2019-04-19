@@ -63,6 +63,7 @@ const Modal = styled(animated.div)`
     var(--brand-color),
     var(--main-dark)
   );
+  z-index: 10000;
 `
 
 const Loading = styled(animated.div)`

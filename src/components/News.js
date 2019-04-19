@@ -104,7 +104,7 @@ const ArticleWrapper = styled.div`
     font-size: 1.25em;
     padding: 10px 0;
     background-color: var(--main-dark);
-    color: white;
+    color: var(--main-light);
     margin-bottom: 7px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
