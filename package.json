@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "algolia-places-react": "^1.4.0",
     "husky": "^1.3.1",
+    "logrocket": "^0.6.20",
     "newsapi": "^2.4.0",
     "node-fetch": "^2.3.0",
     "react": "^16.8.4",

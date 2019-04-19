@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import LogRocket from 'logrocket'
+LogRocket.init('t7irp1/geckos')
 
 ReactDOM.render(
   <>
