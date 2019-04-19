@@ -6,7 +6,17 @@ import LogRocket from 'logrocket'
 import setupLogRocketReact from 'logrocket-react'
 LogRocket.init('t7irp1/geckos')
 setupLogRocketReact(LogRocket)
-
+const name = window.prompt(`name: `, localStorage.getItem(`name`))
+const device = window.prompt(
+  `describe device: `,
+  localStorage.getItem(`device`)
+)
+localStorage.setItem(`name`, name)
+localStorage.setItem(`device`, device)
+LogRocket.identify('THE_USER_ID_IN_YOUR_APP', {
+  name: name,
+  email: device,
+})
 ReactDOM.render(
   <>
     <App />
