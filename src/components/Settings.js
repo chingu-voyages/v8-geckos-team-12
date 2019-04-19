@@ -16,7 +16,7 @@ const ThemeSelector = ({ updateTheme, currentTheme }) => {
         <h1>Theme Selector</h1>
         <h2>Current Theme</h2>
         <p>{currentTheme.name}</p>
-        <h2>Theme Mode</h2>
+        <h2>Toggle Theme Mode</h2>
         <p>
           <ModeSlider toggle={toggleDark} isEnabled={currentTheme.darkMode} />
         </p>
