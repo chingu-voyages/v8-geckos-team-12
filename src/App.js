@@ -28,8 +28,20 @@ const App = ({
     }
   )
   const updateTheme = theme => {
-    window.localStorage.setItem(`theme`, JSON.stringify(theme))
-    setTheme(theme)
+    let saved
+    try {
+      saved = window.setStorate.getItem(`theme`)
+    } catch (err) {
+      saved = false
+    }
+    console.log(saved)
+    JSON.stringify(theme)
+    if (saved === JSON.stringify(theme)) {
+      return
+    } else {
+      window.localStorage.setItem(`theme`, JSON.stringify(theme))
+      setTheme(theme)
+    }
   }
   const [location, setLocation] = useState({
     latitude: 0,
