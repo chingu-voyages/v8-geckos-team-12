@@ -72,7 +72,11 @@ const RedditFeed = ({
               style={{
                 border: 'none',
                 zIndex: 2000,
-                boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
+                boxShadow: `0 0 35px rgba(${
+                  darkMode ? RGBAccentLight : RGBAccentDark
+                }, 0.4), 0 0 10px rgba(${
+                  darkMode ? RGBMainLight : RGBMainDark
+                }, 0.4)`,
                 color: brandColor,
               }}
               inputStyle={{
@@ -82,7 +86,12 @@ const RedditFeed = ({
                 padding: `.25vw ${!toggle ? `4vw` : `0.25vw`} 0.25vw 0.25vw`,
                 fontSize: `1em`,
                 background: mainDark,
-                boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
+                color: mainLight,
+                boxShadow: `0 0 35px rgba(${
+                  darkMode ? RGBAccentLight : RGBAccentDark
+                }, 0.4), 0 0 10px rgba(${
+                  darkMode ? RGBMainLight : RGBMainDark
+                }, 0.4)`,
                 color: brandColor,
               }}
               toggle={!toggle}
