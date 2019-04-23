@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import sun from '../images/sun_animated.svg'
 import { useSpring, useTransition, animated, config } from 'react-spring'
 import {
@@ -8,9 +8,28 @@ import {
   accentDark,
   accentLight,
   brandColor,
+  RGBMainLight,
 } from '../theme/colors'
 
-export default () => {
+const LoadingAnimationModal = ({
+  theme: {
+    name,
+    darkMode,
+    colors: {
+      RGBAccentDark,
+      RGBAccentLight,
+      RGBBrandColor,
+      RGBMainDark,
+      RGBMainLight,
+    },
+  },
+}) => {
+  const accentDark = `rgb(${darkMode ? RGBAccentLight : RGBAccentDark})`
+  const accentLight = ` rgb(${darkMode ? RGBAccentDark : RGBAccentLight})`
+  const brandColor = `rgb(${RGBBrandColor})`
+  const mainDark = `rgb(${darkMode ? RGBMainLight : RGBMainDark})`
+  const mainLight = `rgb(${darkMode ? RGBMainDark : RGBMainLight})`
+
   const loadingAnimation = useSpring({
     position: `relative`,
     transform: `scale(1)`,
@@ -20,9 +39,9 @@ export default () => {
     config: config.slow,
   })
   const modalBackground = useSpring({
-    background: `${brandColor}, ${mainLight}, ${accentLight})`,
+    background: `linear- gradient( to top left, ${brandColor}, ${mainLight}, ${accentLight})`,
     from: {
-      background: `linear-gradient(to top left, ${accentDark}, ${brandColor}, ${mainDark})`,
+      background: `linear-gradient(to top left, ${accentDark},${brandColor}, ${mainDark})`,
     },
     config: config.slow,
   })
@@ -71,3 +90,5 @@ const Loading = styled(animated.div)`
   margin: auto;
   font-size: 1.3em;
 `
+
+export default withTheme(LoadingAnimationModal)

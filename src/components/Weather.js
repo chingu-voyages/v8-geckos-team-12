@@ -8,7 +8,7 @@ export default props => {
   return (
     <Router>
       <ForecastWrapper>
-        <h2>Weather Info</h2>
+        <Header>Weather Info</Header>
         <nav>
           <Link to='/'>Today</Link>
           <Link to='/5days'>5 Days</Link>
@@ -80,4 +80,15 @@ const ForecastLoadingWrapper = styled.div`
   background-color: rgba(var(--rgb-main-light), 0.5);
   grid-column: span 4;
   grid-row: span 2;
+`
+const Header = styled.div`
+  font-weight: 400;
+  background: var(--main-dark);
+  color: var(--main-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25em;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
 `
