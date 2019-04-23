@@ -25,9 +25,9 @@ const Foot = styled.div`
   position: fixed;
   bottom: 0;
   width: 100vw;
-  background-color: var(--main-dark);
+  background-color: var(--accent-dark);
   color: var(--main-light);
-  font-size: 0.85em;
+  font-size: 0.8em;
   padding: 0.4em;
   text-align: center;
   margin-top: 7em;
@@ -35,6 +35,10 @@ const Foot = styled.div`
   & a,
   a:visited {
     color: var(--brand-color);
+  }
+
+  @media screen and (orientation: portrait) {
+    text-align: left;
   }
 `
 const ToggleSettingsVisibleButton = ({ toggleShowSettings }) => (
