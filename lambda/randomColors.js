@@ -55,7 +55,7 @@
         return Object.prototype.hasOwnProperty.call(e, t)
       }),
       (r.p = ''),
-      r((r.s = 7))
+      r((r.s = 6))
     )
   })([
     function(e, t) {
@@ -1032,7 +1032,6 @@
     function(e, t) {
       e.exports = require('https')
     },
-    ,
     function(e, t, r) {
       'use strict'
       r.r(t),
@@ -1042,13 +1041,13 @@
       var o = r(4)
       async function n(e, t) {
         const r = await Object(o.a)('http://colormind.io/api/', {
-          method: 'POST',
-          body: JSON.stringify({ model: 'ui' }),
-        })
-          .then(e => e.json())
-          .then(e => e.result)
+            method: 'POST',
+            body: JSON.stringify({ model: 'ui' }),
+          }),
+          n = await r.json()
         return (
-          console.log(r), { statusCode: 200, body: JSON.stringify({ body: r }) }
+          console.log(n),
+          { statusCode: 200, body: JSON.stringify({ colors: n.result }) }
         )
       }
     },

@@ -1,17 +1,16 @@
 import fetch from 'node-fetch'
 
 export async function handler(event, context) {
-  const body = await fetch(`http://colormind.io/api/`, {
+  const response = await fetch(`http://colormind.io/api/`, {
     method: 'POST',
     body: JSON.stringify({ model: `ui` }),
   })
-    .then(response => response.json())
-    .then(json => json.result)
-  console.log(body)
+  const json = await response.json()
+  console.log(json)
   return {
     statusCode: 200,
     body: JSON.stringify({
-      body,
+      colors: json.result,
     }),
   }
 }
