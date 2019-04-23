@@ -1,17 +1,22 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import {
+  HashRouter,
+  BrowserRouter as Router,
+  Route,
+  Link,
+} from 'react-router-dom'
 import styled from 'styled-components'
 import OneDay from './OneDay'
 import FiveDays from './FiveDays'
 
 export default props => {
   return (
-    <Router>
+    <HashRouter>
       <ForecastWrapper>
         <Header>Weather Info</Header>
         <nav>
-          <Link to='/'>Today</Link>
-          <Link to='/5days'>5 Days</Link>
+          <StyledLink to='/'>Today</StyledLink>
+          <StyledLink to='/5days'>5 Days</StyledLink>
         </nav>
         <Route>
           <Route
@@ -29,10 +34,16 @@ export default props => {
           />
         </Route>
       </ForecastWrapper>
-    </Router>
+    </HashRouter>
   )
 }
 
+const StyledLink = styled(Link)`
+  color: var(--main-dark);
+  &:visited {
+    color: var(--main-dark);
+  }
+`
 const ForecastWrapper = styled.div`
   //add styles here for current location info
   background: rgba(255, 255, 255, 0.85);

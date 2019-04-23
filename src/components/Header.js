@@ -21,7 +21,7 @@ const Header = props => {
 const HeaderWrapper = styled.header`
   position: -webkit-sticky; /* Safari */
   position: sticky;
-  background: var(--main-dark);
+  background: var(--accent-dark);
   z-index: 1000;
   top: 0;
   display: flex;
