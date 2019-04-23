@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import {
+  HashRouter,
+  BrowserRouter as Router,
+  Route,
+  Link,
+} from 'react-router-dom'
 import styled from 'styled-components'
 import OneDay from './OneDay'
 import FiveDays from './FiveDays'
 
 export default props => {
   return (
-    <Router>
+    <HashRouter>
       <ForecastWrapper>
         <Header>Weather Info</Header>
         <nav>
@@ -29,7 +34,7 @@ export default props => {
           />
         </Route>
       </ForecastWrapper>
-    </Router>
+    </HashRouter>
   )
 }
 
