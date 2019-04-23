@@ -10,6 +10,24 @@ const ThemeSelector = ({ updateTheme, currentTheme }) => {
   const toggleDark = () => {
     updateTheme({ ...currentTheme, darkMode: !currentTheme.darkMode })
   }
+
+  const fetchRandomColors = async query => {
+    const { colors } = await fetch(`.netlify/functions/randomColors`).then(
+      response => response.json()
+    )
+    console.log(colors)
+    return {
+      name: 'Random',
+      colors: {
+        RGBMainDark: colors[4].join(','),
+        RGBMainLight: colors[0].join(','),
+        RGBAccentDark: colors[3].join(','),
+        RGBAccentLight: colors[1].join(','),
+        RGBBrandColor: colors[2].join(','),
+      },
+    }
+  }
+  // fetchRandomColors()
   return (
     <>
       <SelectorWrap>
@@ -30,6 +48,14 @@ const ThemeSelector = ({ updateTheme, currentTheme }) => {
                 </li>
               )
           )}
+          <li
+            onClick={async () => {
+              const theme = await fetchRandomColors()
+              updateTheme({ ...theme, darkMode: currentTheme.darkMode })
+            }}
+          >
+            Random
+          </li>
         </ul>
       </SelectorWrap>
     </>
