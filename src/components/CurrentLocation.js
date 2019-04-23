@@ -1,8 +1,19 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 
-export default ({ latitude, longitude, setUnsplashQuery }) => {
+const CurrentLocation = ({
+  latitude,
+  longitude,
+  setUnsplashQuery,
+  theme: {
+    darkMode,
+    colors: { RGBMainDark, RGBMainLight },
+  },
+}) => {
   const [currentLocation, setCurrentLocation] = useState()
+
+  const mainLight = `rgb(${darkMode ? RGBMainDark : RGBMainLight})`
+
   const setDestructuredLocation = ({
     locale_names,
     administrative,
@@ -37,10 +48,21 @@ export default ({ latitude, longitude, setUnsplashQuery }) => {
   return currentLocation ? (
     <CurrentLocationWrapper>
       <LocationIcon>
-        <img
-          src={require('../images/location-arrow-solid.svg')}
-          alt='Location Icon'
-        />
+        <Arrow
+          aria-hidden='true'
+          focusable='false'
+          data-prefix='fas'
+          data-icon='location-arrow'
+          class='svg-inline--fa fa-location-arrow fa-w-16'
+          role='img'
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 512 512'
+        >
+          <path
+            fill={mainLight}
+            d='M444.52 3.52L28.74 195.42c-47.97 22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75 19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z'
+          />
+        </Arrow>
       </LocationIcon>
       <LocationText>
         <CityWrapper>
@@ -70,6 +92,9 @@ const LocationText = styled.div`
   @media screen and (max-width: 420px) {
     text-align: center;
   }
+`
+const Arrow = styled.svg`
+  height: 100%;
 `
 
 const LocationIcon = styled.div`
@@ -101,3 +126,4 @@ const StateWrapper = styled.span`
 const CurrentLocationLoading = styled.div`
   //add styles here for current location loading placeholder
 `
+export default withTheme(CurrentLocation)

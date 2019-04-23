@@ -1,8 +1,26 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import AutosizeInput from 'react-input-autosize'
 import colors from '../theme/colors'
-export default function RedditFeed() {
+const RedditFeed = ({
+  theme: {
+    name,
+    darkMode,
+    colors: {
+      RGBAccentDark,
+      RGBAccentLight,
+      RGBBrandColor,
+      RGBMainDark,
+      RGBMainLight,
+    },
+  },
+}) => {
+  const accentDark = `rgb(${darkMode ? RGBAccentLight : RGBAccentDark})`
+  const accentLight = ` rgb(${darkMode ? RGBAccentDark : RGBAccentLight})`
+  const brandColor = `rgb(${RGBBrandColor})`
+  const mainDark = `rgb(${darkMode ? RGBMainLight : RGBMainDark})`
+  const mainLight = `rgb(${darkMode ? RGBMainDark : RGBMainLight})`
+
   const subreddit = localStorage.getItem(`subreddit`) || `javascript`
   const [currentSub, setCurrentSub] = useState(subreddit)
 
@@ -55,7 +73,7 @@ export default function RedditFeed() {
                 border: 'none',
                 zIndex: 2000,
                 boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
-                color: colors.brandColor,
+                color: brandColor,
               }}
               inputStyle={{
                 border: 'none',
@@ -63,9 +81,9 @@ export default function RedditFeed() {
                 zIndex: 2000,
                 padding: `.25vw ${!toggle ? `4vw` : `0.25vw`} 0.25vw 0.25vw`,
                 fontSize: `1em`,
-                background: colors.mainDark,
+                background: mainDark,
                 boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
-                color: colors.brandColor,
+                color: brandColor,
               }}
               toggle={!toggle}
               placeholder={!toggle ? `r/${currentSub}` : `Select subreddit:`}
@@ -257,6 +275,7 @@ const ReadLink = styled.a`
   border-radius: 5px;
   padding: 0.5vmax 8vmax;
   background: rgba(var(--rgb-main-dark), 0.5);
+  color: var(--main-light) !important;
 `
 const BodyText = styled.div`
   overflow-wrap: break-word;
@@ -298,35 +317,36 @@ const PostCard = styled.li`
 `
 
 const Post = styled.div`
-   padding: 10px 20px;
-   height: 100%;
-   max-height: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  padding: 10px 20px;
+  height: 100%;
+  max-height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  border-radius: ${({ position }) =>
+    position === `left`
+      ? `0 5px 5px 0`
+      : position === `right`
+      ? `5px 0 0 5px`
+      : `5px`};
+  background-color: rgba(var(--rgb-main-light), 0.85);
+  margin: 0 0 1vw 0;
+  color: var(--main-dark);
+  & h5 {
+    font-size: 19px;
+    margin-bottom: 10px;
+    width: 100%;
     overflow-wrap: break-word;
-    overflow: hidden;
-    border-radius: ${({ position }) =>
-      position === `left`
-        ? `0 5px 5px 0`
-        : position === `right`
-        ? `5px 0 0 5px`
-        : `5px`};
-    background-color: rgba(var(--rgb-main-light), 0.85);
-    margin: 0 0 1vw 0;
-    color: var(--main-dark);
-    & h5 {
-      font-size: 19px;
-      margin-bottom: 10px;
-      width: 100%;
-      overflow-wrap: break-word;
-      word-wrap:break-word;
-      white-space:normal;
-    }
-
-    & a, a:visited {
-      color: var(--brand-color);
-    }
+    word-wrap: break-word;
+    white-space: normal;
   }
 
+  & a,
+  a:visited {
+    color: var(--brand-color);
+  }
 `
+
+export default withTheme(RedditFeed)

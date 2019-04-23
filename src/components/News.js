@@ -25,7 +25,7 @@ export default ({ query }) => {
 
   return (
     <ArticleWrapper>
-      <h2>News Feed</h2>
+      <Header>News Feed</Header>
       {articles ? (
         <ul>
           {articles.length > 0 ? (
@@ -95,4 +95,16 @@ const Error = styled.li`
   max-height: 40px;
   text-align: center;
   width: 90%;
+`
+
+const Header = styled.div`
+  font-weight: 400;
+  background: var(--main-dark);
+  color: var(--main-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25em;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
 `
