@@ -8,14 +8,16 @@ library.add(faCog)
 export default ({ profileLink, user, unsplashLink, toggleShowSettings }) => {
   return (
     <Foot>
-      Background photo by{' '}
-      <a href={profileLink} rel='noopener noreferrer' target='_blank'>
-        {user}
-      </a>{' '}
-      on{' '}
-      <a href={unsplashLink} rel='noopener noreferrer' target='_blank'>
-        Unsplash
-      </a>
+      <div className='attribution'>
+        Background photo by{' '}
+        <a href={profileLink} rel='noopener noreferrer' target='_blank'>
+          {user}
+        </a>{' '}
+        on{' '}
+        <a href={unsplashLink} rel='noopener noreferrer' target='_blank'>
+          Unsplash
+        </a>
+      </div>
       <ToggleSettingsVisibleButton toggleShowSettings={toggleShowSettings} />
     </Foot>
   )
@@ -28,7 +30,7 @@ const Foot = styled.div`
   background-color: var(--accent-dark);
   color: var(--main-light);
   font-size: 0.8em;
-  padding: 0.4em;
+  padding: 1em;
   text-align: center;
   margin-top: 7em;
 
@@ -38,7 +40,12 @@ const Foot = styled.div`
   }
 
   @media screen and (orientation: portrait) {
-    text-align: left;
+    div.attribution {
+      width: 66%;
+      text-align: left;
+      margin-left: 0.4em;
+      line-height: 1.2;
+    }
   }
 `
 const ToggleSettingsVisibleButton = ({ toggleShowSettings }) => (
@@ -53,9 +60,10 @@ const ToggleButton = styled.button`
   border: none;
   color: var(--main-light);
   font-size: 0.85em;
-  padding: 0.4em;
+  padding: 0.6em;
   position: fixed;
-  bottom: 0;
+  bottom: 1.2em;
   right: 0;
   z-index: 6000;
+  cursor: pointer;
 `
