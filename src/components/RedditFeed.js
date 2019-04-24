@@ -2,6 +2,13 @@ import React, { useState } from 'react'
 import styled, { withTheme } from 'styled-components'
 import AutosizeInput from 'react-input-autosize'
 import colors from '../theme/colors'
+
+const darken = color =>
+  color
+    .split(',')
+    .map(num => Number(num / 2).toFixed(0))
+    .join(',')
+
 const RedditFeed = ({
   theme: {
     name,
@@ -15,10 +22,10 @@ const RedditFeed = ({
     },
   },
 }) => {
-  const accentDark = `rgb(${darkMode ? RGBAccentLight : RGBAccentDark})`
+  const accentDark = `rgb(${darkMode ? darken(RGBAccentLight) : RGBAccentDark})`
   const accentLight = ` rgb(${darkMode ? RGBAccentDark : RGBAccentLight})`
-  const brandColor = `rgb(${RGBBrandColor})`
-  const mainDark = `rgb(${darkMode ? RGBMainLight : RGBMainDark})`
+  const brandColor = `rgb(${darkMode ? darken(RGBBrandColor) : RGBBrandColor})`
+  const mainDark = `rgb(${darkMode ? darken(RGBMainLight) : RGBMainDark})`
   const mainLight = `rgb(${darkMode ? RGBMainDark : RGBMainLight})`
 
   const subreddit = localStorage.getItem(`subreddit`) || `javascript`
@@ -73,9 +80,9 @@ const RedditFeed = ({
                 border: 'none',
                 zIndex: 2000,
                 boxShadow: `0 0 35px rgba(${
-                  darkMode ? RGBAccentLight : RGBAccentDark
+                  darkMode ? darken(RGBAccentLight) : RGBAccentDark
                 }, 0.4), 0 0 10px rgba(${
-                  darkMode ? RGBMainLight : RGBMainDark
+                  darkMode ? darken(RGBMainLight) : RGBMainDark
                 }, 0.4)`,
                 color: brandColor,
               }}
@@ -86,11 +93,11 @@ const RedditFeed = ({
                 padding: `.25vw ${!toggle ? `4vw` : `0.25vw`} 0.25vw 0.25vw`,
                 fontSize: `1em`,
                 background: mainDark,
-                color: mainLight,
+                color: brandColor,
                 boxShadow: `0 0 35px rgba(${
-                  darkMode ? RGBAccentLight : RGBAccentDark
+                  darkMode ? darken(RGBAccentLight) : RGBAccentDark
                 }, 0.4), 0 0 10px rgba(${
-                  darkMode ? RGBMainLight : RGBMainDark
+                  darkMode ? darken(RGBMainLight) : RGBMainDark
                 }, 0.4)`,
                 color: brandColor,
               }}

@@ -1,5 +1,11 @@
 import { createGlobalStyle } from 'styled-components'
 
+const darken = color =>
+  color
+    .split(',')
+    .map(num => Number(num / 2).toFixed(0))
+    .join(',')
+
 export const GlobalStyle = createGlobalStyle`
 
 ${({
@@ -15,14 +21,14 @@ ${({
   },
 }) => `
   :root {
-  --main-dark: rgb( ${darkMode ? RGBMainLight : RGBMainDark});
+  --main-dark: rgb( ${darkMode ? darken(RGBMainLight) : RGBMainDark});
   --main-light: rgb(${darkMode ? RGBMainDark : RGBMainLight});
-  --accent-dark: rgb(${darkMode ? RGBAccentLight : RGBAccentDark});
+  --accent-dark: rgb(${darkMode ? darken(RGBAccentLight) : RGBAccentDark});
   --accent-light: rgb(${darkMode ? RGBAccentDark : RGBAccentLight});
-  --brand-color: rgb(${RGBBrandColor});
-  --rgb-main-dark: ${darkMode ? RGBMainLight : RGBMainDark};
+  --brand-color: rgb(${darkMode ? darken(RGBBrandColor) : RGBBrandColor});
+  --rgb-main-dark: ${darkMode ? darken(RGBMainLight) : RGBMainDark};
   --rgb-main-light: ${darkMode ? RGBMainDark : RGBMainLight};
-  --rgb-accent-dark: ${darkMode ? RGBAccentLight : RGBAccentDark};
+  --rgb-accent-dark: ${darkMode ? darken(RGBAccentLight) : RGBAccentDark};
   --rgb-accent-light: ${darkMode ? RGBAccentDark : RGBAccentLight};
   --rgb-brand-color: ${RGBBrandColor};
 }

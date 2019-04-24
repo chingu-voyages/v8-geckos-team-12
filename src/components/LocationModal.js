@@ -25,10 +25,16 @@ const LocationModal = ({
     },
   },
 }) => {
-  const accentDark = `rgb(${darkMode ? RGBAccentLight : RGBAccentDark})`
+  const darken = color =>
+    color
+      .split(',')
+      .map(num => Number(num / 2).toFixed(0))
+      .join(',')
+
+  const accentDark = `rgb(${darkMode ? darken(RGBAccentLight) : RGBAccentDark})`
   const accentLight = ` rgb(${darkMode ? RGBAccentDark : RGBAccentLight})`
-  const brandColor = `rgb(${RGBBrandColor})`
-  const mainDark = `rgb(${darkMode ? RGBMainLight : RGBMainDark})`
+  const brandColor = `rgb(${darkMode ? darken(RGBBrandColor) : RGBBrandColor})`
+  const mainDark = `rgb(${darkMode ? darken(RGBMainLight) : RGBMainDark})`
   const mainLight = `rgb(${darkMode ? RGBMainDark : RGBMainLight})`
 
   const headerProps = useSpring({
