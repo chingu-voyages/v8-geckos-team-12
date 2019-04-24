@@ -33,7 +33,23 @@ ${({
   --rgb-brand-color: ${RGBBrandColor};
 }
   `}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--main-light);
+  opacity: 1; /* Firefox */
+}
 
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: var(--main-light);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: var(--main-light);
+}
+
+.ap-dropdown-menu {
+  background: var(--main-light);
+  color: var(--main-dark);
+}
 
 a, a:visited {
   color: rgb(250,250,255);
