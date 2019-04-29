@@ -31,15 +31,15 @@ export default ({ latitude, longitude }) => {
   const weatherIcon = main => {
     let icon = main.toLowerCase()
     if (icon == 'clouds') {
-      return 'fas fa-cloud fa-4x'
+      return 'fas fa-cloud fa-3x'
     } else if (icon == 'rain') {
-      return 'fas fa-cloud-rain fa-4x'
+      return 'fas fa-cloud-rain fa-3x'
     } else if (icon == 'snow') {
-      return 'far fa-snowflake fa-4x'
+      return 'far fa-snowflake fa-3x'
     } else if (icon == 'sunny' || icon == 'clear') {
-      return 'fas fa-sun fa-4x'
+      return 'fas fa-sun fa-3x'
     } else {
-      return 'fas fa-cloud-sun fa-4x'
+      return 'fas fa-cloud-sun fa-3x'
     }
   }
   return forecast ? (
@@ -61,14 +61,12 @@ export default ({ latitude, longitude }) => {
 }
 
 const TodayWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 70%;
   i {
     color: var(--main-dark);
   }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const ForecastLoadingWrapper = styled.div`
