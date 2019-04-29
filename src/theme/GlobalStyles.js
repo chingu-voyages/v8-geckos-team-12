@@ -1,28 +1,54 @@
 import { createGlobalStyle } from 'styled-components'
-import {
-  mainDark,
-  mainLight,
-  accentDark,
-  accentLight,
-  brandColor,
-  RGBMainDark,
-  RGBMainLight,
-  RGBAccentDark,
-  RGBAccentLight,
-  RGBBrandColor,
-} from './colors'
-export const globalStylesTagged = `
-:root {
-  --main-dark: ${mainDark};
-  --main-light: ${mainLight};
-  --accent-dark: ${accentDark};
-  --accent-light: ${accentLight};
-  --brand-color: ${brandColor};
-  --rgb-main-dark: ${RGBMainDark};
-  --rgb-main-light: ${RGBMainLight};
-  --rgb-accent-dark: ${RGBAccentDark};
-  --rgb-accent-light: ${RGBAccentLight};
+
+const darken = color =>
+  color
+    .split(',')
+    .map(num => Number(num / 2).toFixed(0))
+    .join(',')
+
+export const GlobalStyle = createGlobalStyle`
+
+${({
+  theme: {
+    colors: {
+      RGBMainDark,
+      RGBMainLight,
+      RGBAccentDark,
+      RGBAccentLight,
+      RGBBrandColor,
+    },
+    darkMode,
+  },
+}) => `
+  :root {
+  --main-dark: rgb( ${darkMode ? darken(RGBMainLight) : RGBMainDark});
+  --main-light: rgb(${darkMode ? RGBMainDark : RGBMainLight});
+  --accent-dark: rgb(${darkMode ? darken(RGBAccentLight) : RGBAccentDark});
+  --accent-light: rgb(${darkMode ? RGBAccentDark : RGBAccentLight});
+  --brand-color: rgb(${darkMode ? darken(RGBBrandColor) : RGBBrandColor});
+  --rgb-main-dark: ${darkMode ? darken(RGBMainLight) : RGBMainDark};
+  --rgb-main-light: ${darkMode ? RGBMainDark : RGBMainLight};
+  --rgb-accent-dark: ${darkMode ? darken(RGBAccentLight) : RGBAccentDark};
+  --rgb-accent-light: ${darkMode ? RGBAccentDark : RGBAccentLight};
   --rgb-brand-color: ${RGBBrandColor};
+}
+  `}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--main-light);
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: var(--main-light);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: var(--main-light);
+}
+
+.ap-dropdown-menu {
+  background: var(--main-light);
+  color: var(--main-dark);
 }
 
 a, a:visited {
@@ -219,6 +245,5 @@ html,
     color: rgba(125,125,125,.9);
   }
 `
-export const GlobalStyle = createGlobalStyle`${globalStylesTagged}`
 
 export default GlobalStyle
