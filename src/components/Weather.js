@@ -44,24 +44,19 @@ const ForecastWrapper = styled.div`
   grid-column: span 4;
   grid-row: span 2;
   overflow-y: scroll;
-  /* line-height: 20px; */
-  /* padding: 1%; */
   box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
   border-radius: 5px;
   background-color: rgba(var(--rgb-main-light), 0.85);
   color: var(--main-dark);
-  section h1 {
-    font-size: 26px;
-  }
   p,
-  h1 {
+  h1,
+  h2 {
     padding: 2% 0.5%;
     color: var(--main-dark);
   }
   h2,
   h1 {
     font-size: 1.25em;
-    text-align: center;
   }
   a {
     margin: 2%;
@@ -73,10 +68,10 @@ const ForecastWrapper = styled.div`
   h2 {
     background: var(--main-dark);
     color: white;
-    padding: 2%;
   }
-  div {
-    width: 100%;
+  div,
+  h1,
+  h2 {
     text-align: center;
   }
 `
