@@ -64,6 +64,9 @@ const TodayWrapper = styled.div`
   i {
     color: var(--main-dark);
   }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const ForecastLoadingWrapper = styled.div`

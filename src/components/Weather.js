@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import {
-  HashRouter,
-  BrowserRouter as Router,
-  Route,
-  Link,
-} from 'react-router-dom'
+import { HashRouter, Route, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import OneDay from './OneDay'
 import FiveDays from './FiveDays'
@@ -51,7 +46,7 @@ const ForecastWrapper = styled.div`
   p,
   h1,
   h2 {
-    padding: 2% 0.5%;
+    padding: 1.5% 0.5%;
     color: var(--main-dark);
   }
   h2,
