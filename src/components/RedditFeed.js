@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled, { withTheme } from 'styled-components'
 import AutosizeInput from 'react-input-autosize'
 import colors from '../theme/colors'
@@ -69,6 +69,8 @@ const RedditFeed = ({
   }
 
   const [toggle, setToggle] = useState(false)
+
+  const postScroll = useRef()
   return (
     <Postwrap>
       <Header>Reddit Feed</Header>
@@ -141,15 +143,66 @@ const RedditFeed = ({
           {/* <div>Another Option</div> */}
         </OptionSelector>
       </Options>
-      <PostList>
-        <Spacer position={`left`} />
-        {feed.map(PostTile)}
-        <Spacer position={`right`} />
-      </PostList>
+      <WrapDiv>
+        <PrevButton
+          passedRef={postScroll}
+          onClick={() =>
+            (postScroll.current.scrollLeft -= postScroll.current.getBoundingClientRect().width)
+          }
+        >
+          {'<'}
+        </PrevButton>
+        <PostList ref={postScroll}>
+          <Spacer position={`left`} />
+          {feed.map(PostTile)}
+          <Spacer position={`right`} />
+        </PostList>
+        <NextButton
+          passedRef={postScroll}
+          onClick={() =>
+            (postScroll.current.scrollLeft += postScroll.current.getBoundingClientRect().width)
+          }
+        >
+          {'>'}
+        </NextButton>
+      </WrapDiv>
     </Postwrap>
   )
 }
 
+const WrapDiv = styled.div`
+  position: relative;
+`
+
+const PrevButton = styled.button`
+  font-size: 3em;
+  border: none;
+  color: var(--main-dark);
+  background: transparent;
+  z-index: 1000;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 90%;
+  @media screen and (orientation: portrait) {
+    height: 95%;
+  }
+`
+
+const NextButton = styled.button`
+  font-size: 3em;
+  border: none;
+  color: var(--main-dark);
+  background: transparent;
+  z-index: 1000;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 90%;
+  @media screen and (orientation: portrait) {
+    height: 95%;
+  }
+`
 const Header = styled.div`
   font-weight: 400;
   background: var(--main-dark);
@@ -226,6 +279,7 @@ const OptionSelector = styled.div`
   position: relative;
 `
 const Postwrap = styled.div`
+  position: relative;
   grid-column: span 4;
   grid-row: span 2;
   @media screen and (orientation: portrait) {
@@ -235,6 +289,7 @@ const Postwrap = styled.div`
   flex-direction: column;
 `
 const PostList = styled.ul`
+  position: relative;
   height: 90%;
   @media screen and (orientation: portrait) {
     height: 95%;
@@ -251,9 +306,9 @@ const PostList = styled.ul`
   white-space: nowrap;
   overflow-y: hidden;
 
-  /* &::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
-  } */
+  }
 `
 
 const PostTile = ({
