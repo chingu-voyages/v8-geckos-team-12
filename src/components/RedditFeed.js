@@ -202,10 +202,7 @@ const PrevButton = styled.button`
   position: absolute;
   left: 0;
   top: 0;
-  height: 90%;
-  @media screen and (orientation: portrait) {
-    height: 95%;
-  }
+  height: 100%;
 `
 
 const NextButton = styled.button`
@@ -217,10 +214,7 @@ const NextButton = styled.button`
   position: absolute;
   right: 0;
   top: 0;
-  height: 90%;
-  @media screen and (orientation: portrait) {
-    height: 95%;
-  }
+  height: 100%;
 `
 const Header = styled.div`
   font-weight: 400;
@@ -300,7 +294,7 @@ const OptionSelector = styled.div`
 const Postwrap = styled.div`
   position: relative;
   grid-column: span 4;
-  grid-row: span 4;
+  grid-row: span 2;
   @media screen and (orientation: portrait) {
     grid-row: span 4;
   }
@@ -309,10 +303,7 @@ const Postwrap = styled.div`
 `
 const PostList = styled.ul`
   position: relative;
-  height: 90%;
-  @media screen and (orientation: portrait) {
-    height: 95%;
-  }
+  height: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
   -webkit-y: hidden;
@@ -401,7 +392,7 @@ const PostCard = styled.li`
       ? `0 0.5vmax 0 0`
       : position === `right`
       ? `0 0 0 0.5vmax`
-      : `0 0.5vmax`};
+      : `0 0.5vmax 0 0`};
   width: ${({ position }) => (position ? `10%` : `80%`)};
   height: 100%;
 `
