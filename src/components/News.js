@@ -51,9 +51,10 @@ export default ({ query }) => {
 
 const ArticleWrapper = styled.div`
   grid-column: span 4;
-  grid-row: span 4;
+  grid-row: span 2;
   height: 100%;
   color: var(--main-dark);
+  overflow: hidden;
 
   & ul {
     overflow-y: scroll;
