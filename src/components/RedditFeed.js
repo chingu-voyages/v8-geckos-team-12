@@ -1,30 +1,55 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState, useRef } from 'react'
+import styled, { withTheme } from 'styled-components'
 import AutosizeInput from 'react-input-autosize'
 import colors from '../theme/colors'
-export default function RedditFeed() {
+
+const darken = color =>
+  color
+    .split(',')
+    .map(num => Number(num / 2).toFixed(0))
+    .join(',')
+
+const RedditFeed = ({
+  theme: {
+    name,
+    darkMode,
+    colors: {
+      RGBAccentDark,
+      RGBAccentLight,
+      RGBBrandColor,
+      RGBMainDark,
+      RGBMainLight,
+    },
+  },
+}) => {
+  const accentDark = `rgb(${darkMode ? darken(RGBAccentLight) : RGBAccentDark})`
+  const accentLight = ` rgb(${darkMode ? RGBAccentDark : RGBAccentLight})`
+  const brandColor = `rgb(${darkMode ? darken(RGBBrandColor) : RGBBrandColor})`
+  const mainDark = `rgb(${darkMode ? darken(RGBMainLight) : RGBMainDark})`
+  const mainLight = `rgb(${darkMode ? RGBMainDark : RGBMainLight})`
+
   const subreddit = localStorage.getItem(`subreddit`) || `javascript`
   const [currentSub, setCurrentSub] = useState(subreddit)
 
   const [feed, setFeed] = useState([])
   const fetchData = async query => {
-    const response = await fetch(`https://www.reddit.com/r/${query}/.json`)
-    const json = await response.json()
-    const data = await json.data
-    setFeed(data.children.slice(0, 30))
+    const { data } = await fetch(
+      `.netlify/functions/redditFetchFeed?query=${query}`
+    ).then(response => response.json())
+    setFeed(data)
   }
+
   if (!feed.length) {
     fetchData(currentSub)
   }
 
   const fetchAutoComplete = async query => {
-    const response = await fetch(
-      `https://www.reddit.com/api/subreddit_autocomplete_v2.json?query=${query}&include_over_18=false&include_categories=false&include_profiles=false&limit=10`
-    )
-    const json = await response.json()
-    const data = await json.data.children.map(({ data }) => data)
+    const { data } = await fetch(
+      `.netlify/functions/redditAutocomplete?query=${query}`
+    ).then(response => response.json())
     return data
   }
+
   const [suggestions, setSuggestions] = useState([])
   const [subredditAutocompleteQuery, setSubredditAutocompleteQuery] = useState(
     ``
@@ -33,7 +58,6 @@ export default function RedditFeed() {
     setSubredditAutocompleteQuery(value)
     if (subredditAutocompleteQuery.length > 0) {
       const suggestions = await fetchAutoComplete(value)
-      console.log(suggestions)
 
       const returnedSuggestions = suggestions
         .filter(({ subreddit_type }) => subreddit_type !== `private`)
@@ -45,6 +69,8 @@ export default function RedditFeed() {
   }
 
   const [toggle, setToggle] = useState(false)
+
+  const postScroll = useRef()
   return (
     <Postwrap>
       <Header>Reddit Feed</Header>
@@ -55,8 +81,12 @@ export default function RedditFeed() {
               style={{
                 border: 'none',
                 zIndex: 2000,
-                boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
-                color: colors.brandColor,
+                boxShadow: `0 0 35px rgba(${
+                  darkMode ? darken(RGBAccentLight) : RGBAccentDark
+                }, 0.4), 0 0 10px rgba(${
+                  darkMode ? darken(RGBMainLight) : RGBMainDark
+                }, 0.4)`,
+                color: brandColor,
               }}
               inputStyle={{
                 border: 'none',
@@ -64,9 +94,14 @@ export default function RedditFeed() {
                 zIndex: 2000,
                 padding: `.25vw ${!toggle ? `4vw` : `0.25vw`} 0.25vw 0.25vw`,
                 fontSize: `1em`,
-                background: colors.mainDark,
-                boxShadow: `0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4)`,
-                color: colors.brandColor,
+                background: mainDark,
+                color: brandColor,
+                boxShadow: `0 0 35px rgba(${
+                  darkMode ? darken(RGBAccentLight) : RGBAccentDark
+                }, 0.4), 0 0 10px rgba(${
+                  darkMode ? darken(RGBMainLight) : RGBMainDark
+                }, 0.4)`,
+                color: brandColor,
               }}
               toggle={!toggle}
               placeholder={!toggle ? `r/${currentSub}` : `Select subreddit:`}
@@ -108,15 +143,66 @@ export default function RedditFeed() {
           {/* <div>Another Option</div> */}
         </OptionSelector>
       </Options>
-      <PostList>
-        <Spacer position={`left`} />
-        {feed.map(PostTile)}
-        <Spacer position={`right`} />
-      </PostList>
+      <WrapDiv>
+        <PrevButton
+          passedRef={postScroll}
+          onClick={() =>
+            (postScroll.current.scrollLeft -= postScroll.current.getBoundingClientRect().width)
+          }
+        >
+          {'<'}
+        </PrevButton>
+        <PostList ref={postScroll}>
+          <Spacer position={`left`} />
+          {feed.map(PostTile)}
+          <Spacer position={`right`} />
+        </PostList>
+        <NextButton
+          passedRef={postScroll}
+          onClick={() =>
+            (postScroll.current.scrollLeft += postScroll.current.getBoundingClientRect().width)
+          }
+        >
+          {'>'}
+        </NextButton>
+      </WrapDiv>
     </Postwrap>
   )
 }
 
+const WrapDiv = styled.div`
+  position: relative;
+`
+
+const PrevButton = styled.button`
+  font-size: 3em;
+  border: none;
+  color: var(--main-dark);
+  background: transparent;
+  z-index: 1000;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 90%;
+  @media screen and (orientation: portrait) {
+    height: 95%;
+  }
+`
+
+const NextButton = styled.button`
+  font-size: 3em;
+  border: none;
+  color: var(--main-dark);
+  background: transparent;
+  z-index: 1000;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 90%;
+  @media screen and (orientation: portrait) {
+    height: 95%;
+  }
+`
 const Header = styled.div`
   font-weight: 400;
   background: var(--main-dark);
@@ -193,8 +279,9 @@ const OptionSelector = styled.div`
   position: relative;
 `
 const Postwrap = styled.div`
+  position: relative;
   grid-column: span 4;
-  grid-row: span 4;
+  grid-row: span 2;
   @media screen and (orientation: portrait) {
     grid-row: span 4;
   }
@@ -202,6 +289,7 @@ const Postwrap = styled.div`
   flex-direction: column;
 `
 const PostList = styled.ul`
+  position: relative;
   height: 90%;
   @media screen and (orientation: portrait) {
     height: 95%;
@@ -218,9 +306,9 @@ const PostList = styled.ul`
   white-space: nowrap;
   overflow-y: hidden;
 
-  /* &::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
-  } */
+  }
 `
 
 const PostTile = ({
@@ -258,6 +346,7 @@ const ReadLink = styled.a`
   border-radius: 5px;
   padding: 0.5vmax 8vmax;
   background: rgba(var(--rgb-main-dark), 0.5);
+  color: var(--main-light) !important;
 `
 const BodyText = styled.div`
   overflow-wrap: break-word;
@@ -299,35 +388,36 @@ const PostCard = styled.li`
 `
 
 const Post = styled.div`
-   padding: 10px 20px;
-   height: 100%;
-   max-height: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  padding: 10px 20px;
+  height: 100%;
+  max-height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  border-radius: ${({ position }) =>
+    position === `left`
+      ? `0 5px 5px 0`
+      : position === `right`
+      ? `5px 0 0 5px`
+      : `5px`};
+  background-color: rgba(var(--rgb-main-light), 0.85);
+  margin: 0 0 1vw 0;
+  color: var(--main-dark);
+  & h5 {
+    font-size: 19px;
+    margin-bottom: 10px;
+    width: 100%;
     overflow-wrap: break-word;
-    overflow: hidden;
-    border-radius: ${({ position }) =>
-      position === `left`
-        ? `0 5px 5px 0`
-        : position === `right`
-        ? `5px 0 0 5px`
-        : `5px`};
-    background-color: rgba(var(--rgb-main-light), 0.85);
-    margin: 0 0 1vw 0;
-    color: var(--main-dark);
-    & h5 {
-      font-size: 19px;
-      margin-bottom: 10px;
-      width: 100%;
-      overflow-wrap: break-word;
-      word-wrap:break-word;
-      white-space:normal;
-    }
-
-    & a, a:visited {
-      color: var(--brand-color);
-    }
+    word-wrap: break-word;
+    white-space: normal;
   }
 
+  & a,
+  a:visited {
+    color: var(--brand-color);
+  }
 `
+
+export default withTheme(RedditFeed)

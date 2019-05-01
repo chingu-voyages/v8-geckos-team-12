@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AlgoliaPlaces from 'algolia-places-react'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import { useSpring, useTransition, animated, config } from 'react-spring'
 import {
   mainDark,
@@ -10,7 +10,33 @@ import {
   brandColor,
 } from '../theme/colors'
 
-export default ({ setLocation, shown }) => {
+const LocationModal = ({
+  setLocation,
+  shown,
+  theme: {
+    name,
+    darkMode,
+    colors: {
+      RGBAccentDark,
+      RGBAccentLight,
+      RGBBrandColor,
+      RGBMainDark,
+      RGBMainLight,
+    },
+  },
+}) => {
+  const darken = color =>
+    color
+      .split(',')
+      .map(num => Number(num / 2).toFixed(0))
+      .join(',')
+
+  const accentDark = `rgb(${darkMode ? darken(RGBAccentLight) : RGBAccentDark})`
+  const accentLight = ` rgb(${darkMode ? RGBAccentDark : RGBAccentLight})`
+  const brandColor = `rgb(${darkMode ? darken(RGBBrandColor) : RGBBrandColor})`
+  const mainDark = `rgb(${darkMode ? darken(RGBMainLight) : RGBMainDark})`
+  const mainLight = `rgb(${darkMode ? RGBMainDark : RGBMainLight})`
+
   const headerProps = useSpring({
     opacity: 1,
     top: 0,
@@ -19,9 +45,9 @@ export default ({ setLocation, shown }) => {
     config: config.wobbly,
   })
   const modalBackground = useSpring({
-    background: `${brandColor}, ${mainLight}, ${accentLight})`,
+    background: `linear-gradient(to top left,  ${brandColor}, ${mainLight}, ${accentLight}`,
     from: {
-      background: `linear-gradient(to top left, ${accentDark}, ${brandColor}, ${mainDark})`,
+      background: `linear-gradient(to top left, ${accentDark},  ${brandColor}, ${mainDark})`,
     },
     config: config.stiff,
   })
@@ -51,6 +77,7 @@ export default ({ setLocation, shown }) => {
             </Header>
             <animated.div style={angoliaAnimate}>
               <StyledAngoliaBox
+                darkMode={darkMode}
                 placeholder={`Please enter location`}
                 options={{
                   appId: process.env.REACT_APP_ANGOLIA_APP_ID,
@@ -81,10 +108,10 @@ export default ({ setLocation, shown }) => {
 const Header = styled(animated.div)`
   position: relative;
 
-  margin: 10vmin auto;
+  margin: 5vmin auto;
   & h1 {
     color: var(--main-dark);
-    font-size: 4em;
+    font-size: 3em;
     font-weight: 100;
     @media screen and (orientation: portrait) {
       margin-top: 10vh;
@@ -95,7 +122,7 @@ const Header = styled(animated.div)`
     font-weight: 150;
     opacity: 0.5;
     font-size: 1.4em;
-    margin: 1em 0;
+    margin: 0.5em 0;
   }
   @media screen and (orientation: portrait) {
     & h1 {
@@ -130,7 +157,6 @@ const Modal = styled(animated.div)`
     var(--main-dark)
   );
 
-  color: var(--main-dark);
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -140,7 +166,10 @@ const Modal = styled(animated.div)`
 const StyledAngoliaBox = styled(AlgoliaPlaces)`
   position: relative;
   opacity: 0.9;
-  color: var(--main-dark);
+  background: ${({ darkMode }) =>
+    darkMode ? `var(--main-dark)` : `var(--main-light)`};
+  color: ${({ darkMode }) =>
+    darkMode ? `var(--main-light)` : `var(--main-dark)`};
   width: 75vw;
   margin-bottom: auto;
   box-shadow: 0 0 35px rgba(50, 50, 50, 0.2), 0 0 10px rgba(20, 20, 20, 0.2);
@@ -148,3 +177,4 @@ const StyledAngoliaBox = styled(AlgoliaPlaces)`
     width: 90vw;
   }
 `
+export default withTheme(LocationModal)

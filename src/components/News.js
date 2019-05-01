@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import NewsAPI from 'newsapi'
 import styled from 'styled-components'
-
+import Article from './Article'
 const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API_KEY)
+
 export default ({ query }) => {
   const [articles, setArticles] = useState(null)
 
@@ -12,48 +13,25 @@ export default ({ query }) => {
         q: query,
         language: 'en',
         country: 'us',
-        pageSize: 10,
+        pageSize: 6,
         page: 1,
       })
       .then(response => {
         setArticles(response.articles)
+        console.log(response)
       })
       .catch(err => console.log(err))
   }
 
   return (
     <ArticleWrapper>
-      <h2>News Feed</h2>
+      <Header>News Feed</Header>
       {articles ? (
         <ul>
           {articles.length > 0 ? (
             articles.map((article, i) => {
               return article.title ? (
-                <Article key={`article-${i}`}>
-                  <a href={article.url} target={`__newtab${i}`}>
-                    <h5>{article.title}</h5>
-                    {article.author ? (
-                      <ArticleText misc>By {article.author}</ArticleText>
-                    ) : null}
-                    <ArticleText desc>
-                      {article.content
-                        ? article.content.split('[')[0]
-                        : article.description
-                        ? article.description
-                        : 'No description available.'}
-                    </ArticleText>
-                    <div>
-                      <ArticleText misc>{article.source.name}</ArticleText>
-                      <ArticleText misc>
-                        {new Date(article.publishedAt)
-                          .toString()
-                          .split(' ')
-                          .splice(0, 4)
-                          .join(' ')}
-                      </ArticleText>
-                    </div>
-                  </a>
-                </Article>
+                <Article article={article} articleKey={i} />
               ) : null
             })
           ) : (
@@ -74,11 +52,12 @@ export default ({ query }) => {
 const ArticleWrapper = styled.div`
   grid-column: span 4;
   grid-row: span 4;
-  overflow-y: scroll;
   height: 100%;
   color: var(--main-dark);
 
   & ul {
+    overflow-y: scroll;
+    height: 100%;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
@@ -104,43 +83,28 @@ const ArticleWrapper = styled.div`
     font-size: 1.25em;
     padding: 10px 0;
     background-color: var(--main-dark);
-    color: white;
-    margin-bottom: 7px;
+    color: var(--main-light);
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
   }
 `
 
-const Article = styled.li`
-  background-color: rgba(var(--rgb-main-light), 0.85);
-  line-height: 130%;
-  transition: 0.1s;
-
-  & a {
-    color: var(--main-dark);
-    :visited {
-      color: var(--main-dark);
-    }
-    & h5 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-  }
-  :hover {
-    transform: translateY(-6px);
-    cursor: pointer;
-  }
-`
-
-const ArticleText = styled.p`
-  ${props => (props.misc ? 'font-style: italic' : null)};
-  ${props => (props.desc ? 'margin: 7px 0' : null)};
-  ${props => (props.misc ? 'color: var(--accent-dark)' : null)}
-`
 const Error = styled.li`
   background-color: rgba(var(--rgb-accent-dark), 0.87);
   color: var(--main-light);
   max-height: 40px;
   text-align: center;
   width: 90%;
+`
+
+const Header = styled.div`
+  font-weight: 400;
+  background: var(--main-dark);
+  color: var(--main-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25em;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
 `
