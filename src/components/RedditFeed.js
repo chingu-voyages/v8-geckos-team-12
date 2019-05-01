@@ -172,9 +172,29 @@ const RedditFeed = ({
 
 const WrapDiv = styled.div`
   position: relative;
+  height: 90%;
+  @media screen and (orientation: portrait) {
+    height: 95%;
+  }
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  -webkit-scroll-snap-type: x mandatory;
+  -webkit-scroll-snap-points-x: repeat(100%);
+  -webkit-scroll-snap-destination: 50% 50%;
+  scroll-snap-type: x mandatory;
+  scroll-snap-points-x: repeat(100%);
+  white-space: nowrap;
+  overflow-y: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const PrevButton = styled.button`
+  cursor: pointer;
   font-size: 3em;
   border: none;
   color: var(--main-dark);
@@ -183,13 +203,15 @@ const PrevButton = styled.button`
   position: absolute;
   left: 0;
   top: 0;
-  height: 90%;
-  @media screen and (orientation: portrait) {
-    height: 95%;
+  height: 100%;
+
+  &:focus {
+    outline: none;
   }
 `
 
 const NextButton = styled.button`
+  cursor: pointer;
   font-size: 3em;
   border: none;
   color: var(--main-dark);
@@ -198,9 +220,10 @@ const NextButton = styled.button`
   position: absolute;
   right: 0;
   top: 0;
-  height: 90%;
-  @media screen and (orientation: portrait) {
-    height: 95%;
+  height: 100%;
+
+  &:focus {
+    outline: none;
   }
 `
 const Header = styled.div`
@@ -290,10 +313,7 @@ const Postwrap = styled.div`
 `
 const PostList = styled.ul`
   position: relative;
-  height: 90%;
-  @media screen and (orientation: portrait) {
-    height: 95%;
-  }
+  height: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
   -webkit-y: hidden;
@@ -327,8 +347,8 @@ const PostTile = ({
       <BodyText>
         {selftext.length === 0 ? (
           <a href={url}>{url}</a>
-        ) : selftext.length > 320 ? (
-          `${selftext.slice(0, 320)}...`
+        ) : selftext.length > 250 ? (
+          `${selftext.slice(0, 250)}...`
         ) : (
           selftext
         )}
@@ -382,7 +402,7 @@ const PostCard = styled.li`
       ? `0 0.5vmax 0 0`
       : position === `right`
       ? `0 0 0 0.5vmax`
-      : `0 0.5vmax`};
+      : `0 0.5vmax 0 0`};
   width: ${({ position }) => (position ? `10%` : `80%`)};
   height: 100%;
 `
