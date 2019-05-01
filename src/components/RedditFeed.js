@@ -172,6 +172,25 @@ const RedditFeed = ({
 
 const WrapDiv = styled.div`
   position: relative;
+  height: 90%;
+  @media screen and (orientation: portrait) {
+    height: 95%;
+  }
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  -webkit-scroll-snap-type: x mandatory;
+  -webkit-scroll-snap-points-x: repeat(100%);
+  -webkit-scroll-snap-destination: 50% 50%;
+  scroll-snap-type: x mandatory;
+  scroll-snap-points-x: repeat(100%);
+  white-space: nowrap;
+  overflow-y: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const PrevButton = styled.button`
@@ -281,7 +300,7 @@ const OptionSelector = styled.div`
 const Postwrap = styled.div`
   position: relative;
   grid-column: span 4;
-  grid-row: span 2;
+  grid-row: span 4;
   @media screen and (orientation: portrait) {
     grid-row: span 4;
   }
