@@ -64,9 +64,9 @@ const TodayWrapper = styled.div`
   i {
     color: var(--main-dark);
   }
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @media only screen and (min-width: 500px) {
+    padding-top: 5%;
+  }
 `
 
 const ForecastLoadingWrapper = styled.div`
