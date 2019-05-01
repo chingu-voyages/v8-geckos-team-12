@@ -194,6 +194,7 @@ const WrapDiv = styled.div`
 `
 
 const PrevButton = styled.button`
+  cursor: pointer;
   font-size: 3em;
   border: none;
   color: var(--main-dark);
@@ -203,9 +204,14 @@ const PrevButton = styled.button`
   left: 0;
   top: 0;
   height: 100%;
+
+  &:focus {
+    outline: none;
+  }
 `
 
 const NextButton = styled.button`
+  cursor: pointer;
   font-size: 3em;
   border: none;
   color: var(--main-dark);
@@ -215,6 +221,10 @@ const NextButton = styled.button`
   right: 0;
   top: 0;
   height: 100%;
+
+  &:focus {
+    outline: none;
+  }
 `
 const Header = styled.div`
   font-weight: 400;
@@ -337,8 +347,8 @@ const PostTile = ({
       <BodyText>
         {selftext.length === 0 ? (
           <a href={url}>{url}</a>
-        ) : selftext.length > 320 ? (
-          `${selftext.slice(0, 320)}...`
+        ) : selftext.length > 250 ? (
+          `${selftext.slice(0, 250)}...`
         ) : (
           selftext
         )}
