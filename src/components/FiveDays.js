@@ -101,9 +101,11 @@ export default ({ latitude, longitude }) => {
   )
 }
 
-const ComponentWrapper = styled.div``
+const ComponentWrapper = styled.div`
+  height: 75%;
+  overflow-y: auto;
+`
 const DayWrapper = styled.div`
-  /* overflow: scroll; */
   background-color: rgba(var(--rgb-main-light), 0.8);
   margin: 1%;
   padding: 2%;

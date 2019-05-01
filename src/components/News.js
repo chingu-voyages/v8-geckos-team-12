@@ -52,7 +52,10 @@ export default ({ query }) => {
 const ArticleWrapper = styled.div`
   grid-column: span 4;
   grid-row: span 2;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  overflow-y: scroll;
   color: var(--main-dark);
   overflow: hidden;
 
