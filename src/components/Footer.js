@@ -61,7 +61,6 @@ const ToggleButton = styled.button`
   color: var(--main-light);
   font-size: 0.85em;
   padding: 0.6em;
-  position: fixed;
   bottom: 1.2em;
   right: 0;
   z-index: 6000;
