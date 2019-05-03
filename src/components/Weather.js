@@ -48,7 +48,6 @@ const ForecastWrapper = styled.div`
   background: rgba(255, 255, 255, 0.85);
   grid-column: span 4;
   grid-row: span 2;
-  overflow-y: hidden;
   box-shadow: 0 0 35px rgba(50, 50, 50, 0.4), 0 0 10px rgba(20, 20, 20, 0.4);
   border-radius: 5px;
   background-color: rgba(var(--rgb-main-light), 0.85);
