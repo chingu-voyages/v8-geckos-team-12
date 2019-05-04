@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import { geolocated } from 'react-geolocated'
 import LocationModal from './components/LocationModal.js'
+import Header from './components/Header'
 import Weather from './components/Weather'
-import CurrentLocation from './components/CurrentLocation'
 import Unsplash from './components/Unsplash.js'
 import News from './components/News'
 import LoadingAnimation from './components/LoadingAnimation'
-import styled from 'styled-components'
+import Footer from './components/Footer'
+import styled, { ThemeProvider } from 'styled-components'
+import RedditFeed from './components/RedditFeed'
+import Settings from './components/Settings'
+
+import GlobalStyle from './theme/GlobalStyles'
+import { defaultStyle } from './theme/colors'
 
 const App = ({
   coords,
@@ -14,12 +20,24 @@ const App = ({
   isGeolocationEnabled, // boolean flag indicating that the user has allowed the use of the Geolocation API
   positionError, // object with the error returned from the Geolocation API call
 }) => {
+  const [showLoading, setLoading] = useState(true)
+  const [theme, setTheme] = useState(
+    JSON.parse(window.localStorage.getItem(`theme`)) || {
+      ...defaultStyle,
+      darkMode: false,
+    }
+  )
+  const updateTheme = theme => {
+    window.localStorage.setItem(`theme`, JSON.stringify(theme))
+    setTheme(theme)
+  }
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
     available: !isGeolocationAvailable || !isGeolocationEnabled,
   })
   const [unsplashQuery, setUnsplashQuery] = useState(null)
+  const [unsplashData, setUnsplashData] = useState(null)
   try {
     const {
       latitude,
@@ -36,55 +54,98 @@ const App = ({
       available: !isGeolocationAvailable || !isGeolocationEnabled,
     })
   } catch (err) {}
+  setTimeout(() => setLoading(false), 3000)
+  //Example netlify lambda call
+  // fetch('/.netlify/functions/hello')
+  //   .then(response => response.json())
+  //   .then(console.log)
 
+  /*
+Disabled for now, issues with lambda function
+
+  const [colorTheme, setColorTheme] = useState(null)
+
+  const randomColor = () => {
+    fetch('/.netlify/functions/randomColors')
+      .then(response => response.json())
+      .then(json => setColorTheme(json))
+  }
+
+  if (!colorTheme) {
+    randomColor()
+  }
+  console.log(colorTheme)
+  */
+
+  const [showSettings, setShowSettings] = useState(false)
+  const toggleShowSettings = () => setShowSettings(state => !state)
   return (
-    <>
-      <LocationModal
-        setLocation={setLocation}
-        shown={
-          !location.available &&
-          (!isGeolocationAvailable || !isGeolocationEnabled)
-        }
-      />
-
-      {location.available || coords || location.latitude ? (
-        <>
-          <Unsplash query={unsplashQuery} />
-          <AppWrapper>
-            <CurrentLocation
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyle />
+        {(location.available || coords || location.latitude) && (
+          <>
+            <Unsplash setUnsplashData={setUnsplashData} />
+            <Header
               latitude={location.latitude}
               longitude={location.longitude}
               setUnsplashQuery={setUnsplashQuery}
             />
-
-            <Weather
-              latitude={location.latitude}
-              longitude={location.longitude}
+            <AppWrapper>
+              <Settings
+                currentTheme={theme}
+                updateTheme={updateTheme}
+                showSettings={showSettings}
+                toggleShowSettings={toggleShowSettings}
+                widgets={[
+                  {
+                    component: (
+                      <Weather
+                        latitude={location.latitude}
+                        longitude={location.longitude}
+                      />
+                    ),
+                    name: `Weather`,
+                  },
+                  {
+                    component: <News query={unsplashQuery} />,
+                    name: `News Feed`,
+                  },
+                  { component: <RedditFeed />, name: `Reddit Feed` },
+                ]}
+              />
+            </AppWrapper>
+            <Footer {...unsplashData} toggleShowSettings={toggleShowSettings} />
+          </>
+        )}
+        {showLoading && <LoadingAnimation />}
+        {!showLoading &&
+          (!location.available || !coords || !location.latitude) && (
+            <LocationModal
+              setLocation={setLocation}
+              shown={
+                !location.available &&
+                (!isGeolocationAvailable || !isGeolocationEnabled)
+              }
             />
-            <News query={unsplashQuery} />
-          </AppWrapper>
-        </>
-      ) : (
-        setTimeout(() => <LoadingAnimation />, 0)
-      )}
-    </>
+          )}
+      </>
+    </ThemeProvider>
   )
 }
 
 const AppWrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  overflow: hidden;
   display: grid;
-  grid-gap: 2.5vh;
-  grid-template-rows: 15% 30% 50%;
-  & > * {
-    overflow: hidden;
-  }
+  grid-auto-flow: row dense;
+  grid-gap: 1vw;
+  margin: 1.5vw 1.5vw 4.5vmax 1.5vw;
+  grid-template-columns: repeat(8, 11.25vw);
+  grid-auto-rows: 11.25vw;
   @media screen and (orientation: portrait) {
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: repeat(4, 23.5vw);
+    grid-auto-rows: 25vw;
   }
 `
 
