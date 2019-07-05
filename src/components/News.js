@@ -125,6 +125,14 @@ const Article = styled.li`
       font-size: 20px;
       margin-bottom: 10px;
     }
+
+    & a {
+      color: #dd443c;
+    }
+  }
+
+  & li:hover {
+    transform: translateY(-10px);
   }
   :hover {
     transform: translateY(-6px);
