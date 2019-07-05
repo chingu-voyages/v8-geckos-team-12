@@ -9,6 +9,7 @@ We are still adding more features so this will be updated later on.
 ## To get started
 
 Clone repo
+
 ```shell
 git clone https://github.com/chingu-voyages/v8-geckos-team-12.git
 ```
@@ -25,6 +26,7 @@ Get any API keys that you are missing.
 * [Open Weather Maps](https://openweathermap.org/api "Get Open Weather Maps API key")
 * [Unsplash](https://unsplash.com/developers "Get Unsplash API key")
 * [News API](https://newsapi.org/ "Get News API key")
+
 
 Save a .env in root of project with your API keys.
 
