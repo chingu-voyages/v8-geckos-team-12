@@ -58,7 +58,6 @@ const ArticleWrapper = styled.div`
   overflow-y: scroll;
   color: var(--main-dark);
   overflow: hidden;
-
   & ul {
     overflow-y: scroll;
     height: 100%;
@@ -68,20 +67,17 @@ const ArticleWrapper = styled.div`
     justify-content: center;
     font-size: 17px;
   }
-
   & li {
     padding: 10px 20px;
     overflow-wrap: break-word;
     border-radius: 5px;
     margin: 0 0 1vw 0;
     width: 100%;
-
     & div {
       display: flex;
       justify-content: space-between;
     }
   }
-
   & h2 {
     text-align: center;
     font-size: 1.25em;
