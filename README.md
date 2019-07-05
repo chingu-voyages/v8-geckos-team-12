@@ -22,10 +22,11 @@ npm install
 
 Get any API keys that you are missing.
 
-- [Angolia Search](https://www.algolia.com/users/sign_up 'Get Angolia Search API key')
-- [Open Weather Maps](https://openweathermap.org/api 'Get Open Weather Maps API key')
-- [Unsplash](https://unsplash.com/developers 'Get Unsplash API key')
-- [News API](https://newsapi.org/ 'Get News API key')
+* [Angolia Search](https://www.algolia.com/users/sign_up "Get Angolia Search API key")
+* [Open Weather Maps](https://openweathermap.org/api "Get Open Weather Maps API key")
+* [Unsplash](https://unsplash.com/developers "Get Unsplash API key")
+* [News API](https://newsapi.org/ "Get News API key")
+
 
 Save a .env in root of project with your API keys.
 

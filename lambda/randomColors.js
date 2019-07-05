@@ -70,17 +70,12 @@
     function(e, t) {
       e.exports = require('http')
     },
-    function(e, t) {
-      e.exports = require('https')
-    },
-    ,
     function(e, t, r) {
       'use strict'
-      r.r(t)
       var o = r(0),
         n = r(3),
         s = r(2),
-        i = r(4),
+        i = r(5),
         u = r(1)
       const a = Symbol('buffer'),
         l = Symbol('type')
@@ -1031,22 +1026,30 @@
       ;(V.isRedirect = function(e) {
         return 301 === e || 302 === e || 303 === e || 307 === e || 308 === e
       }),
-        (V.Promise = global.Promise)
-      var D = V
-      async function G(e, t) {
-        const r = await D('http://colormind.io/api/', {
-          method: 'POST',
-          body: JSON.stringify({ model: 'ui' }),
+        (V.Promise = global.Promise),
+        (t.a = V)
+    },
+    function(e, t) {
+      e.exports = require('https')
+    },
+    function(e, t, r) {
+      'use strict'
+      r.r(t),
+        r.d(t, 'handler', function() {
+          return n
         })
-          .then(e => e.json())
-          .then(e => e.result)
+      var o = r(4)
+      async function n(e, t) {
+        const r = await Object(o.a)('http://colormind.io/api/', {
+            method: 'POST',
+            body: JSON.stringify({ model: 'ui' }),
+          }),
+          n = await r.json()
         return (
-          console.log(r), { statusCode: 200, body: JSON.stringify({ body: r }) }
+          console.log(n),
+          { statusCode: 200, body: JSON.stringify({ colors: n.result }) }
         )
       }
-      r.d(t, 'handler', function() {
-        return G
-      })
     },
   ])
 )
