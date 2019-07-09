@@ -7,6 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "algolia-places-react": "^1.4.1",
+    "encoding": "^0.1.12",
     "husky": "^1.3.1",
     "logrocket": "^0.6.20",
     "logrocket-react": "^3.0.0",
